@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfólio de Matheus Luiz Neves Johnsson — Estudante de Computação (UFBA / SENAI CIMATEC) e Bolsista QUIIN no Hiive Lab">
+    <title>Matheus Luiz Neves Johnsson</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #090a0f;
+            --card: #12121e;
+            --border: rgba(148, 148, 168, 0.12);
+            --text: #f1f1f7;
+            --text-secondary: #9a9ab0;
+            --muted: #64647a;
+            --purple: #7c3aed;
+            --indigo: #6366f1;
+            --cyan: #06b6d4;
+            --emerald: #10b981;
+            --grad: linear-gradient(135deg, #7c3aed, #6366f1, #06b6d4);
+            --font: 'Inter', "Segoe UI", sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── Background orbs ── */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::before {
+            width: 500px; height: 500px;
+            background: var(--purple);
+            top: -10%; right: -8%;
+            opacity: 0.18;
+        }
+        body::after {
+            width: 400px; height: 400px;
+            background: var(--cyan);
+            bottom: -8%; left: -8%;
+            opacity: 0.14;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: var(--card);
+            border-radius: 18px;
+            padding: 50px;
+            border: 1px solid var(--border);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Header ── */
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            font-size: .95rem;
+            margin-bottom: 14px;
+            font-family: var(--mono);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--emerald);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: .82rem;
+            font-family: var(--mono);
+            font-weight: 500;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.35); opacity: 0.5; }
+        }
+
+        /* ── Section titles ── */
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 18px;
+            color: var(--text);
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-left: 4px solid;
+            border-image: var(--grad) 1;
+            padding-left: 13px;
+        }
+
+        /* ── Text ── */
+        p {
+            text-align: justify;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        ul {
+            margin-left: 22px;
+            line-height: 1.9;
+        }
+
+        li {
+            margin-bottom: 11px;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ── Skills ── */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .skill {
+            background: rgba(124, 58, 237, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(124, 58, 237, 0.22);
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: .88rem;
+            font-family: var(--mono);
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .skill:hover {
+            background: rgba(124, 58, 237, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .skill.cyan {
+            background: rgba(6, 182, 212, 0.1);
+            color: #67e8f9;
+            border-color: rgba(6, 182, 212, 0.22);
+        }
+
+        /* ── Footer ── */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--muted);
+            font-size: .85rem;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+
+        footer a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 2.1rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Matheus Luiz Neves Johnsson</h1>
+
+    <p class="subtitle">
+        Ciência da Computação • UFBA &nbsp;|&nbsp; Engenharia de Computação • SENAI CIMATEC
+    </p>
+
+    <div class="badge">
+        <span class="badge-dot"></span>
+        Bolsista QUIIN — Hiive Lab
+    </div>
+
+    <h2>Sobre mim</h2>
+
+    <p>
+        Sou estudante de <strong>Ciência da Computação</strong> na <strong>Universidade Federal da Bahia (UFBA)</strong>
+        e de <strong>Engenharia de Computação</strong> no <strong>SENAI CIMATEC</strong>, com interesse em desenvolvimento
+        de software, ambientes imersivos em realidade virtual e pesquisa aplicada.
+        Atualmente atuo como <strong>Bolsista do programa QUIIN no Hiive Lab</strong> (SENAI CIMATEC),
+        desenvolvendo soluções tecnológicas voltadas para inovação no ensino e buscando sempre
+        conectar a pesquisa acadêmica a aplicações práticas de impacto.
+    </p>
+
+    <h2>Experiência Técnica</h2>
+
+    <p>
+        Ao longo da minha formação tive contato com diferentes linguagens, ferramentas e ambientes,
+        atuando em projetos de desenvolvimento de software, robótica, ambientes imersivos e fabricação digital.
+    </p>
+
+    <ul>
+
+        <li>
+            <strong>C / C++:</strong> principal linguagem de programação, utilizada em projetos acadêmicos,
+            programação competitiva e desenvolvimento de sistemas.
+        </li>
+
+        <li>
+            <strong>Java:</strong> utilizado em projetos acadêmicos com foco em orientação a objetos e
+            desenvolvimento de aplicações.
+        </li>
+
+        <li>
+            <strong>Unreal Engine 5:</strong> desenvolvimento de jogos e ambientes imersivos em VR,
+            com destaque para o projeto de bolsa no Hiive Lab e a vitória na GAMEJAM CIMATEC 2024.
+        </li>
+
+        <li>
+            <strong>Realidade Virtual (VR):</strong> atuação como programador em projeto de bolsa no
+            <strong>Hiive Lab</strong> voltado para tecnologias VR no ensino de física quântica.
+        </li>
+
+        <li>
+            <strong>Robótica:</strong> desenvolvimento do projeto <strong>RASolver</strong> como integrante
+            da equipe <strong>IEEE RAS</strong> — robô educacional multifuncional para seguir linhas e
+            resolver labirintos.
+        </li>
+
+        <li>
+            <strong>Modelagem e Impressão 3D:</strong> experiência em modelagem de peças e protótipos,
+            com operação de impressoras 3D em projetos acadêmicos e de extensão.
+        </li>
+
+        <li>
+            <strong>Git e GitHub:</strong> controle de versão, gerenciamento de branches, colaboração
+            em equipe e integração de projetos.
+        </li>
+
+    </ul>
+
+    <h2>Iniciativas Estudantis</h2>
+
+    <ul>
+
+        <li>
+            Membro do <strong>IEEE</strong>, atuando no ramo <strong>Robotics and Automation Society (RAS)</strong>,
+            com participação no desenvolvimento do projeto educacional RASolver.
+        </li>
+
+        <li>
+            Bolsista do programa <strong>QUIIN</strong> no <strong>Hiive Lab (SENAI CIMATEC)</strong>,
+            com foco no desenvolvimento de soluções tecnológicas e pesquisa aplicada em VR e ensino.
+        </li>
+
+        <li>
+            Atuação como <strong>instrutor de preparação para a Olimpíada Brasileira de Informática (OBI)</strong>,
+            contribuindo para a disseminação do conhecimento em programação e algoritmos.
+        </li>
+
+    </ul>
+
+    <h2>Competições e Atividades</h2>
+
+    <ul>
+
+        <li>
+            <strong>Vencedor da GAMEJAM CIMATEC 2024</strong>, competição de desenvolvimento de jogos
+            realizada no SENAI CIMATEC.
+        </li>
+
+        <li>
+            Participação em competições da <strong>Olimpíada Brasileira de Informática (OBI)</strong>.
+        </li>
+
+        <li>
+            Participação em eventos e hackathons voltados a inovação, robótica e desenvolvimento
+            de software promovidos pela comunidade acadêmica do CIMATEC e da UFBA.
+        </li>
+
+        <li>
+            Interesse contínuo por algoritmos, estruturas de dados e tecnologias emergentes como
+            VR e física quântica aplicada ao ensino.
+        </li>
+
+    </ul>
+
+    <h2>Tecnologias</h2>
+
+    <div class="skills">
+        <div class="skill cyan">Bolsista QUIIN</div>
+        <div class="skill cyan">Hiive Lab</div>
+        <div class="skill">C / C++</div>
+        <div class="skill">Java</div>
+        <div class="skill">Unreal Engine 5</div>
+        <div class="skill">Realidade Virtual (VR)</div>
+        <div class="skill">Git / GitHub</div>
+        <div class="skill">Robótica</div>
+        <div class="skill">IEEE RAS</div>
+        <div class="skill">Modelagem 3D</div>
+        <div class="skill">Impressão 3D</div>
+        <div class="skill">Linux</div>
+    </div>
+
+    <footer>
+        <p>
+            <a href="mailto:mattluiz.johnsson@gmail.com">mattluiz.johnsson@gmail.com</a>
+            &nbsp;•&nbsp;
+            <a href="https://github.com/ironJohnsson" target="_blank" rel="noopener noreferrer">github.com/ironJohnsson</a>
+        </p>
+        <br>
+        <p>Matheus Luiz Neves Johnsson &nbsp;•&nbsp; &copy; <span id="yr"></span></p>
+    </footer>
+
+</div>
+
+<script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
