@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>projeto-react</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+
+  <!---VER NOME-->
+
+  <form action="" method="get" onsubmit="verNome(); return false;">
+    <input type="text" id="nome" required placeholder="Digite seu nome">
+    <button>Enviar</button>
+
+
+  </form>
+  <div id="Resultado"></div>
+
+
+  <!---CALCULAR MÉDIA-->
+
+   <form action="" method="get" onsubmit="calcularMedia(); return false;">
+    <input type="number" id="num1" required placeholder="Número 1">
+    <input type="number" id="num2" required placeholder="Número 2">
+
+
+    <button>Enviar</button>
+
+
+  </form>
+
+   <div id="resultado"></div>
+</body>
+<script src="./func.js"></script>
+</html>
