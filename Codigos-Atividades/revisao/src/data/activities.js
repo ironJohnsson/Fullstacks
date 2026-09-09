@@ -11,15 +11,19 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 			? 'O controle de versões foi criado desde o início, com histórico de commits e branch principal definida como main.'
 			: index === 1
 				? 'A homepage foi organizada com elementos HTML semânticos e uma área reservada para as 30 atividades.'
+				: index === 2
+					? 'O cabeçalho apresenta o autor, sua formação, o propósito do portfólio e um acesso direto às atividades.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
 			? 'Git · GitHub · Controle de versão'
 			: index === 1
 				? 'HTML semântico · JSX · Acessibilidade'
+				: index === 2
+					? 'Identidade visual · Acessibilidade · Navegação'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1
+	...(index === 0 || index === 1 || index === 2
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -42,7 +46,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'É a linha principal de desenvolvimento. Neste projeto, ela foi definida como main.',
 									},
 								]
-							: [
+							: index === 1
+								? [
 									{
 										name: 'header',
 										description:
@@ -68,11 +73,40 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										description:
 											'Mantêm a hierarquia dos títulos com apenas um h1 principal.',
 									},
+								]
+								: [
+									{
+										name: 'Identidade',
+										description:
+											'O nome Matheus Luiz Neves Johnsson identifica o autor do portfólio.',
+									},
+									{
+										name: 'Curso e turma',
+										description:
+											'Engenharia de Computação no SENAI CIMATEC situa a formação acadêmica do autor.',
+									},
+									{
+										name: 'Descrição objetiva',
+										description:
+											'Apresenta o portfólio como uma coleção do percurso em desenvolvimento web.',
+									},
+									{
+										name: 'Avatar acessível',
+										description:
+											'Imagem com texto alternativo identifica visualmente o autor sem depender apenas do desenho.',
+									},
+									{
+										name: 'Botão de atividades',
+										description:
+											'Link de destaque leva diretamente à seção que contém a lista das atividades.',
+									},
 								],
 					message:
 						index === 0
 							? 'O repositório registra cada alteração em commits, enquanto a branch main mantém a linha principal do projeto.'
-							: 'A estrutura semântica melhora a organização, a navegação e a compreensão do conteúdo por tecnologias assistivas.',
+							: index === 1
+								? 'A estrutura semântica melhora a organização, a navegação e a compreensão do conteúdo por tecnologias assistivas.'
+								: 'A identidade combina informações pessoais, formação acadêmica, avatar alternativo e uma chamada clara para explorar o portfólio.',
 				},
 			}
 		: {}),

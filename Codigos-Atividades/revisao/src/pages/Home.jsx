@@ -5,14 +5,25 @@ function Home() {
   return (
     <div className="home-page">
       <header className="site-header">
-        <p className="eyebrow">Universidade Senai Cimatec · 2026</p>
-        <h1>Portfólio de atividades</h1>
-        <p className="intro">
-          Uma coleção organizada do meu percurso em desenvolvimento web,
-          construída etapa por etapa com React, HTML, CSS e Git.
-        </p>
+        <div className="identity">
+          <img
+            className="avatar"
+            src="/image.png"
+            alt="Avatar ilustrado de Matheus Luiz Neves Johnsson"
+          />
+          <div>
+            <p className="eyebrow">SENAI CIMATEC · Engenharia de Computação</p>
+            <h1>Matheus Luiz Neves Johnsson</h1>
+            <p className="intro">
+              Portfólio das atividades práticas do meu percurso em desenvolvimento
+              web, construído etapa por etapa com React, HTML, CSS e Git.
+            </p>
+          </div>
+        </div>
         <nav aria-label="Navegação principal">
-          <a href="#activities-title">Atividades</a>
+          <a className="activities-button" href="#activities-title">
+            Ver atividades
+          </a>
         </nav>
       </header>
 

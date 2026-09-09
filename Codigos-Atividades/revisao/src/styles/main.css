@@ -35,6 +35,21 @@ a {
 	border-bottom: 1px solid #b8c6bd;
 }
 
+.identity {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+}
+
+.avatar {
+	width: 112px;
+	height: 112px;
+	padding: 18px;
+	border: 1px solid #bdcbc2;
+	border-radius: 50%;
+	background: #f0f6f2;
+}
+
 .eyebrow,
 .activity-technology {
 	margin: 0;
@@ -68,6 +83,35 @@ h1 {
 	color: #52605a;
 	font-size: 1.2rem;
 	line-height: 1.55;
+}
+
+.site-header nav {
+	margin-top: 28px;
+}
+
+.activities-button {
+	display: inline-block;
+	padding: 12px 18px;
+	border-radius: 4px;
+	background: #315a48;
+	color: #ffffff;
+	font-family: 'Courier New', monospace;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.activities-button:hover,
+.activities-button:focus-visible {
+	background: #182f25;
+}
+
+.site-footer {
+	width: min(1120px, calc(100% - 40px));
+	margin: 0 auto;
+	padding: 24px 0 40px;
+	color: #65736c;
+	font-family: 'Courier New', monospace;
+	font-size: 0.8rem;
 }
 
 .activities-section {
@@ -189,6 +233,14 @@ h2 {
 
 	.site-header {
 		padding: 48px 0 52px;
+	}
+
+	.identity {
+		display: block;
+	}
+
+	.avatar {
+		margin-bottom: 24px;
 	}
 
 	.section-heading {
