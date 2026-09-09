@@ -21,6 +21,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'Cartões reutilizáveis apresentam número, título, descrição, tecnologia e ação com estados visuais acessíveis.'
 				: index === 6
 					? 'Flexbox organiza o cabeçalho, o menu e os contatos, distribuindo os itens com alinhamento e espaçamento consistentes.'
+					: index === 7
+						? 'A seção de atividades usa CSS Grid para distribuir os cartões em colunas adaptáveis sem criar rolagem horizontal.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -34,12 +36,14 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						: index === 4
 							? 'CSS · Design system · Responsividade'
 							: index === 5
-								? 'React · CSS · Acessibilidade'
+				? 'React · CSS · Acessibilidade'
 				: index === 6
 					? 'CSS · Flexbox · Layout responsivo'
+					: index === 7
+						? 'CSS Grid · Responsividade · Layout adaptável'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6
+	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -197,7 +201,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'Texto escuro, verde de ação e fundo claro preservam a leitura e a distinção entre os elementos.',
 									},
 								]
-								: [
+								: index === 6
+								? [
 									{
 										name: 'Cabeçalho',
 										description:
@@ -217,6 +222,23 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										name: 'Problema resolvido',
 										description:
 											'A distribuição manual e o espaçamento irregular foram substituídos por alinhamento responsivo.',
+									},
+								]
+								: [
+									{
+										name: 'Grade responsiva',
+										description:
+											'activities-list usa repeat(auto-fit, minmax(280px, 1fr)) para criar colunas conforme o espaço disponível.',
+									},
+									{
+										name: 'Adaptação',
+										description:
+											'auto-fit ajusta a quantidade de colunas sem precisar definir uma largura fixa para cada cartão.',
+									},
+									{
+										name: 'Sem rolagem horizontal',
+										description:
+											'minmax limita o tamanho mínimo e permite que os cartões encolham dentro do contêiner.',
 									},
 								],
 					demo:
@@ -239,7 +261,9 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										? 'A base visual foi centralizada em variáveis reutilizáveis para facilitar manutenção e consistência entre seções.'
 										: index === 5
 											? 'O cartão foi testado no estado normal, com hover, foco pelo teclado e evidência expandida.'
-											: 'A demonstração compara itens agrupados sem distribuição com o alinhamento responsivo feito por Flexbox.',
+											: index === 6
+												? 'A demonstração compara itens agrupados sem distribuição com o alinhamento responsivo feito por Flexbox.'
+												: 'Os cartões foram distribuídos em uma grade que se adapta ao espaço disponível sem provocar rolagem horizontal.',
 				},
 			}
 		: {}),

@@ -238,19 +238,24 @@ h2 {
 
 .activities-list {
 	display: grid;
-	gap: 12px;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: var(--space-3);
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
+.activities-list > li {
+	min-width: 0;
+}
+
 .activity-card {
 	display: grid;
-	grid-template-columns: 64px minmax(0, 1fr) auto;
+	grid-template-columns: 52px minmax(0, 1fr);
 	align-items: center;
-	gap: 24px;
-	min-height: 142px;
-	padding: 24px;
+	gap: var(--space-3);
+	min-height: 100%;
+	padding: var(--space-4);
 	border: 1px solid #bdcbc2;
 	background: #ffffff;
 	border-radius: 8px;
@@ -289,6 +294,8 @@ h2 {
 }
 
 .activity-link {
+	grid-column: 2;
+	justify-self: start;
 	border: 0;
 	background: transparent;
 	padding: 10px 0;
@@ -310,7 +317,7 @@ h2 {
 }
 
 .activity-evidence {
-	grid-column: 2 / -1;
+	grid-column: 1 / -1;
 	padding: 18px;
 	border-top: 1px solid #e1e7e3;
 	background: #fafcfb;
@@ -398,17 +405,6 @@ h2 {
 
 	.progress-label {
 		margin-top: 18px;
-	}
-
-	.activity-card {
-		grid-template-columns: 40px minmax(0, 1fr);
-		gap: 16px;
-		padding: 20px 16px;
-	}
-
-	.activity-link {
-		grid-column: 2;
-		justify-self: start;
 	}
 
 	.activity-evidence {
