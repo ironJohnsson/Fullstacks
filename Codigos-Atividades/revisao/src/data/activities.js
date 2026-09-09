@@ -23,6 +23,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 					? 'Flexbox organiza o cabeçalho, o menu e os contatos, distribuindo os itens com alinhamento e espaçamento consistentes.'
 					: index === 7
 						? 'A seção de atividades usa CSS Grid para distribuir os cartões em colunas adaptáveis sem criar rolagem horizontal.'
+						: index === 8
+							? 'A homepage foi ajustada para telas de 360px, 768px e 1440px com media queries e grade adaptável.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -41,9 +43,11 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 					? 'CSS · Flexbox · Layout responsivo'
 					: index === 7
 						? 'CSS Grid · Responsividade · Layout adaptável'
+						: index === 8
+							? 'CSS · Media queries · Design responsivo'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7
+	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -224,7 +228,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'A distribuição manual e o espaçamento irregular foram substituídos por alinhamento responsivo.',
 									},
 								]
-								: [
+								: index === 7
+								? [
 									{
 										name: 'Grade responsiva',
 										description:
@@ -239,6 +244,28 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										name: 'Sem rolagem horizontal',
 										description:
 											'minmax limita o tamanho mínimo e permite que os cartões encolham dentro do contêiner.',
+									},
+								]
+								: [
+									{
+										name: '360px',
+										description:
+											'O menu quebra linhas, o avatar reduz e os cartões ocupam uma coluna sem overflow.',
+									},
+									{
+										name: '768px',
+										description:
+											'A grade passa a acomodar mais colunas e os espaçamentos ficam equilibrados para tablets.',
+									},
+									{
+										name: '1440px',
+										description:
+											'O conteúdo permanece centralizado com largura máxima, evitando linhas excessivamente longas.',
+									},
+									{
+										name: 'Problemas corrigidos',
+										description:
+											'Foram ajustados menu, tipografia, margens, imagem e grade para evitar cortes e rolagem horizontal.',
 									},
 								],
 					demo:
@@ -263,7 +290,9 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											? 'O cartão foi testado no estado normal, com hover, foco pelo teclado e evidência expandida.'
 											: index === 6
 												? 'A demonstração compara itens agrupados sem distribuição com o alinhamento responsivo feito por Flexbox.'
-												: 'Os cartões foram distribuídos em uma grade que se adapta ao espaço disponível sem provocar rolagem horizontal.',
+												: index === 7
+													? 'Os cartões foram distribuídos em uma grade que se adapta ao espaço disponível sem provocar rolagem horizontal.'
+													: 'Os testes em 360px, 768px e 1440px confirmaram uma interface legível, sem cortes e sem rolagem horizontal.',
 				},
 			}
 		: {}),
