@@ -17,6 +17,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						? 'O menu permite acessar Início, Sobre, Atividades e Contato por âncoras internas com rolagem suave.'
 						: index === 4
 							? 'A interface usa variáveis CSS para manter cores, tipografia, espaçamentos, raios e sombras consistentes.'
+							: index === 5
+								? 'Cartões reutilizáveis apresentam número, título, descrição, tecnologia e ação com estados visuais acessíveis.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -29,9 +31,11 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						? 'Navegação interna · Âncoras · UX'
 						: index === 4
 							? 'CSS · Design system · Responsividade'
+							: index === 5
+								? 'React · CSS · Acessibilidade'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4
+	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -133,7 +137,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'Os links exibem um indicador visual quando recebem foco pelo teclado.',
 									},
 								]
-								: [
+								: index === 4
+								? [
 									{
 										name: 'Paleta',
 										description:
@@ -159,6 +164,33 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										description:
 											'box-sizing: border-box, margem corporal zerada e rolagem suave formam a normalização básica.',
 									},
+								]
+								: [
+									{
+										name: 'Estado padrão',
+										description:
+											'O cartão exibe número, título, descrição, tecnologia e a ação Ver atividade sobre fundo claro.',
+									},
+									{
+										name: 'Hover',
+										description:
+											'A borda e a sombra mudam suavemente ao passar o cursor, reforçando qual cartão está sendo explorado.',
+									},
+									{
+										name: 'Focus',
+										description:
+											'O foco visível no botão permite identificar a posição da navegação pelo teclado.',
+									},
+									{
+										name: 'Ação expandida',
+										description:
+											'Ver atividade abre a área de evidência sem esconder o título ou a descrição do cartão.',
+									},
+									{
+										name: 'Contraste',
+										description:
+											'Texto escuro, verde de ação e fundo claro preservam a leitura e a distinção entre os elementos.',
+									},
 								],
 					message:
 						index === 0
@@ -169,7 +201,9 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'A identidade combina informações pessoais, formação acadêmica, avatar alternativo e uma chamada clara para explorar o portfólio.'
 								: index === 3
 									? 'O teste manual confirmou que os quatro links levam às respectivas seções e permanecem navegáveis pelo teclado.'
-									: 'A base visual foi centralizada em variáveis reutilizáveis para facilitar manutenção e consistência entre seções.',
+									: index === 4
+										? 'A base visual foi centralizada em variáveis reutilizáveis para facilitar manutenção e consistência entre seções.'
+										: 'O cartão foi testado no estado normal, com hover, foco pelo teclado e evidência expandida.',
 				},
 			}
 		: {}),

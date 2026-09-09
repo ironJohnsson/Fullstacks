@@ -254,6 +254,18 @@ h2 {
 	border: 1px solid #bdcbc2;
 	background: #ffffff;
 	border-radius: 8px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.activity-card:hover {
+	border-color: var(--color-primary);
+	box-shadow: var(--shadow-soft);
+	transform: translateY(-2px);
+}
+
+.activity-card:focus-within {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 3px rgba(198, 124, 61, 0.2);
 }
 
 .activity-number {
