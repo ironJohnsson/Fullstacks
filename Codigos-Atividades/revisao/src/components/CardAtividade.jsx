@@ -28,7 +28,7 @@ function CardAtividade({ activity }) {
 					<ul>
 						{activity.evidence.tools.map((tool) => (
 							<li key={tool.name}>
-								<strong>{tool.name}:</strong> {tool.version}
+								<strong>{tool.name}:</strong> {tool.description ?? tool.version}
 							</li>
 						))}
 					</ul>

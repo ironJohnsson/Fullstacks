@@ -1,9 +1,38 @@
-const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
+const plannedActivities = Array.from({ length: 28 }, (_, index) => ({
 	id: index + 2,
-	title: `Atividade ${String(index + 2).padStart(2, '0')}`,
-	description: 'Entrega em construção para o roteiro prático.',
-	technology: 'A definir',
+	title: index === 0 ? 'Inicializar o repositório Git' : `Atividade ${String(index + 2).padStart(2, '0')}`,
+	description:
+		index === 0
+			? 'O controle de versões foi criado desde o início, com histórico de commits e branch principal definida como main.'
+			: 'Entrega em construção para o roteiro prático.',
+	technology: index === 0 ? 'Git · GitHub · Controle de versão' : 'A definir',
 	href: '#',
+	...(index === 0
+		? {
+				href: '#atividade-02',
+				evidence: {
+					tools: [
+						{
+							name: 'Repositório',
+							description:
+								'É a pasta controlada pelo Git, onde ficam os arquivos e todo o histórico do projeto.',
+						},
+						{
+							name: 'Commit',
+							description:
+								'Registra um conjunto de alterações no histórico, permitindo acompanhar e recuperar versões do projeto.',
+						},
+						{
+							name: 'Branch principal',
+							description:
+								'É a linha principal de desenvolvimento. Neste projeto, ela foi definida como main.',
+						},
+					],
+					message:
+						'O repositório registra cada alteração em commits, enquanto a branch main mantém a linha principal do projeto.',
+				},
+			}
+		: {}),
 }))
 
 export const activities = [
