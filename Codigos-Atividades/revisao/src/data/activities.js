@@ -15,6 +15,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 					? 'O cabeçalho apresenta o autor, sua formação, o propósito do portfólio e um acesso direto às atividades.'
 					: index === 3
 						? 'O menu permite acessar Início, Sobre, Atividades e Contato por âncoras internas com rolagem suave.'
+						: index === 4
+							? 'A interface usa variáveis CSS para manter cores, tipografia, espaçamentos, raios e sombras consistentes.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -25,9 +27,11 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 					? 'Identidade visual · Acessibilidade · Navegação'
 					: index === 3
 						? 'Navegação interna · Âncoras · UX'
+						: index === 4
+							? 'CSS · Design system · Responsividade'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2 || index === 3
+	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -106,7 +110,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'Link de destaque leva diretamente à seção que contém a lista das atividades.',
 									},
 								]
-								: [
+								: index === 3
+								? [
 									{
 										name: 'Links internos',
 										description:
@@ -127,6 +132,33 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										description:
 											'Os links exibem um indicador visual quando recebem foco pelo teclado.',
 									},
+								]
+								: [
+									{
+										name: 'Paleta',
+										description:
+											'Verde escuro para ações e textos, branco para superfícies e laranja para o foco.',
+									},
+									{
+										name: 'Tipografia',
+										description:
+											'Georgia aparece nos textos e títulos; Courier New identifica etiquetas e informações técnicas.',
+									},
+									{
+										name: 'Espaçamentos',
+										description:
+											'Variáveis de 8, 12, 18, 24, 40 e 56px organizam os intervalos da interface.',
+									},
+									{
+										name: 'Raios e sombras',
+										description:
+											'Raios de 4, 8 e 30px, com sombra suave para destacar elementos interativos.',
+									},
+									{
+										name: 'Base',
+										description:
+											'box-sizing: border-box, margem corporal zerada e rolagem suave formam a normalização básica.',
+									},
 								],
 					message:
 						index === 0
@@ -135,7 +167,9 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'A estrutura semântica melhora a organização, a navegação e a compreensão do conteúdo por tecnologias assistivas.'
 							: index === 2
 								? 'A identidade combina informações pessoais, formação acadêmica, avatar alternativo e uma chamada clara para explorar o portfólio.'
-								: 'O teste manual confirmou que os quatro links levam às respectivas seções e permanecem navegáveis pelo teclado.',
+								: index === 3
+									? 'O teste manual confirmou que os quatro links levam às respectivas seções e permanecem navegáveis pelo teclado.'
+									: 'A base visual foi centralizada em variáveis reutilizáveis para facilitar manutenção e consistência entre seções.',
 				},
 			}
 		: {}),
