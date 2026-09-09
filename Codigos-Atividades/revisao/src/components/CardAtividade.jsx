@@ -32,6 +32,26 @@ function CardAtividade({ activity }) {
 							</li>
 						))}
 					</ul>
+					{activity.evidence.demo && (
+						<div className="flex-demo" aria-label="Demonstração comparativa de alinhamento">
+							<div>
+								<strong>{activity.evidence.demo.before}</strong>
+								<div className="demo-row demo-row-before">
+									<span>01</span>
+									<span>02</span>
+									<span>03</span>
+								</div>
+							</div>
+							<div>
+								<strong>{activity.evidence.demo.after}</strong>
+								<div className="demo-row demo-row-after">
+									<span>01</span>
+									<span>02</span>
+									<span>03</span>
+								</div>
+							</div>
+						</div>
+					)}
 					<p className="ready-message">{activity.evidence.message}</p>
 				</div>
 			)}

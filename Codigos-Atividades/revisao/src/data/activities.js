@@ -19,6 +19,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 							? 'A interface usa variáveis CSS para manter cores, tipografia, espaçamentos, raios e sombras consistentes.'
 							: index === 5
 								? 'Cartões reutilizáveis apresentam número, título, descrição, tecnologia e ação com estados visuais acessíveis.'
+				: index === 6
+					? 'Flexbox organiza o cabeçalho, o menu e os contatos, distribuindo os itens com alinhamento e espaçamento consistentes.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -33,9 +35,11 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 							? 'CSS · Design system · Responsividade'
 							: index === 5
 								? 'React · CSS · Acessibilidade'
+				: index === 6
+					? 'CSS · Flexbox · Layout responsivo'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5
+	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -165,7 +169,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'box-sizing: border-box, margem corporal zerada e rolagem suave formam a normalização básica.',
 									},
 								]
-								: [
+								: index === 5
+								? [
 									{
 										name: 'Estado padrão',
 										description:
@@ -191,7 +196,36 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										description:
 											'Texto escuro, verde de ação e fundo claro preservam a leitura e a distinção entre os elementos.',
 									},
+								]
+								: [
+									{
+										name: 'Cabeçalho',
+										description:
+											'display: flex e align-items: center alinham o avatar e o bloco de identidade.',
+									},
+									{
+										name: 'Menu',
+										description:
+											'flex-wrap e gap distribuem os links e permitem que eles se reorganizem em telas menores.',
+									},
+									{
+										name: 'Contatos',
+										description:
+											'flex-wrap e gap mantêm os botões sociais organizados sem sobreposição.',
+									},
+									{
+										name: 'Problema resolvido',
+										description:
+											'A distribuição manual e o espaçamento irregular foram substituídos por alinhamento responsivo.',
+									},
 								],
+					demo:
+						index === 6
+							? {
+									before: 'Itens sem distribuição',
+									after: 'Itens com Flexbox',
+								}
+							: undefined,
 					message:
 						index === 0
 							? 'O repositório registra cada alteração em commits, enquanto a branch main mantém a linha principal do projeto.'
@@ -203,7 +237,9 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 									? 'O teste manual confirmou que os quatro links levam às respectivas seções e permanecem navegáveis pelo teclado.'
 									: index === 4
 										? 'A base visual foi centralizada em variáveis reutilizáveis para facilitar manutenção e consistência entre seções.'
-										: 'O cartão foi testado no estado normal, com hover, foco pelo teclado e evidência expandida.',
+										: index === 5
+											? 'O cartão foi testado no estado normal, com hover, foco pelo teclado e evidência expandida.'
+											: 'A demonstração compara itens agrupados sem distribuição com o alinhamento responsivo feito por Flexbox.',
 				},
 			}
 		: {}),

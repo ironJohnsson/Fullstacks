@@ -327,6 +327,44 @@ h2 {
 	line-height: 1.7;
 }
 
+.flex-demo {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--space-4);
+	margin: var(--space-4) 0;
+}
+
+.flex-demo strong {
+	display: block;
+	margin-bottom: var(--space-2);
+}
+
+.demo-row {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	padding: var(--space-1);
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+}
+
+.demo-row span {
+	padding: 4px 8px;
+	background: #e8f1eb;
+	color: var(--color-primary-dark);
+	font-family: 'Courier New', monospace;
+	font-size: 0.75rem;
+}
+
+.demo-row-before {
+	gap: 2px;
+}
+
+.demo-row-after {
+	justify-content: space-between;
+	gap: var(--space-2);
+}
+
 .ready-message {
 	margin: 0;
 	color: #315a48;
