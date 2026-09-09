@@ -13,6 +13,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 				? 'A homepage foi organizada com elementos HTML semânticos e uma área reservada para as 30 atividades.'
 				: index === 2
 					? 'O cabeçalho apresenta o autor, sua formação, o propósito do portfólio e um acesso direto às atividades.'
+					: index === 3
+						? 'O menu permite acessar Início, Sobre, Atividades e Contato por âncoras internas com rolagem suave.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -21,9 +23,11 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 				? 'HTML semântico · JSX · Acessibilidade'
 				: index === 2
 					? 'Identidade visual · Acessibilidade · Navegação'
+					: index === 3
+						? 'Navegação interna · Âncoras · UX'
 				: 'A definir',
 	href: '#',
-	...(index === 0 || index === 1 || index === 2
+	...(index === 0 || index === 1 || index === 2 || index === 3
 		? {
 				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
@@ -74,7 +78,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											'Mantêm a hierarquia dos títulos com apenas um h1 principal.',
 									},
 								]
-								: [
+								: index === 2
+								? [
 									{
 										name: 'Identidade',
 										description:
@@ -100,13 +105,37 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										description:
 											'Link de destaque leva diretamente à seção que contém a lista das atividades.',
 									},
+								]
+								: [
+									{
+										name: 'Links internos',
+										description:
+											'O menu oferece acesso direto às áreas Início, Sobre, Atividades e Contato.',
+									},
+									{
+										name: 'Âncoras',
+										description:
+											'Cada link aponta para uma seção pelo seu identificador, sem abrir outra página.',
+									},
+									{
+										name: 'Rolagem suave',
+										description:
+											'O CSS com scroll-behavior suaviza a transição até a seção escolhida.',
+									},
+									{
+										name: 'Foco visível',
+										description:
+											'Os links exibem um indicador visual quando recebem foco pelo teclado.',
+									},
 								],
 					message:
 						index === 0
 							? 'O repositório registra cada alteração em commits, enquanto a branch main mantém a linha principal do projeto.'
 							: index === 1
 								? 'A estrutura semântica melhora a organização, a navegação e a compreensão do conteúdo por tecnologias assistivas.'
-								: 'A identidade combina informações pessoais, formação acadêmica, avatar alternativo e uma chamada clara para explorar o portfólio.',
+							: index === 2
+								? 'A identidade combina informações pessoais, formação acadêmica, avatar alternativo e uma chamada clara para explorar o portfólio.'
+								: 'O teste manual confirmou que os quatro links levam às respectivas seções e permanecem navegáveis pelo teclado.',
 				},
 			}
 		: {}),

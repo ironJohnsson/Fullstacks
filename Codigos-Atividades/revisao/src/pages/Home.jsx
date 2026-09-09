@@ -1,4 +1,5 @@
 import CardAtividade from '../components/CardAtividade.jsx'
+import Contato from '../components/Contato.jsx'
 import { activities } from '../data/activities.js'
 
 function Home() {
@@ -21,14 +22,30 @@ function Home() {
           </div>
         </div>
         <nav aria-label="Navegação principal">
-          <a className="activities-button" href="#activities-title">
-            Ver atividades
-          </a>
+          <a href="#inicio">Início</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#atividades">Atividades</a>
+          <a href="#contato">Contato</a>
         </nav>
       </header>
 
       <main>
-        <section className="activities-section" aria-labelledby="activities-title">
+        <section className="intro-section" id="inicio" aria-labelledby="intro-title">
+          <h2 id="intro-title">Bem-vindo ao meu portfólio</h2>
+          <p>Use o menu para conhecer o projeto e acessar rapidamente as atividades.</p>
+          <a className="activities-button" href="#atividades">Ver atividades</a>
+        </section>
+
+        <section className="about-section" id="sobre" aria-labelledby="about-title">
+          <p className="eyebrow">Sobre</p>
+          <h2 id="about-title">Aprendizado em desenvolvimento web</h2>
+          <p>
+            Este portfólio reúne as etapas práticas do curso e registra a evolução
+            do projeto com tecnologias web e controle de versão.
+          </p>
+        </section>
+
+        <section className="activities-section" id="atividades" aria-labelledby="activities-title">
           <div className="section-heading">
             <div>
               <p className="eyebrow">Percurso prático</p>
@@ -45,6 +62,8 @@ function Home() {
             ))}
           </ol>
         </section>
+
+        <Contato />
       </main>
       <footer className="site-footer">
         <p>Portfólio de atividades · Desenvolvimento web</p>
