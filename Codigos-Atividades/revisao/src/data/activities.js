@@ -32,6 +32,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																? 'Revisar acessibilidade'
 																: index === 25
 																	? 'Criar o README do repositório'
+																	: index === 26
+																		? 'Organizar o histórico Git'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -84,6 +86,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																															? 'A interface foi revisada para garantir estrutura semântica, foco visível, labels, textos alternativos, contraste e navegação por teclado.'
 																															: index === 25
 																																? 'O README documenta instalação, execução, tecnologias, estrutura, autoria e links de publicação do projeto.'
+																																: index === 26
+																																	? 'O histórico foi revisado com commits descritivos, branch principal identificada e tag local v1.0.0 criada após a validação final.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -136,8 +140,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'Acessibilidade · HTML semântico · Teclado'
 											: index === 25
 												? 'Markdown · Documentação · GitHub'
+											: index === 26
+												? 'Git · Histórico · Tags'
 				: 'A definir',
-	status: index < 26 ? 'Concluída' : index === 26 ? 'Em andamento' : 'Planejada',
+	status: index < 27 ? 'Concluída' : index === 27 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -867,6 +873,28 @@ export const activities = [
 												'Consulte o README.md do projeto para acessar a documentação completa.',
 											documentationLink:
 												'https://github.com/ironJohnsson/Fullstacks/blob/main/Codigos-Atividades/revisao/README.md',
+										},
+									}
+							: activity.id === 28
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Status e log',
+													description: 'git status e git log foram revisados antes da versão final.',
+												},
+												{
+													name: 'Histórico',
+													description: 'A branch develop possui 27 commits descritivos e nenhum arquivo indevido pendente.',
+												},
+												{
+													name: 'Tag local',
+													description: 'A tag v1.0.0 identifica a versão final validada do projeto.',
+												},
+											],
+											message:
+												'O histórico Git está organizado e a versão final foi marcada localmente como v1.0.0.',
 										},
 									}
 							: activity,
