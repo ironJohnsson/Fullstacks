@@ -1,15 +1,17 @@
 const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 	id: index + 2,
 	numero: String(index + 2).padStart(2, '0'),
-	title:
+	titulo:
 		index === 0
 			? 'Inicializar o repositório Git'
 			: index === 1
 				? 'Construir a estrutura semântica'
 				: index === 11
 					? 'Criar o componente CardAtividade'
+					: index === 14
+						? 'Mostrar status condicional'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
-	description:
+	descricao:
 		index === 0
 			? 'O controle de versões foi criado desde o início, com histórico de commits e branch principal definida como main.'
 			: index === 1
@@ -36,8 +38,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										? 'Os cartões foram transformados em componentes reutilizáveis que recebem dados por props.'
 											: index === 12
 												? 'A lista de 30 atividades é gerada dinamicamente com map e cada item recebe uma key estável baseada no id.'
+															: index === 14
+																? 'Cada atividade apresenta um status visual, com classes específicas para Planejada, Em andamento ou Concluída.'
 				: 'Entrega em construção para o roteiro prático.',
-	technology:
+	tecnologia:
 		index === 0
 			? 'Git · GitHub · Controle de versão'
 			: index === 1
@@ -64,15 +68,14 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										? 'React · Props · Componentes reutilizáveis'
 										: index === 12
 											? 'JavaScript · map · Renderização de listas'
+											: index === 14
+												? 'React · Renderização condicional · CSS'
 				: 'A definir',
-	titulo: undefined,
-	descricao: undefined,
-	tecnologia: undefined,
-	status: index < 12 ? 'Concluída' : 'Planejada',
-	href: '#',
+	status: index < 14 ? 'Concluída' : index === 14 ? 'Em andamento' : 'Planejada',
+	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
-				href: `#atividade-${String(index + 2).padStart(2, '0')}`,
+				link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 				evidence: {
 					tools:
 						index === 0
@@ -515,6 +518,32 @@ export const activities = [
 										'A renderização mantém o conteúdo separado dos componentes e evita chaves duplicadas.',
 								},
 							}
-						: activity,
+						: activity.id === 16
+							? {
+									...activity,
+									evidence: {
+										tools: [
+											{
+												name: 'Status',
+												description:
+													'Cada cartão recebe Planejada, Em andamento ou Concluída a partir dos dados.',
+											},
+											{
+												name: 'Classes visuais',
+												description:
+													'StatusAtividade associa cada texto a uma classe CSS específica sem condições longas no JSX.',
+											},
+											{
+												name: 'Demonstração',
+												description:
+													'Os três estados aparecem juntos abaixo para facilitar a comparação visual.',
+											},
+										],
+										statuses: ['Planejada', 'Em andamento', 'Concluída'],
+										message:
+											'O status é renderizado de forma condicional e mantém significado visual e textual.',
+									},
+								}
+							: activity,
 	),
 ]

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import StatusAtividade from './StatusAtividade.jsx'
 
 function CardAtividade({ number, title, description, technology, status, link, evidence }) {
 	const [isOpen, setIsOpen] = useState(false)
@@ -12,7 +13,7 @@ function CardAtividade({ number, title, description, technology, status, link, e
 				<p className="activity-technology">{technology}</p>
 				<h3>{title}</h3>
 				<p>{description}</p>
-				{status && <span className="activity-status">{status}</span>}
+				{status && <StatusAtividade status={status} />}
 			</div>
 			<div className="activity-actions">
 				<button
@@ -60,6 +61,13 @@ function CardAtividade({ number, title, description, technology, status, link, e
 						<pre className="data-example">
 							{JSON.stringify(evidence.example, null, 2)}
 						</pre>
+					)}
+					{evidence.statuses && (
+						<div className="status-demo" aria-label="Demonstração dos status das atividades">
+							{evidence.statuses.map((statusName) => (
+								<StatusAtividade key={statusName} status={statusName} />
+							))}
+						</div>
 					)}
 					<p className="ready-message">{evidence.message}</p>
 				</div>

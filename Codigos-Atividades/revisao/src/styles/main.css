@@ -310,6 +310,28 @@ h2 {
 	font-weight: 700;
 }
 
+.status-planejada {
+	background: #e8f1eb;
+	color: var(--color-primary-dark);
+}
+
+.status-andamento {
+	background: #fff0d6;
+	color: #8a5714;
+}
+
+.status-concluida {
+	background: #dcecf8;
+	color: #1c5577;
+}
+
+.status-demo {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	margin: var(--space-4) 0;
+}
+
 .activity-link {
 	grid-column: 2;
 	justify-self: start;
