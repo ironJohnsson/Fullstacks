@@ -298,6 +298,18 @@ h2 {
 	line-height: 1.45;
 }
 
+.activity-status {
+	display: inline-block;
+	margin-top: var(--space-2);
+	padding: 4px 8px;
+	border-radius: var(--radius-pill);
+	background: #e8f1eb;
+	color: var(--color-primary-dark);
+	font-family: 'Courier New', monospace;
+	font-size: 0.7rem;
+	font-weight: 700;
+}
+
 .activity-link {
 	grid-column: 2;
 	justify-self: start;
@@ -395,6 +407,18 @@ h2 {
 	margin: 0;
 	color: #315a48;
 	font-weight: 700;
+}
+
+.data-example {
+	overflow-x: auto;
+	margin: var(--space-4) 0;
+	padding: var(--space-3);
+	border-radius: var(--radius-md);
+	background: #202b2b;
+	color: #e8f1eb;
+	font-family: 'Courier New', monospace;
+	font-size: 0.78rem;
+	line-height: 1.5;
 }
 
 @media (min-width: 1200px) {

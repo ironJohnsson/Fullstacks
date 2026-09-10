@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function CardAtividade({ number, title, description, technology, link, evidence }) {
+function CardAtividade({ number, title, description, technology, status, link, evidence }) {
 	const [isOpen, setIsOpen] = useState(false)
 
 	return (
@@ -12,6 +12,7 @@ function CardAtividade({ number, title, description, technology, link, evidence 
 				<p className="activity-technology">{technology}</p>
 				<h3>{title}</h3>
 				<p>{description}</p>
+				{status && <span className="activity-status">{status}</span>}
 			</div>
 			<div className="activity-actions">
 				<button
@@ -54,6 +55,11 @@ function CardAtividade({ number, title, description, technology, link, evidence 
 								</div>
 							</div>
 						</div>
+					)}
+					{evidence.example && (
+						<pre className="data-example">
+							{JSON.stringify(evidence.example, null, 2)}
+						</pre>
 					)}
 					<p className="ready-message">{evidence.message}</p>
 				</div>

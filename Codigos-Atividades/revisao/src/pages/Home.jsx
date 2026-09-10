@@ -35,10 +35,11 @@ function Home() {
               <li key={activity.id}>
                 <CardAtividade
                   number={activity.id}
-                  title={activity.title}
-                  description={activity.description}
-                  technology={activity.technology}
-                  link={`#atividade-${String(activity.id).padStart(2, '0')}`}
+                  title={activity.titulo}
+                  description={activity.descricao}
+                  technology={activity.tecnologia}
+                  status={activity.status}
+                  link={activity.link}
                   evidence={activity.evidence}
                 />
               </li>

@@ -1,5 +1,6 @@
 const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 	id: index + 2,
+	numero: String(index + 2).padStart(2, '0'),
 	title:
 		index === 0
 			? 'Inicializar o repositório Git'
@@ -60,6 +61,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 									: index === 11
 										? 'React · Props · Componentes reutilizáveis'
 				: 'A definir',
+	titulo: undefined,
+	descricao: undefined,
+	tecnologia: undefined,
+	status: index < 12 ? 'Concluída' : 'Planejada',
 	href: '#',
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -315,10 +320,17 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 export const activities = [
 	{
 		id: 1,
+		numero: '01',
 		title: 'Preparar o ambiente e criar o projeto',
+		titulo: 'Preparar o ambiente e criar o projeto',
 		description:
 			'Node.js, npm, Git e VS Code verificados. O projeto React com Vite está pronto para desenvolvimento local.',
+		descricao:
+			'Node.js, npm, Git e VS Code verificados. O projeto React com Vite está pronto para desenvolvimento local.',
 		technology: 'Node.js · npm · Git · VS Code · Vite',
+		tecnologia: 'Node.js · npm · Git · VS Code · Vite',
+		status: 'Concluída',
+		link: '#atividade-01',
 		href: '#atividade-01',
 		evidence: {
 			tools: [
@@ -330,7 +342,28 @@ export const activities = [
 			message: 'O ambiente React com Vite está pronto para desenvolvimento local.',
 		},
 	},
-	...plannedActivities.map((activity) =>
+	...plannedActivities.map((activity) => ({
+		...activity,
+		titulo:
+			activity.titulo ??
+			(activity.id === 2
+				? 'Inicializar o repositório Git'
+				: activity.id === 3
+					? 'Construir a estrutura semântica'
+					: activity.id === 14
+						? 'Modelar os dados das atividades'
+					: `Atividade ${String(activity.id).padStart(2, '0')}`),
+		descricao:
+			activity.descricao ??
+			(activity.id === 14
+				? 'Separação dos dados e da apresentação para facilitar a manutenção das atividades.'
+				: activity.description),
+		tecnologia:
+			activity.tecnologia ??
+			(activity.id === 14 ? 'JavaScript · Objetos · Dados' : activity.technology),
+		link: activity.link ?? `#atividade-${String(activity.id).padStart(2, '0')}`,
+	}))
+		.map((activity) =>
 		activity.id === 11
 			? {
 					...activity,
@@ -411,6 +444,35 @@ export const activities = [
 								'O mesmo CardAtividade é renderizado para todas as atividades usando dados diferentes por props.',
 						},
 					}
-				: activity,
+				: activity.id === 14
+					? {
+							...activity,
+							evidence: {
+								tools: [
+									{
+										name: 'Arquivo',
+										description:
+											'activities.js concentra o array de objetos separado da apresentação.',
+									},
+									{
+										name: 'Objeto de exemplo',
+										description:
+											'Cada atividade possui id, numero, titulo, descricao, tecnologia, status e link.',
+									},
+								],
+								example: {
+									id: 14,
+									numero: '14',
+									titulo: 'Modelar os dados das atividades',
+									descricao: 'Conteúdo separado da interface.',
+									tecnologia: 'JavaScript · Objetos',
+									status: 'Concluída',
+									link: '#atividade-14',
+								},
+								message:
+									'O componente recebe os dados prontos e permanece responsável apenas pela apresentação.',
+							},
+						}
+					: activity,
 	),
 ]
