@@ -10,6 +10,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 					? 'Criar o componente CardAtividade'
 					: index === 14
 						? 'Mostrar status condicional'
+						: index === 15
+							? 'Criar filtro por tecnologia'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -40,6 +42,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'A lista de 30 atividades é gerada dinamicamente com map e cada item recebe uma key estável baseada no id.'
 															: index === 14
 																? 'Cada atividade apresenta um status visual, com classes específicas para Planejada, Em andamento ou Concluída.'
+																					: index === 15
+																						? 'Um filtro por tecnologia usa useState para exibir apenas os cartões compatíveis, sem modificar o array original.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -70,8 +74,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											? 'JavaScript · map · Renderização de listas'
 											: index === 14
 												? 'React · Renderização condicional · CSS'
+											: index === 15
+												? 'React · useState · Filtros'
 				: 'A definir',
-	status: index < 14 ? 'Concluída' : index === 14 ? 'Em andamento' : 'Planejada',
+	status: index < 16 ? 'Concluída' : index === 16 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -544,6 +550,29 @@ export const activities = [
 											'O status é renderizado de forma condicional e mantém significado visual e textual.',
 									},
 								}
+							: activity.id === 17
+								? {
+										...activity,
+										tecnologia: 'React · useState · Filtros · Vercel',
+										evidence: {
+											tools: [
+												{
+													name: 'Botões',
+													description: 'Todos, HTML, CSS, React, Git e Vercel controlam o filtro selecionado.',
+												},
+												{
+													name: 'useState',
+													description: 'technologyFilter guarda a tecnologia ativa sem alterar o array activities.',
+												},
+												{
+													name: 'filter',
+													description: 'A lista exibida é derivada com filter e permanece compatível com a fonte original.',
+												},
+											],
+											message:
+												'Selecione uma tecnologia acima para conferir o filtro funcionando sobre a lista completa.',
+										},
+									}
 							: activity,
 	),
 ]
