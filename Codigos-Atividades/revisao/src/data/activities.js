@@ -30,6 +30,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 															? 'Adicionar seção Sobre'
 															: index === 24
 																? 'Revisar acessibilidade'
+																: index === 25
+																	? 'Criar o README do repositório'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -80,6 +82,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																														? 'A seção Sobre apresenta autoria, tecnologias em prática e links profissionais apropriados para publicação.'
 																														: index === 24
 																															? 'A interface foi revisada para garantir estrutura semântica, foco visível, labels, textos alternativos, contraste e navegação por teclado.'
+																															: index === 25
+																																? 'O README documenta instalação, execução, tecnologias, estrutura, autoria e links de publicação do projeto.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -130,8 +134,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Componente · Conteúdo autoral'
 											: index === 24
 												? 'Acessibilidade · HTML semântico · Teclado'
+											: index === 25
+												? 'Markdown · Documentação · GitHub'
 				: 'A definir',
-	status: index < 25 ? 'Concluída' : index === 25 ? 'Em andamento' : 'Planejada',
+	status: index < 26 ? 'Concluída' : index === 26 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -837,6 +843,30 @@ export const activities = [
 											],
 											message:
 												'Foram realizadas cinco verificações de acessibilidade e as correções foram incorporadas à interface.',
+										},
+									}
+							: activity.id === 27
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Instalação e execução',
+													description: 'O README apresenta npm install, npm run dev e os comandos disponíveis.',
+												},
+												{
+													name: 'Tecnologias e estrutura',
+													description: 'A documentação lista a stack e as principais pastas do projeto.',
+												},
+												{
+													name: 'Autoria e publicação',
+													description: 'A autoria e os campos reservados para GitHub e Vercel estão documentados.',
+												},
+											],
+											message:
+												'Consulte o README.md do projeto para acessar a documentação completa.',
+											documentationLink:
+												'https://github.com/ironJohnsson/Fullstacks/blob/main/Codigos-Atividades/revisao/README.md',
 										},
 									}
 							: activity,

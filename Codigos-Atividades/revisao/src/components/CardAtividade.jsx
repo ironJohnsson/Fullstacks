@@ -106,6 +106,11 @@ function CardAtividade({ number, title, description, technology, status, link, e
 							))}
 						</div>
 					)}
+					{evidence.documentationLink && (
+						<a className="documentation-link" href={evidence.documentationLink}>
+							Abrir README
+						</a>
+					)}
 					<p className="ready-message">{evidence.message}</p>
 						</div>
 					</div>

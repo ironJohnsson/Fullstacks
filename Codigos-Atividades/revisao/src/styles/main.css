@@ -725,6 +725,13 @@ h2 {
 	font-weight: 700;
 }
 
+.documentation-link {
+	display: inline-block;
+	margin: var(--space-3) 0;
+	color: var(--color-primary-dark);
+	font-weight: 700;
+}
+
 .data-example {
 	overflow-x: auto;
 	margin: var(--space-4) 0;

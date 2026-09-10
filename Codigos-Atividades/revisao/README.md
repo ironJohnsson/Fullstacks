@@ -1,16 +1,59 @@
-# React + Vite
+# Portfólio de atividades web
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Homepage React criada para registrar 30 atividades práticas de desenvolvimento web, com evidências visuais, filtros, busca, progresso, tema claro/escuro e formulário de contato.
 
-Currently, two official plugins are available:
+## Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- Vite
+- JavaScript e JSX
+- HTML semântico e CSS responsivo
+- Git e GitHub
 
-## React Compiler
+## Pré-requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20 ou superior
+- npm
 
-## Expanding the Oxlint configuration
+## Instalação e execução
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install
+npm run dev
+```
+
+Depois, acesse o endereço informado pelo Vite no terminal.
+
+## Comandos disponíveis
+
+```bash
+npm run dev      # inicia o servidor de desenvolvimento
+npm run lint     # verifica problemas de lint
+npm run build    # gera a versão de produção
+npm run preview  # visualiza a build localmente
+```
+
+## Estrutura principal
+
+```text
+src/
+├── components/   # Cabecalho, Sobre, Contato, Rodape e cartões
+├── data/         # dados e evidências das atividades
+├── pages/        # composição da homepage
+├── styles/       # estilos globais e responsivos
+├── App.jsx       # tema e composição principal
+└── main.jsx      # entrada da aplicação
+public/           # imagens públicas
+```
+
+## Autoria
+
+Matheus Luiz Neves Johnsson  
+Estudante de Engenharia de Computação no SENAI CIMATEC.
+
+## Links
+
+- Repositório: **[adicionar link do GitHub]**
+- Deploy na Vercel: **[adicionar link da Vercel]**
+- LinkedIn: [matheus-luiz-johnsson](https://www.linkedin.com/in/matheus-luiz-johnsson-9981642b/)
+- Lattes: [Currículo Lattes](http://lattes.cnpq.br/2290172202945405)
