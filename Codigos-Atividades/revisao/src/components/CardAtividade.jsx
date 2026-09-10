@@ -107,8 +107,13 @@ function CardAtividade({ number, title, description, technology, status, link, e
 						</div>
 					)}
 					{evidence.documentationLink && (
-						<a className="documentation-link" href={evidence.documentationLink}>
+						<a className="documentation-link" href={evidence.documentationLink} target="_blank" rel="noopener noreferrer">
 							Abrir README
+						</a>
+					)}
+					{evidence.applicationLink && (
+						<a className="documentation-link" href={evidence.applicationLink} target="_blank" rel="noopener noreferrer">
+							Abrir aplicação publicada
 						</a>
 					)}
 					<p className="ready-message">{evidence.message}</p>

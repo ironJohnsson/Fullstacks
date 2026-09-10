@@ -53,7 +53,7 @@ Estudante de Engenharia de Computação no SENAI CIMATEC.
 
 ## Links
 
-- Repositório: **[adicionar link do GitHub]**
-- Deploy na Vercel: **[adicionar link da Vercel]**
+- Repositório: [github.com/ironJohnsson/Fullstacks](https://github.com/ironJohnsson/Fullstacks)
+- Deploy na Vercel: [revisaofullstack.vercel.app](https://revisaofullstack.vercel.app/)
 - LinkedIn: [matheus-luiz-johnsson](https://www.linkedin.com/in/matheus-luiz-johnsson-9981642b/)
 - Lattes: [Currículo Lattes](http://lattes.cnpq.br/2290172202945405)

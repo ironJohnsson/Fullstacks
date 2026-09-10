@@ -36,6 +36,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																		? 'Organizar o histórico Git'
 																		: index === 27
 																			? 'Enviar o projeto ao repositório remoto'
+																			: index === 28
+																				? 'Publicar e validar na Vercel'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -92,6 +94,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																																	? 'O histórico foi revisado com commits descritivos, branch principal identificada e tag local v1.0.0 criada após a validação final.'
 																																	: index === 27
 																																		? 'O projeto está associado ao repositório remoto Fullstacks e preparado para publicar a branch principal e a tag v1.0.0.'
+																																		: index === 28
+																																			? 'A aplicação foi publicada na Vercel e validada com checklist de navegação, filtros, busca, modal, formulário e responsividade.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -148,8 +152,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'Git · Histórico · Tags'
 											: index === 27
 												? 'GitHub · Git remote · Publicação'
+											: index === 28
+												? 'Vercel · Deploy · Validação'
 				: 'A definir',
-	status: index < 28 ? 'Concluída' : index === 28 ? 'Em andamento' : 'Planejada',
+	status: index < 29 ? 'Concluída' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -924,6 +930,33 @@ export const activities = [
 											message:
 												'Confira o repositório remoto para acompanhar os arquivos, o README e a versão publicada.',
 											documentationLink: 'https://github.com/ironJohnsson/Fullstacks',
+										},
+									}
+							: activity.id === 30
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Deploy',
+													description: 'Aplicação publicada em https://revisaofullstack.vercel.app/.',
+												},
+												{
+													name: 'Checklist funcional',
+													description: 'Menu, filtros, busca, modal e formulário foram conferidos na versão publicada.',
+												},
+												{
+													name: 'Responsividade',
+													description: 'A interface foi conferida em diferentes larguras e mantém leitura e interação.',
+												},
+												{
+													name: 'Documentação',
+													description: 'README atualizado com os links do repositório e da aplicação.',
+												},
+											],
+											message:
+												'Versão final publicada e validada na Vercel.',
+											applicationLink: 'https://revisaofullstack.vercel.app/',
 										},
 									}
 							: activity,
