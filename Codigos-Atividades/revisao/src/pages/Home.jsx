@@ -9,6 +9,7 @@ function Home() {
   const technologies = ['Todos', 'HTML', 'CSS', 'React', 'Git', 'Vercel']
   const normalizedSearchTerm = searchTerm.trim().toLowerCase()
   const completedActivities = activities.filter((activity) => activity.status === 'Concluída').length
+  const completionPercentage = Math.round((completedActivities / activities.length) * 100)
   const filteredActivities = activities.filter((activity) => {
     const matchesTechnology =
       technologyFilter === 'Todos' ||
@@ -45,7 +46,21 @@ function Home() {
               <p className="eyebrow">Percurso prático</p>
               <h2 id="activities-title">Atividades do roteiro</h2>
             </div>
-            <p className="progress-label">{completedActivities} concluídas de {activities.length}</p>
+            <div className="progress-summary">
+              <p className="progress-label">{completedActivities} concluídas de {activities.length}</p>
+              <div
+                className="progress-bar"
+                role="progressbar"
+                aria-label="Progresso das atividades"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow={completionPercentage}
+                aria-valuetext={`${completionPercentage}% concluído`}
+              >
+                <span style={{ width: `${completionPercentage}%` }} />
+              </div>
+              <strong>{completionPercentage}% concluído</strong>
+            </div>
           </div>
 
           <label className="activity-search">

@@ -241,6 +241,27 @@ h2 {
 	font-size: 0.8rem;
 }
 
+.progress-summary {
+	display: grid;
+	gap: var(--space-2);
+	min-width: 12rem;
+}
+
+.progress-bar {
+	height: 0.65rem;
+	overflow: hidden;
+	border-radius: 999px;
+	background: #dce5df;
+}
+
+.progress-bar span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--color-primary-dark);
+	transition: width 180ms ease;
+}
+
 .activities-list {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

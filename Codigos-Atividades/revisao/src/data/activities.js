@@ -16,6 +16,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'Criar busca por texto'
 								: index === 17
 									? 'Criar contador de progresso'
+									: index === 18
+										? 'Criar barra de progresso'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -52,6 +54,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																							? 'A busca controlada combina o texto digitado com o filtro de tecnologia e informa quando nenhum cartão corresponde.'
 																							: index === 17
 																								? 'O progresso é calculado a partir dos status das atividades e exibido automaticamente como concluídas de 30.'
+																								: index === 18
+																									? 'Uma barra acessível representa o percentual calculado a partir das atividades concluídas.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -88,8 +92,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Eventos · Busca · filter'
 											: index === 17
 												? 'React · Array.filter · Estado derivado'
+											: index === 18
+												? 'React · Progressbar · Acessibilidade'
 				: 'A definir',
-	status: index < 18 ? 'Concluída' : index === 18 ? 'Em andamento' : 'Planejada',
+	status: index < 19 ? 'Concluída' : index === 19 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -630,6 +636,31 @@ export const activities = [
 											],
 											message:
 												'O contador exibido acima é calculado diretamente do array de atividades.',
+										},
+									}
+							: activity.id === 20
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Percentual',
+													description:
+														'completionPercentage divide as atividades concluídas pelo total e arredonda o resultado.',
+												},
+												{
+													name: 'Barra acessível',
+													description:
+														'O elemento progressbar informa aria-valuemin, aria-valuemax, aria-valuenow e aria-valuetext.',
+												},
+												{
+													name: 'Sincronização',
+													description:
+														'A largura visual e o texto usam o mesmo percentual derivado do contador.',
+												},
+											],
+											message:
+												'A barra acompanha o contador e também representa corretamente os limites de 0% e 100%.',
 										},
 									}
 							: activity,
