@@ -18,6 +18,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 									? 'Criar contador de progresso'
 									: index === 18
 										? 'Criar barra de progresso'
+										: index === 19
+											? 'Criar modal de detalhes'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -56,6 +58,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																								? 'O progresso é calculado a partir dos status das atividades e exibido automaticamente como concluídas de 30.'
 																								: index === 18
 																									? 'Uma barra acessível representa o percentual calculado a partir das atividades concluídas.'
+																									: index === 19
+																										? 'Os detalhes da atividade são exibidos em um modal que pode ser fechado por botão, Escape ou área externa.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -94,8 +98,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Array.filter · Estado derivado'
 											: index === 18
 												? 'React · Progressbar · Acessibilidade'
+											: index === 19
+												? 'React · Modal · Eventos de teclado'
 				: 'A definir',
-	status: index < 19 ? 'Concluída' : index === 19 ? 'Em andamento' : 'Planejada',
+	status: index < 20 ? 'Concluída' : index === 20 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -661,6 +667,28 @@ export const activities = [
 											],
 											message:
 												'A barra acompanha o contador e também representa corretamente os limites de 0% e 100%.',
+										},
+									}
+							: activity.id === 21
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Abertura',
+													description: 'Ver atividade abre os detalhes em um diálogo sobreposto.',
+												},
+												{
+													name: 'Fechamento',
+													description: 'O modal fecha pelo botão Fechar, pela tecla Escape e pelo clique na área externa.',
+												},
+												{
+													name: 'Foco acessível',
+													description: 'O foco vai para o controle Fechar e retorna ao botão que abriu o modal.',
+												},
+											],
+											message:
+												'Abra este cartão e use o teclado para testar a interação do modal.',
 										},
 									}
 							: activity,

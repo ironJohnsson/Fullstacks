@@ -1,8 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import StatusAtividade from './StatusAtividade.jsx'
 
 function CardAtividade({ number, title, description, technology, status, link, evidence }) {
 	const [isOpen, setIsOpen] = useState(false)
+	const closeButtonRef = useRef(null)
+	const triggerRef = useRef(null)
+
+	const closeDetails = () => {
+		setIsOpen(false)
+		triggerRef.current?.focus()
+	}
+
+	useEffect(() => {
+		if (!isOpen) return undefined
+
+		const handleEscape = (event) => {
+			if (event.key === 'Escape') closeDetails()
+		}
+
+		document.addEventListener('keydown', handleEscape)
+		closeButtonRef.current?.focus()
+		return () => document.removeEventListener('keydown', handleEscape)
+	}, [isOpen])
 
 	return (
 		<article id={link.replace('#', '')} className="activity-card">
@@ -20,16 +39,34 @@ function CardAtividade({ number, title, description, technology, status, link, e
 					className="activity-link"
 					type="button"
 					aria-expanded={isOpen}
-					aria-controls={`evidencia-${number}`}
-					onClick={() => setIsOpen((open) => !open)}
+					aria-haspopup="dialog"
+					ref={triggerRef}
+					onClick={() => setIsOpen(true)}
 				>
-					{isOpen ? 'Ocultar atividade' : 'Ver atividade'} <span aria-hidden="true">{isOpen ? '↑' : '→'}</span>
+					Ver atividade <span aria-hidden="true">→</span>
 				</button>
 				<a className="activity-anchor" href={link}>Link direto</a>
 			</div>
 			{isOpen && evidence && (
-				<div className="activity-evidence" id={`evidencia-${number}`}>
-					<h4>Evidência da atividade</h4>
+				<div className="activity-modal-backdrop" role="presentation" onMouseDown={closeDetails}>
+					<div
+						className="activity-modal"
+						role="dialog"
+						aria-modal="true"
+						aria-labelledby={`evidencia-titulo-${number}`}
+						onMouseDown={(event) => event.stopPropagation()}
+					>
+						<div className="activity-evidence">
+							<div className="activity-modal-heading">
+								<div>
+									<p className="activity-technology">{technology}</p>
+									<h4 id={`evidencia-titulo-${number}`} tabIndex="-1">{title}</h4>
+									<p>{description}</p>
+								</div>
+								<button className="modal-close" type="button" ref={closeButtonRef} onClick={closeDetails}>
+									Fechar
+								</button>
+							</div>
 					<ul>
 						{evidence.tools.map((tool) => (
 							<li key={tool.name}>
@@ -70,6 +107,8 @@ function CardAtividade({ number, title, description, technology, status, link, e
 						</div>
 					)}
 					<p className="ready-message">{evidence.message}</p>
+						</div>
+					</div>
 				</div>
 			)}
 		</article>
