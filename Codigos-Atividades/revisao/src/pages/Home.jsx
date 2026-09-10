@@ -33,7 +33,14 @@ function Home() {
           <ol className="activities-list">
             {activities.map((activity) => (
               <li key={activity.id}>
-                <CardAtividade activity={activity} />
+                <CardAtividade
+                  number={activity.id}
+                  title={activity.title}
+                  description={activity.description}
+                  technology={activity.technology}
+                  link={`#atividade-${String(activity.id).padStart(2, '0')}`}
+                  evidence={activity.evidence}
+                />
               </li>
             ))}
           </ol>

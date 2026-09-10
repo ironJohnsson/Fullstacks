@@ -5,6 +5,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 			? 'Inicializar o repositório Git'
 			: index === 1
 				? 'Construir a estrutura semântica'
+				: index === 11
+					? 'Criar o componente CardAtividade'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	description:
 		index === 0
@@ -29,6 +31,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'O cabeçalho foi extraído para um componente React reutilizável, mantendo a marcação e os estilos em um único lugar.'
 								: index === 10
 									? 'O rodapé foi separado em um componente com autor, ano calculado e link para retornar ao início.'
+									: index === 11
+										? 'Os cartões foram transformados em componentes reutilizáveis que recebem dados por props.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -53,6 +57,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 								? 'React · Componentização · JSX'
 								: index === 10
 									? 'React · Responsabilidade única · JavaScript'
+									: index === 11
+										? 'React · Props · Componentes reutilizáveis'
 				: 'A definir',
 	href: '#',
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
@@ -375,6 +381,36 @@ export const activities = [
 							'O rodapé tem responsabilidade única e pode ser reutilizado sem espalhar a lógica do ano pela aplicação.',
 					},
 				}
-			: activity,
+			: activity.id === 13
+				? {
+						...activity,
+						evidence: {
+							tools: [
+								{
+									name: 'number',
+									description:
+										'Recebe o número da atividade e o apresenta com dois dígitos.',
+								},
+								{
+									name: 'title e description',
+									description:
+										'Recebem o título e o texto descritivo exibidos no conteúdo do cartão.',
+								},
+								{
+									name: 'technology',
+									description:
+										'Identifica as tecnologias ou conceitos usados na atividade.',
+								},
+								{
+									name: 'link',
+									description:
+										'Define a âncora para acessar diretamente o cartão correspondente.',
+								},
+							],
+							message:
+								'O mesmo CardAtividade é renderizado para todas as atividades usando dados diferentes por props.',
+						},
+					}
+				: activity,
 	),
 ]
