@@ -24,6 +24,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'Criar formulário de contato'
 												: index === 21
 													? 'Implementar alternância de tema'
+													: index === 22
+														? 'Persistir preferência local'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -68,6 +70,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																											? 'O formulário reúne nome, e-mail, assunto e mensagem com validação nativa e confirmação simulada.'
 																											: index === 21
 																												? 'Um botão alterna entre tema claro e escuro usando estado React e uma classe na raiz da aplicação.'
+																												: index === 22
+																													? 'A preferência de tema é salva no localStorage e restaurada ao iniciar a aplicação, com tema claro como padrão.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -112,8 +116,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Formulários · Validação'
 											: index === 21
 												? 'React · useState · CSS · Acessibilidade'
+											: index === 22
+												? 'React · localStorage · useEffect'
 				: 'A definir',
-	status: index < 22 ? 'Concluída' : index === 22 ? 'Em andamento' : 'Planejada',
+	status: index < 23 ? 'Concluída' : index === 23 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -745,6 +751,28 @@ export const activities = [
 											],
 											message:
 												'Use o botão de tema no topo da página para alternar entre claro e escuro.',
+										},
+									}
+							: activity.id === 24
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Chave',
+													description: 'A preferência usa a chave portfolio-theme no localStorage.',
+												},
+												{
+													name: 'Restauração',
+													description: 'A preferência salva é lida durante a inicialização do componente App.',
+												},
+												{
+													name: 'Padrão seguro',
+													description: 'Sem valor salvo ou sem acesso ao armazenamento, o tema claro é utilizado.',
+												},
+											],
+											message:
+												'Recarregue a página após trocar o tema para confirmar que a preferência foi restaurada.',
 										},
 									}
 							: activity,
