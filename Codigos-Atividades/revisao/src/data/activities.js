@@ -20,6 +20,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 										? 'Criar barra de progresso'
 										: index === 19
 											? 'Criar modal de detalhes'
+											: index === 20
+												? 'Criar formulário de contato'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -60,6 +62,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																									? 'Uma barra acessível representa o percentual calculado a partir das atividades concluídas.'
 																									: index === 19
 																										? 'Os detalhes da atividade são exibidos em um modal que pode ser fechado por botão, Escape ou área externa.'
+																										: index === 20
+																											? 'O formulário reúne nome, e-mail, assunto e mensagem com validação nativa e confirmação simulada.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -100,8 +104,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Progressbar · Acessibilidade'
 											: index === 19
 												? 'React · Modal · Eventos de teclado'
+											: index === 20
+												? 'React · Formulários · Validação'
 				: 'A definir',
-	status: index < 20 ? 'Concluída' : index === 20 ? 'Em andamento' : 'Planejada',
+	status: index < 21 ? 'Concluída' : index === 21 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -689,6 +695,28 @@ export const activities = [
 											],
 											message:
 												'Abra este cartão e use o teclado para testar a interação do modal.',
+										},
+									}
+							: activity.id === 22
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Campos controlados',
+													description: 'Nome, e-mail, assunto e mensagem são mantidos em um único estado React.',
+												},
+												{
+													name: 'Validação',
+													description: 'Labels associados, required e type=email ajudam o navegador a validar os dados.',
+												},
+												{
+													name: 'Envio simulado',
+													description: 'onSubmit impede o recarregamento e exibe uma confirmação sem backend.',
+												},
+											],
+											message:
+												'Use o formulário na seção Contato para testar o preenchimento e a confirmação.',
 										},
 									}
 							: activity,
