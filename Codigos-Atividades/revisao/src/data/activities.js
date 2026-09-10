@@ -34,6 +34,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 									? 'O rodapé foi separado em um componente com autor, ano calculado e link para retornar ao início.'
 									: index === 11
 										? 'Os cartões foram transformados em componentes reutilizáveis que recebem dados por props.'
+											: index === 12
+												? 'A lista de 30 atividades é gerada dinamicamente com map e cada item recebe uma key estável baseada no id.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -60,6 +62,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 									? 'React · Responsabilidade única · JavaScript'
 									: index === 11
 										? 'React · Props · Componentes reutilizáveis'
+										: index === 12
+											? 'JavaScript · map · Renderização de listas'
 				: 'A definir',
 	titulo: undefined,
 	descricao: undefined,
@@ -350,6 +354,8 @@ export const activities = [
 				? 'Inicializar o repositório Git'
 				: activity.id === 3
 					? 'Construir a estrutura semântica'
+					: activity.id === 15
+						? 'Renderizar a lista com map'
 					: activity.id === 14
 						? 'Modelar os dados das atividades'
 					: `Atividade ${String(activity.id).padStart(2, '0')}`),
@@ -357,10 +363,16 @@ export const activities = [
 			activity.descricao ??
 			(activity.id === 14
 				? 'Separação dos dados e da apresentação para facilitar a manutenção das atividades.'
+				: activity.id === 15
+					? 'A lista de atividades é gerada dinamicamente com map, usando uma key estável para cada cartão.'
 				: activity.description),
 		tecnologia:
 			activity.tecnologia ??
-			(activity.id === 14 ? 'JavaScript · Objetos · Dados' : activity.technology),
+			(activity.id === 14
+				? 'JavaScript · Objetos · Dados'
+				: activity.id === 15
+					? 'JavaScript · map · Renderização de listas'
+					: activity.technology),
 		link: activity.link ?? `#atividade-${String(activity.id).padStart(2, '0')}`,
 	}))
 		.map((activity) =>
@@ -473,6 +485,36 @@ export const activities = [
 									'O componente recebe os dados prontos e permanece responsável apenas pela apresentação.',
 							},
 						}
-					: activity,
+					: activity.id === 15
+						? {
+								...activity,
+								evidence: {
+									tools: [
+										{
+											name: 'Array',
+											description:
+												'activities é a coleção ordenada com os dados das 30 atividades.',
+										},
+										{
+											name: 'map',
+											description:
+												'O método percorre cada objeto e transforma cada item em um CardAtividade.',
+										},
+										{
+											name: 'key',
+											description:
+												'activity.id fornece uma chave estável e exclusiva para cada item renderizado.',
+										},
+										{
+											name: 'Numeração',
+											description:
+												'A lista contém os IDs de 1 a 30, confirmados pela quantidade total de 30 etapas.',
+										},
+									],
+									message:
+										'A renderização mantém o conteúdo separado dos componentes e evita chaves duplicadas.',
+								},
+							}
+						: activity,
 	),
 ]

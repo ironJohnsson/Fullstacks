@@ -27,7 +27,7 @@ function Home() {
               <p className="eyebrow">Percurso prático</p>
               <h2 id="activities-title">Atividades do roteiro</h2>
             </div>
-            <p className="progress-label">{activities.length} etapas planejadas</p>
+            <p className="progress-label">{activities.length} etapas planejadas · 01–30</p>
           </div>
 
           <ol className="activities-list">
