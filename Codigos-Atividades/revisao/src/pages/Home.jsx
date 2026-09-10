@@ -8,6 +8,7 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState('')
   const technologies = ['Todos', 'HTML', 'CSS', 'React', 'Git', 'Vercel']
   const normalizedSearchTerm = searchTerm.trim().toLowerCase()
+  const completedActivities = activities.filter((activity) => activity.status === 'Concluída').length
   const filteredActivities = activities.filter((activity) => {
     const matchesTechnology =
       technologyFilter === 'Todos' ||
@@ -44,7 +45,7 @@ function Home() {
               <p className="eyebrow">Percurso prático</p>
               <h2 id="activities-title">Atividades do roteiro</h2>
             </div>
-            <p className="progress-label">{filteredActivities.length} de {activities.length} atividades exibidas</p>
+            <p className="progress-label">{completedActivities} concluídas de {activities.length}</p>
           </div>
 
           <label className="activity-search">

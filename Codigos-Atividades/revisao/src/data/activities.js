@@ -14,6 +14,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 							? 'Criar filtro por tecnologia'
 							: index === 16
 								? 'Criar busca por texto'
+								: index === 17
+									? 'Criar contador de progresso'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -48,6 +50,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																						? 'Um filtro por tecnologia usa useState para exibir apenas os cartões compatíveis, sem modificar o array original.'
 																						: index === 16
 																							? 'A busca controlada combina o texto digitado com o filtro de tecnologia e informa quando nenhum cartão corresponde.'
+																							: index === 17
+																								? 'O progresso é calculado a partir dos status das atividades e exibido automaticamente como concluídas de 30.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -82,8 +86,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · useState · Filtros'
 											: index === 16
 												? 'React · Eventos · Busca · filter'
+											: index === 17
+												? 'React · Array.filter · Estado derivado'
 				: 'A definir',
-	status: index < 16 ? 'Concluída' : index === 16 ? 'Em andamento' : 'Planejada',
+	status: index < 18 ? 'Concluída' : index === 18 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -599,6 +605,31 @@ export const activities = [
 											],
 											message:
 												'Digite um termo inexistente, como “xyz”, para conferir a mensagem de nenhum resultado.',
+										},
+									}
+							: activity.id === 19
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Cálculo derivado',
+													description:
+														'completedActivities conta os itens cujo status é Concluída usando filter.',
+												},
+												{
+													name: 'Formato',
+													description:
+														'O indicador apresenta a quantidade concluída em relação ao total de 30 atividades.',
+												},
+												{
+													name: 'Atualização automática',
+													description:
+														'O valor acompanha os dados sem criar um useState separado para o contador.',
+												},
+											],
+											message:
+												'O contador exibido acima é calculado diretamente do array de atividades.',
 										},
 									}
 							: activity,
