@@ -28,6 +28,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 														? 'Persistir preferência local'
 														: index === 23
 															? 'Adicionar seção Sobre'
+															: index === 24
+																? 'Revisar acessibilidade'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -76,6 +78,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																													? 'A preferência de tema é salva no localStorage e restaurada ao iniciar a aplicação, com tema claro como padrão.'
 																													: index === 23
 																														? 'A seção Sobre apresenta autoria, tecnologias em prática e links profissionais apropriados para publicação.'
+																														: index === 24
+																															? 'A interface foi revisada para garantir estrutura semântica, foco visível, labels, textos alternativos, contraste e navegação por teclado.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -124,8 +128,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · localStorage · useEffect'
 											: index === 23
 												? 'React · Componente · Conteúdo autoral'
+											: index === 24
+												? 'Acessibilidade · HTML semântico · Teclado'
 				: 'A definir',
-	status: index < 24 ? 'Concluída' : index === 24 ? 'Em andamento' : 'Planejada',
+	status: index < 25 ? 'Concluída' : index === 25 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -801,6 +807,36 @@ export const activities = [
 											],
 											message:
 												'A seção Sobre pode ser acessada pelo menu e apresenta autoria, competências em prática e objetivo profissional.',
+										},
+									}
+							: activity.id === 26
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Headings',
+													description: 'A página mantém um h1 principal e headings hierárquicos nas seções e cartões.',
+												},
+												{
+													name: 'Labels e textos alternativos',
+													description: 'Campos têm labels associados e imagens relevantes possuem alt descritivo.',
+												},
+												{
+													name: 'Foco e teclado',
+													description: 'Links, botões, filtros, formulário e modal possuem foco visível e operação por teclado.',
+												},
+												{
+													name: 'Contraste',
+													description: 'Cores de texto, superfícies e foco foram revisadas nos temas claro e escuro.',
+												},
+												{
+													name: 'Status compreensível',
+													description: 'Cada status exibe texto e aria-label, sem depender apenas da cor.',
+												},
+											],
+											message:
+												'Foram realizadas cinco verificações de acessibilidade e as correções foram incorporadas à interface.',
 										},
 									}
 							: activity,

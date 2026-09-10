@@ -7,7 +7,11 @@ const statusClasses = {
 function StatusAtividade({ status }) {
 	const className = statusClasses[status] ?? statusClasses.Planejada
 
-	return <span className={`activity-status ${className}`}>{status}</span>
+	return (
+		<span className={`activity-status ${className}`} aria-label={`Status: ${status}`}>
+			{status}
+		</span>
+	)
 }
 
 export default StatusAtividade

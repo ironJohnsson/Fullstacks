@@ -102,9 +102,10 @@ a:focus-visible {
 
 .theme-dark .theme-toggle,
 .theme-dark .filter-button,
-.theme-dark .modal-close {
+.theme-dark .modal-close,
+.theme-dark .activity-link {
 	border-color: var(--color-border);
-	color: var(--color-text);
+	color: #b9e6c9;
 }
 
 .theme-dark .theme-toggle:hover,
@@ -113,7 +114,9 @@ a:focus-visible {
 .theme-dark .filter-button:focus-visible,
 .theme-dark .filter-button-active,
 .theme-dark .modal-close:hover,
-.theme-dark .modal-close:focus-visible {
+.theme-dark .modal-close:focus-visible,
+.theme-dark .activity-link:hover,
+.theme-dark .activity-link:focus-visible {
 	background: #9ed0b2;
 	color: #18251f;
 }
