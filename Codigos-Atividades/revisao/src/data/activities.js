@@ -25,6 +25,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						? 'A seção de atividades usa CSS Grid para distribuir os cartões em colunas adaptáveis sem criar rolagem horizontal.'
 						: index === 8
 							? 'A homepage foi ajustada para telas de 360px, 768px e 1440px com media queries e grade adaptável.'
+							: index === 9
+								? 'O cabeçalho foi extraído para um componente React reutilizável, mantendo a marcação e os estilos em um único lugar.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -45,6 +47,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						? 'CSS Grid · Responsividade · Layout adaptável'
 						: index === 8
 							? 'CSS · Media queries · Design responsivo'
+							: index === 9
+								? 'React · Componentização · JSX'
 				: 'A definir',
 	href: '#',
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
@@ -316,5 +320,32 @@ export const activities = [
 			message: 'O ambiente React com Vite está pronto para desenvolvimento local.',
 		},
 	},
-	...plannedActivities,
+	...plannedActivities.map((activity) =>
+		activity.id === 11
+			? {
+					...activity,
+					evidence: {
+						tools: [
+							{
+								name: 'Arquivo',
+								description:
+									'Cabecalho.jsx concentra a marcação do cabeçalho, avatar, identidade e menu.',
+							},
+							{
+								name: 'Responsabilidade',
+								description:
+									'O componente apresenta a identidade do autor e oferece a navegação principal.',
+							},
+							{
+								name: 'Local de uso',
+								description:
+									'App.jsx importa Cabecalho e o renderiza antes do conteúdo de Home.jsx.',
+							},
+						],
+						message:
+							'A extração evita duplicação e deixa o cabeçalho pronto para reutilização em outras páginas.',
+					},
+				}
+			: activity,
+	),
 ]
