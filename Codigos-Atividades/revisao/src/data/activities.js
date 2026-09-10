@@ -22,6 +22,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 											? 'Criar modal de detalhes'
 											: index === 20
 												? 'Criar formulário de contato'
+												: index === 21
+													? 'Implementar alternância de tema'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -64,6 +66,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																										? 'Os detalhes da atividade são exibidos em um modal que pode ser fechado por botão, Escape ou área externa.'
 																										: index === 20
 																											? 'O formulário reúne nome, e-mail, assunto e mensagem com validação nativa e confirmação simulada.'
+																											: index === 21
+																												? 'Um botão alterna entre tema claro e escuro usando estado React e uma classe na raiz da aplicação.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -106,8 +110,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Modal · Eventos de teclado'
 											: index === 20
 												? 'React · Formulários · Validação'
+											: index === 21
+												? 'React · useState · CSS · Acessibilidade'
 				: 'A definir',
-	status: index < 21 ? 'Concluída' : index === 21 ? 'Em andamento' : 'Planejada',
+	status: index < 22 ? 'Concluída' : index === 22 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -717,6 +723,28 @@ export const activities = [
 											],
 											message:
 												'Use o formulário na seção Contato para testar o preenchimento e a confirmação.',
+										},
+									}
+							: activity.id === 23
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Estado',
+													description: 'isDarkTheme controla a preferência visual com useState.',
+												},
+												{
+													name: 'Classe raiz',
+													description: 'theme-dark é aplicada ao elemento principal para trocar as variáveis e superfícies.',
+												},
+												{
+													name: 'Acessibilidade',
+													description: 'O botão usa aria-pressed e mantém foco visível nos dois temas.',
+												},
+											],
+											message:
+												'Use o botão de tema no topo da página para alternar entre claro e escuro.',
 										},
 									}
 							: activity,

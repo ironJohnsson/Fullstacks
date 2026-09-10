@@ -53,6 +53,71 @@ a:focus-visible {
 	background: #ffffff;
 }
 
+.theme-toggle {
+	position: absolute;
+	top: 24px;
+	right: max(20px, calc((100% - 1120px) / 2));
+	z-index: 2;
+	border: 1px solid var(--color-primary-dark);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface);
+	color: var(--color-primary-dark);
+	cursor: pointer;
+	padding: 0.6rem 1rem;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+	background: var(--color-primary-dark);
+	color: var(--color-surface);
+}
+
+.theme-dark {
+	--color-text: #edf4ef;
+	--color-muted: #c3d1c7;
+	--color-subtle: #a9bbae;
+	--color-primary: #9ed0b2;
+	--color-primary-dark: #edf4ef;
+	--color-border: #526b5c;
+	--color-border-light: #34483c;
+	--color-surface: #18251f;
+	background: #18251f;
+	color: var(--color-text);
+}
+
+.theme-dark .home-page,
+.theme-dark .activity-card,
+.theme-dark .activity-modal,
+.theme-dark .activity-modal .activity-evidence,
+.theme-dark .form-field input,
+.theme-dark .form-field textarea,
+.theme-dark .filter-button {
+	background: var(--color-surface);
+	color: var(--color-text);
+}
+
+.theme-dark .activity-evidence {
+	background: #203128;
+}
+
+.theme-dark .theme-toggle,
+.theme-dark .filter-button,
+.theme-dark .modal-close {
+	border-color: var(--color-border);
+	color: var(--color-text);
+}
+
+.theme-dark .theme-toggle:hover,
+.theme-dark .theme-toggle:focus-visible,
+.theme-dark .filter-button:hover,
+.theme-dark .filter-button:focus-visible,
+.theme-dark .filter-button-active,
+.theme-dark .modal-close:hover,
+.theme-dark .modal-close:focus-visible {
+	background: #9ed0b2;
+	color: #18251f;
+}
+
 .site-header,
 .activities-section {
 	width: min(1120px, calc(100% - 40px));
