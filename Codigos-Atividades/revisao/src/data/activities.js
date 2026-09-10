@@ -12,6 +12,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 						? 'Mostrar status condicional'
 						: index === 15
 							? 'Criar filtro por tecnologia'
+							: index === 16
+								? 'Criar busca por texto'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -44,6 +46,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																? 'Cada atividade apresenta um status visual, com classes específicas para Planejada, Em andamento ou Concluída.'
 																					: index === 15
 																						? 'Um filtro por tecnologia usa useState para exibir apenas os cartões compatíveis, sem modificar o array original.'
+																						: index === 16
+																							? 'A busca controlada combina o texto digitado com o filtro de tecnologia e informa quando nenhum cartão corresponde.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -76,6 +80,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · Renderização condicional · CSS'
 											: index === 15
 												? 'React · useState · Filtros'
+											: index === 16
+												? 'React · Eventos · Busca · filter'
 				: 'A definir',
 	status: index < 16 ? 'Concluída' : index === 16 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
@@ -571,6 +577,28 @@ export const activities = [
 											],
 											message:
 												'Selecione uma tecnologia acima para conferir o filtro funcionando sobre a lista completa.',
+										},
+									}
+							: activity.id === 18
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Campo controlado',
+													description: 'O valor digitado é armazenado em searchTerm com useState.',
+												},
+												{
+													name: 'Busca sem distinção de caixa',
+													description: 'Título e descrição são comparados em letras minúsculas.',
+												},
+												{
+													name: 'Estado sem resultados',
+													description: 'Uma mensagem é exibida quando a combinação de busca e tecnologia não encontra cartões.',
+												},
+											],
+											message:
+												'Digite um termo inexistente, como “xyz”, para conferir a mensagem de nenhum resultado.',
 										},
 									}
 							: activity,

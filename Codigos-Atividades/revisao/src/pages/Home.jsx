@@ -5,11 +5,20 @@ import { activities } from '../data/activities.js'
 
 function Home() {
   const [technologyFilter, setTechnologyFilter] = useState('Todos')
+  const [searchTerm, setSearchTerm] = useState('')
   const technologies = ['Todos', 'HTML', 'CSS', 'React', 'Git', 'Vercel']
-  const filteredActivities =
-    technologyFilter === 'Todos'
-      ? activities
-      : activities.filter((activity) => activity.tecnologia.toLowerCase().includes(technologyFilter.toLowerCase()))
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase()
+  const filteredActivities = activities.filter((activity) => {
+    const matchesTechnology =
+      technologyFilter === 'Todos' ||
+      activity.tecnologia.toLowerCase().includes(technologyFilter.toLowerCase())
+    const matchesSearch =
+      !normalizedSearchTerm ||
+      activity.titulo.toLowerCase().includes(normalizedSearchTerm) ||
+      activity.descricao.toLowerCase().includes(normalizedSearchTerm)
+
+    return matchesTechnology && matchesSearch
+  })
 
   return (
     <>
@@ -38,6 +47,16 @@ function Home() {
             <p className="progress-label">{filteredActivities.length} de {activities.length} atividades exibidas</p>
           </div>
 
+          <label className="activity-search">
+            Buscar por título ou descrição
+            <input
+              type="search"
+              value={searchTerm}
+              placeholder="Ex.: React"
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+          </label>
+
           <div className="technology-filters" aria-label="Filtrar atividades por tecnologia">
             {technologies.map((technology) => (
               <button
@@ -52,21 +71,27 @@ function Home() {
             ))}
           </div>
 
-          <ol className="activities-list">
-            {filteredActivities.map((activity) => (
-              <li key={activity.id}>
-                <CardAtividade
-                  number={activity.id}
-                  title={activity.titulo}
-                  description={activity.descricao}
-                  technology={activity.tecnologia}
-                  status={activity.status}
-                  link={activity.link}
-                  evidence={activity.evidence}
-                />
-              </li>
-            ))}
-          </ol>
+          {filteredActivities.length > 0 ? (
+            <ol className="activities-list">
+              {filteredActivities.map((activity) => (
+                <li key={activity.id}>
+                  <CardAtividade
+                    number={activity.id}
+                    title={activity.titulo}
+                    description={activity.descricao}
+                    technology={activity.tecnologia}
+                    status={activity.status}
+                    link={activity.link}
+                    evidence={activity.evidence}
+                  />
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="empty-results" role="status">
+              Nenhuma atividade encontrada para essa busca e tecnologia.
+            </p>
+          )}
         </section>
 
         <Contato />
