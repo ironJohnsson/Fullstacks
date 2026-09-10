@@ -26,6 +26,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 													? 'Implementar alternância de tema'
 													: index === 22
 														? 'Persistir preferência local'
+														: index === 23
+															? 'Adicionar seção Sobre'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -72,6 +74,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																												? 'Um botão alterna entre tema claro e escuro usando estado React e uma classe na raiz da aplicação.'
 																												: index === 22
 																													? 'A preferência de tema é salva no localStorage e restaurada ao iniciar a aplicação, com tema claro como padrão.'
+																													: index === 23
+																														? 'A seção Sobre apresenta autoria, tecnologias em prática e links profissionais apropriados para publicação.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -118,8 +122,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'React · useState · CSS · Acessibilidade'
 											: index === 22
 												? 'React · localStorage · useEffect'
+											: index === 23
+												? 'React · Componente · Conteúdo autoral'
 				: 'A definir',
-	status: index < 23 ? 'Concluída' : index === 23 ? 'Em andamento' : 'Planejada',
+	status: index < 24 ? 'Concluída' : index === 24 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -773,6 +779,28 @@ export const activities = [
 											],
 											message:
 												'Recarregue a página após trocar o tema para confirmar que a preferência foi restaurada.',
+										},
+									}
+							: activity.id === 25
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Componente Sobre',
+													description: 'Sobre.jsx concentra a apresentação autoral e é usado na homepage.',
+												},
+												{
+													name: 'Tecnologias',
+													description: 'A lista informa tecnologias praticadas sem afirmar domínio absoluto.',
+												},
+												{
+													name: 'Links profissionais',
+													description: 'GitHub, LinkedIn e Lattes são apresentados como referências públicas.',
+												},
+											],
+											message:
+												'A seção Sobre pode ser acessada pelo menu e apresenta autoria, competências em prática e objetivo profissional.',
 										},
 									}
 							: activity,

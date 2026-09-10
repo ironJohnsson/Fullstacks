@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CardAtividade from '../components/CardAtividade.jsx'
 import Contato from '../components/Contato.jsx'
+import Sobre from '../components/Sobre.jsx'
 import { activities } from '../data/activities.js'
 
 function Home() {
@@ -31,14 +32,7 @@ function Home() {
           <a className="activities-button" href="#atividades">Ver atividades</a>
         </section>
 
-        <section className="about-section" id="sobre" aria-labelledby="about-title">
-          <p className="eyebrow">Sobre</p>
-          <h2 id="about-title">Aprendizado em desenvolvimento web</h2>
-          <p>
-            Este portfólio reúne as etapas práticas do curso e registra a evolução
-            do projeto com tecnologias web e controle de versão.
-          </p>
-        </section>
+        <Sobre />
 
         <section className="activities-section" id="atividades" aria-labelledby="activities-title">
           <div className="section-heading">
