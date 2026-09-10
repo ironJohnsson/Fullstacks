@@ -34,6 +34,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																	? 'Criar o README do repositório'
 																	: index === 26
 																		? 'Organizar o histórico Git'
+																		: index === 27
+																			? 'Enviar o projeto ao repositório remoto'
 				: `Atividade ${String(index + 2).padStart(2, '0')}`,
 	descricao:
 		index === 0
@@ -88,6 +90,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 																																? 'O README documenta instalação, execução, tecnologias, estrutura, autoria e links de publicação do projeto.'
 																																: index === 26
 																																	? 'O histórico foi revisado com commits descritivos, branch principal identificada e tag local v1.0.0 criada após a validação final.'
+																																	: index === 27
+																																		? 'O projeto está associado ao repositório remoto Fullstacks e preparado para publicar a branch principal e a tag v1.0.0.'
 				: 'Entrega em construção para o roteiro prático.',
 	tecnologia:
 		index === 0
@@ -142,8 +146,10 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 												? 'Markdown · Documentação · GitHub'
 											: index === 26
 												? 'Git · Histórico · Tags'
+											: index === 27
+												? 'GitHub · Git remote · Publicação'
 				: 'A definir',
-	status: index < 27 ? 'Concluída' : index === 27 ? 'Em andamento' : 'Planejada',
+	status: index < 28 ? 'Concluída' : index === 28 ? 'Em andamento' : 'Planejada',
 	link: `#atividade-${String(index + 2).padStart(2, '0')}`,
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
 		? {
@@ -895,6 +901,29 @@ export const activities = [
 											],
 											message:
 												'O histórico Git está organizado e a versão final foi marcada localmente como v1.0.0.',
+										},
+									}
+							: activity.id === 29
+								? {
+										...activity,
+										evidence: {
+											tools: [
+												{
+													name: 'Repositório remoto',
+													description: 'origin aponta para https://github.com/ironJohnsson/Fullstacks.',
+												},
+												{
+													name: 'Publicação',
+													description: 'A branch principal e a tag v1.0.0 são os alvos de envio da versão final.',
+												},
+												{
+													name: 'Conferência',
+													description: 'O README e os arquivos do projeto podem ser conferidos diretamente no GitHub.',
+												},
+											],
+											message:
+												'Confira o repositório remoto para acompanhar os arquivos, o README e a versão publicada.',
+											documentationLink: 'https://github.com/ironJohnsson/Fullstacks',
 										},
 									}
 							: activity,
