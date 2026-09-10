@@ -27,6 +27,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 							? 'A homepage foi ajustada para telas de 360px, 768px e 1440px com media queries e grade adaptável.'
 							: index === 9
 								? 'O cabeçalho foi extraído para um componente React reutilizável, mantendo a marcação e os estilos em um único lugar.'
+								: index === 10
+									? 'O rodapé foi separado em um componente com autor, ano calculado e link para retornar ao início.'
 				: 'Entrega em construção para o roteiro prático.',
 	technology:
 		index === 0
@@ -49,6 +51,8 @@ const plannedActivities = Array.from({ length: 29 }, (_, index) => ({
 							? 'CSS · Media queries · Design responsivo'
 							: index === 9
 								? 'React · Componentização · JSX'
+								: index === 10
+									? 'React · Responsabilidade única · JavaScript'
 				: 'A definir',
 	href: '#',
 	...(index === 0 || index === 1 || index === 2 || index === 3 || index === 4 || index === 5 || index === 6 || index === 7 || index === 8
@@ -344,6 +348,31 @@ export const activities = [
 						],
 						message:
 							'A extração evita duplicação e deixa o cabeçalho pronto para reutilização em outras páginas.',
+					},
+				}
+		: activity.id === 12
+			? {
+					...activity,
+					evidence: {
+						tools: [
+							{
+								name: 'Arquivo',
+								description:
+									'Rodape.jsx concentra o conteúdo e o comportamento do rodapé.',
+							},
+							{
+								name: 'Ano',
+								description:
+									'new Date().getFullYear() calcula o ano atual em um único local.',
+							},
+							{
+								name: 'Retorno',
+								description:
+									'O link #inicio leva novamente ao topo da homepage por uma âncora interna.',
+							},
+						],
+						message:
+							'O rodapé tem responsabilidade única e pode ser reutilizado sem espalhar a lógica do ano pela aplicação.',
 					},
 				}
 			: activity,

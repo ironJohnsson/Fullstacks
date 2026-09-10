@@ -41,9 +41,6 @@ function Home() {
 
         <Contato />
       </main>
-      <footer className="site-footer">
-        <p>Portfólio de atividades · Desenvolvimento web</p>
-      </footer>
     </>
   )
 }
