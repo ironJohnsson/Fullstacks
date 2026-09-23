@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de funções</title>
+</head>
+<body>
+    <p id="mensagem"></p>
+    <p id="resultado"></p>
+    <button type="button" onclick="mostrarCor('lightblue')">Aplicar cor</button>
+    <p id="corEscolhida"></p>
+
+<script>
+    function mostrarDataAtual(){
+    const agora = new Date();
+    const dataFormatada = agora.toLocaleDateString('pt-BR');
+
+        console.log("Data atual: " + dataFormatada);
+    };
+mostrarDataAtual();
+
+function calcularMediaFixa(){
+    //valores definidos na função
+    const nota1 = 8;
+    const nota2 = 6;
+    const media = (nota1 + nota2) / 2;
+
+    console.log("Média: " + media);
+}
+calcularMediaFixa();
+
+
+
+//html esperado : <p id="mensagem"></p>
+function preencherMensagem(){
+    const paragrafo = document.getElementById("mensagem");
+    if(paragrafo){
+        paragrafo.textContent = "Javascript alterou este texto!";
+    }
+}
+preencherMensagem();
+
+//nome é o parametro uma variavel local da função
+function saudar(nome){
+    console.log("Olá, " + nome + "!");
+}
+
+saudar("Alice");
+saudar("Bob");
+saudar("Bruno");
+
+function calcularDobro(numero){
+    return numero * 2;
+}
+
+const numeroDigitado = Number(prompt("Digite um número:"));
+console.log("Dobro: " + calcularDobro(numeroDigitado));
+document.getElementById("resultado").textContent = "Dobro: " + calcularDobro(numeroDigitado);
+
+function somar(numero1, numero2){
+    const resultado = numero1 + numero2;
+    console.log("Soma: " + resultado);
+    return resultado;
+}
+somar(5, 10);
+somar(3, 7);
+somar(2, 4);
+
+function mostrarNomeCompleto(){
+    console.log("Seu nome completo: Matheus Luiz");
+}
+mostrarNomeCompleto();
+
+function receberNome(nome){
+    console.log("Olá, " + nome + "!");
+}
+receberNome("Bruno");
+
+function calcularArea(base, altura){
+    return base * altura;
+}
+console.log("Área do retângulo: " + calcularArea(5, 3));
+
+function verificarAprovacao(media){
+    return media >= 7 ? "aprovado" : "reprovado";
+}
+console.log("Situação: " + verificarAprovacao(8));
+
+function converterCelsius(fahrenheit){
+    return (fahrenheit - 32) * 5 / 9;
+}
+console.log("Temperatura em Celsius: " + converterCelsius(86));
+
+function mostrarCor(cor){
+    document.body.style.backgroundColor = cor;
+    document.getElementById("corEscolhida").textContent = "Cor escolhida: " + cor;
+}
+
+
+</script>
+</body>
+</html>
