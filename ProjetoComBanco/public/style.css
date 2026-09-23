@@ -1,30 +1,133 @@
+:root {
+  /* Paleta de Cores */
+  --bg-page: #eef5fa;         /* Fundo suave em tom azul-claro */
+  --bg-card: #ffffff;         /* Fundo do cartão */
+  --text-title: #0f172a;      /* Título principal */
+  --text-sub: #334155;        /* Subtítulos e rótulos */
+  --text-muted: #64748b;      /* Texto secundário */
+  --primary: #1261a0;         /* Azul oceano (cor do slide) */
+  --primary-hover: #0c4877;   /* Azul mais escuro no hover */
+  --border-input: #cbd5e1;    /* Borda sutil dos campos */
+  --border-divider: #e2e8f0;  /* Linha divisória */
+  --success: #15803d;         /* Mensagem de sucesso */
+  --error: #b91c1c;           /* Mensagem de erro */
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #eaf4fa;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  margin: 0;
+  padding: 24px 16px;
+  color: var(--text-title);
 }
 
 main {
-  max-width: 600px;
+  max-width: 480px;
   margin: 40px auto;
-  background: white;
-  padding: 28px;
+  background: var(--bg-card);
+  padding: 32px 28px;
+  border-radius: 10px;
+  border: 1px solid var(--border-divider);
+  box-shadow: 0 4px 14px rgba(18, 97, 160, 0.08);
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+}
+
+h2 {
+  font-size: 16px;
+  color: var(--text-sub);
+  margin-top: 26px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--border-divider);
+  padding-bottom: 8px;
 }
 
 input,
 button {
   width: 100%;
   box-sizing: border-box;
-  padding: 12px;
-  margin-top: 12px;
+  padding: 11px 13px;
+  margin-top: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+input {
+  background-color: #fcfdfe;
+  border: 1px solid var(--border-input);
+  color: var(--text-title);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(18, 97, 160, 0.15);
 }
 
 button {
-  background: #1261a0;
-  color: white;
+  background-color: var(--primary);
+  color: #ffffff;
   border: 0;
   cursor: pointer;
+  font-weight: 600;
+  margin-top: 16px;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
-li {
-  margin: 10px 0;
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+#mensagem {
+  margin-top: 14px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  min-height: 20px;
+}
+
+#mensagem.sucesso {
+  color: var(--success);
+}
+
+#mensagem.erro {
+  color: var(--error);
+}
+
+#lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#lista li {
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border-divider);
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+#lista li:last-child {
+  border-bottom: none;
+}
+
+#lista li strong {
+  color: var(--text-title);
 }
