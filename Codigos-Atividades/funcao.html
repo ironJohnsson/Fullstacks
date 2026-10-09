@@ -5,98 +5,341 @@
     <title>Teste de funções</title>
 </head>
 <body>
+    <h3>Slide 09 - Manipular a página</h3>
     <p id="mensagem"></p>
+
+    <h3>Slide 13 - Dobro de um número</h3>
+    <input type="number" id="inputNumero" placeholder="Digite um número" value="5">
+    <button onclick="calcularDobroDaTela()">Calcular Dobro</button>
     <p id="resultado"></p>
-    <button type="button" onclick="mostrarCor('lightblue')">Aplicar cor</button>
-    <p id="corEscolhida"></p>
+
+    <h3>Slide 26 - Mudar cor de fundo</h3>
+    <button onclick="mudarCor('lightblue')">Azul</button>
+    <button onclick="mudarCor('lightgreen')">Verde</button>
+    <button onclick="mudarCor('#ffffff')">Branco</button>
+
+    <h3>Slide 27 - Formulário de saudação</h3>
+    <input id="nome" placeholder="Digite seu nome">
+    <button onclick="cumprimentar()">Enviar</button>
+    <p id="saida"></p>
+
+    <h3>Slide 32 (Desafio 5) - Calculadora</h3>
+    <input type="number" id="calcNum1" value="10" style="width: 80px;">
+    <input type="number" id="calcNum2" value="2" style="width: 80px;">
+    <select id="calcOperacao">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <button onclick="executarCalculoInterface()">Calcular</button>
+    <p id="calcResultado"></p>
 
 <script>
-    function mostrarDataAtual(){
-    const agora = new Date();
-    const dataFormatada = agora.toLocaleDateString('pt-BR');
-
-        console.log("Data atual: " + dataFormatada);
-    };
-mostrarDataAtual();
-
-function calcularMediaFixa(){
-    //valores definidos na função
-    const nota1 = 8;
-    const nota2 = 6;
-    const media = (nota1 + nota2) / 2;
-
-    console.log("Média: " + media);
-}
-calcularMediaFixa();
-
-
-
-//html esperado : <p id="mensagem"></p>
-function preencherMensagem(){
-    const paragrafo = document.getElementById("mensagem");
-    if(paragrafo){
-        paragrafo.textContent = "Javascript alterou este texto!";
+    // Slide 05 - Declaração e chamada
+    console.log('--- Slide 05: Declaração e chamada ---');
+    function mostrarAviso() {
+        console.log('Atenção!');
     }
-}
-preencherMensagem();
+    mostrarAviso();
+    mostrarAviso();
 
-//nome é o parametro uma variavel local da função
-function saudar(nome){
-    console.log("Olá, " + nome + "!");
-}
+    // Slide 06 - Saudação (sem parâmetros)
+    console.log('\n--- Slide 06: Saudação ---');
+    function exibirSaudacao() {
+        console.log('Olá! Bem-vindo à aula.');
+    }
+    exibirSaudacao();
 
-saudar("Alice");
-saudar("Bob");
-saudar("Bruno");
+    // Slide 07 - Mostrar data atual
+    console.log('\n--- Slide 07: Mostrar data atual ---');
+    function mostrarDataAtual() {
+        const agora = new Date();
+        const dataFormatada = agora.toLocaleDateString('pt-BR');
+        console.log('Data de hoje:', dataFormatada);
+    }
+    mostrarDataAtual();
 
-function calcularDobro(numero){
-    return numero * 2;
-}
+    // Slide 08 - Cálculo interno
+    console.log('\n--- Slide 08: Cálculo interno ---');
+    function calcularMediaFixa() {
+        const nota1 = 8;
+        const nota2 = 6;
+        const media = (nota1 + nota2) / 2;
+        console.log('Média:', media);
+    }
+    calcularMediaFixa();
 
-const numeroDigitado = Number(prompt("Digite um número:"));
-console.log("Dobro: " + calcularDobro(numeroDigitado));
-document.getElementById("resultado").textContent = "Dobro: " + calcularDobro(numeroDigitado);
+    // Slide 09 - Manipular elemento da página
+    console.log('\n--- Slide 09: Manipular elemento da página ---');
+    function preencherMensagem() {
+        const paragrafo = document.getElementById('mensagem');
+        if (paragrafo) {
+            paragrafo.textContent = 'JavaScript alterou este texto!';
+            console.log('Texto do parágrafo #mensagem alterado.');
+        }
+    }
+    preencherMensagem();
 
-function somar(numero1, numero2){
-    const resultado = numero1 + numero2;
-    console.log("Soma: " + resultado);
-    return resultado;
-}
-somar(5, 10);
-somar(3, 7);
-somar(2, 4);
+    // Slide 11 - Função com parâmetros
+    console.log('\n--- Slide 11: Função com parâmetros ---');
+    function saudar(nome) {
+        console.log(`Olá, ${nome}!`);
+    }
+    saudar('Ana');
+    saudar('Carlos');
+    saudar('Marina');
 
-function mostrarNomeCompleto(){
-    console.log("Seu nome completo: Matheus Luiz");
-}
-mostrarNomeCompleto();
+    // Slide 13 - Um parâmetro (dobro)
+    console.log('\n--- Slide 13: Dobro de um número ---');
+    function mostrarDobro(numero) {
+        const dobro = numero * 2;
+        console.log(`O dobro de ${numero} é ${dobro}.`);
+    }
+    mostrarDobro(5);
+    mostrarDobro(12);
+    mostrarDobro(-3);
 
-function receberNome(nome){
-    console.log("Olá, " + nome + "!");
-}
-receberNome("Bruno");
+    function calcularDobro(numero) {
+        return numero * 2;
+    }
+    function calcularDobroDaTela() {
+        const input = document.getElementById("inputNumero");
+        const valor = Number(input.value);
+        const resultado = calcularDobro(valor);
+        document.getElementById("resultado").textContent = `O dobro de ${valor} é ${resultado}.`;
+        console.log(`Dobro calculado na tela: ${resultado}`);
+    }
+    calcularDobroDaTela();
 
-function calcularArea(base, altura){
-    return base * altura;
-}
-console.log("Área do retângulo: " + calcularArea(5, 3));
+    // Slide 14 - Dois parâmetros (soma)
+    console.log('\n--- Slide 14: Somar valores ---');
+    function somar(numero1, numero2) {
+        const resultado = numero1 + numero2;
+        console.log(`Soma: ${resultado}`);
+    }
+    somar(4, 6);
+    somar(10, 25);
+    somar(2.5, 1.5);
 
-function verificarAprovacao(media){
-    return media >= 7 ? "aprovado" : "reprovado";
-}
-console.log("Situação: " + verificarAprovacao(8));
+    // Slide 15 - Múltiplos parâmetros (ficha de aluno)
+    console.log('\n--- Slide 15: Exibir aluno ---');
+    function exibirAluno(nome, curso, semestre) {
+        console.log('Nome:', nome);
+        console.log('Curso:', curso);
+        console.log('Semestre:', semestre);
+    }
+    exibirAluno('Lia', 'Computação', 2);
+    exibirAluno('Ravi', 'Engenharia', 4);
 
-function converterCelsius(fahrenheit){
-    return (fahrenheit - 32) * 5 / 9;
-}
-console.log("Temperatura em Celsius: " + converterCelsius(86));
+    // Slide 16 - Parâmetro padrão
+    console.log('\n--- Slide 16: Parâmetro padrão ---');
+    function apresentar(nome, perfil = 'Aluno') {
+        console.log(`${nome} acessou como ${perfil}.`);
+    }
+    apresentar('João');
+    apresentar('Carla', 'Professora');
 
-function mostrarCor(cor){
-    document.body.style.backgroundColor = cor;
-    document.getElementById("corEscolhida").textContent = "Cor escolhida: " + cor;
-}
+    // Slide 17 - Retorno de valor
+    console.log('\n--- Slide 17: Retorno de valor ---');
+    function calcularMedia(nota1, nota2) {
+        const media = (nota1 + nota2) / 2;
+        return media;
+    }
+    console.log('Média Ana:', calcularMedia(8, 7));
+    console.log('Média Bia:', calcularMedia(10, 9));
 
+    // Slide 19 - Retorno booleano
+    console.log('\n--- Slide 19: Retorno booleano ---');
+    function verificarMaioridade(idade) {
+        return idade >= 18;
+    }
+    const podeEntrar = verificarMaioridade(20);
+    console.log(podeEntrar ? 'Entrada permitida.' : 'Entrada não permitida.');
 
+    // Slide 20 - Retorno antecipado e validação
+    console.log('\n--- Slide 20: Divisão com validação ---');
+    function dividir(dividendo, divisor) {
+        if (divisor === 0) {
+            return 'Não é possível dividir por zero.';
+        }
+        return dividendo / divisor;
+    }
+    console.log('Divisão 10 / 2:', dividir(10, 2));
+    console.log('Divisão 10 / 0:', dividir(10, 0));
+
+    // Slide 21 - Objeto como parâmetro
+    console.log('\n--- Slide 21: Objeto como parâmetro ---');
+    function exibirProduto(produto) {
+        console.log(`Produto: ${produto.nome}`);
+        console.log(`Preço: R$ ${produto.preco.toFixed(2)}`);
+    }
+    exibirProduto({ nome: 'JavaScript Básico', preco: 59.9 });
+    exibirProduto({ nome: 'Teclado USB', preco: 120 });
+
+    // Slide 22 - Vetor como parâmetro
+    console.log('\n--- Slide 22: Vetor como parâmetro ---');
+    function calcularTotal(valores) {
+        let total = 0;
+        for (const valor of valores) {
+            total += valor;
+        }
+        return total;
+    }
+    console.log('Total vetor [10, 20, 30]:', calcularTotal([10, 20, 30]));
+    console.log('Total vetor [5.5, 4.5]:', calcularTotal([5.5, 4.5]));
+
+    // Slide 23 - Escopo local e global
+    console.log('\n--- Slide 23: Escopo de variáveis ---');
+    const escola = 'SENAI CIMATEC';
+    function mostrarTurma(nomeTurma) {
+        const mensagem = `${escola}: ${nomeTurma}`;
+        console.log(mensagem);
+    }
+    mostrarTurma('Desenvolvimento Web');
+
+    // Slide 24 - Expressão de função
+    console.log('\n--- Slide 24: Expressão de função ---');
+    const multiplicar = function (a, b) {
+        return a * b;
+    };
+    console.log('Multiplicação (3 x 4):', multiplicar(3, 4));
+    console.log('Multiplicação (5 x 8):', multiplicar(5, 8));
+
+    // Slide 25 - Arrow function
+    console.log('\n--- Slide 25: Arrow function ---');
+    function quadrado(numero) {
+        return numero * numero;
+    }
+    const quadradoArrow = numero => numero * numero;
+    console.log('Quadrado tradicional (5):', quadrado(5));
+    console.log('Quadrado arrow (5):', quadradoArrow(5));
+
+    // Slide 26 - Botão com parâmetro
+    function mudarCor(cor) {
+        document.body.style.backgroundColor = cor;
+        console.log(`Cor de fundo alterada para: ${cor}`);
+    }
+
+    // Slide 27 - Formulário com nome e mensagem
+    function criarMensagem(nome) {
+        return `Olá, ${nome}! Bons estudos.`;
+    }
+    function cumprimentar() {
+        const nome = document.getElementById('nome').value.trim();
+        const saida = document.getElementById('saida');
+        saida.textContent = nome ? criarMensagem(nome) : 'Informe o nome.';
+        console.log('Mensagem:', saida.textContent);
+    }
+
+    // Slide 30 - Exemplo completo (desconto)
+    console.log('\n--- Slide 30: Exemplo completo de desconto ---');
+    function calcularDesconto(preco, percentual = 10) {
+        if (preco < 0 || percentual < 0 || percentual > 100) {
+            return null;
+        }
+        const desconto = preco * (percentual / 100);
+        return preco - desconto;
+    }
+    const valorFinal = calcularDesconto(200, 15);
+    console.log(valorFinal !== null ? `Valor final: R$ ${valorFinal.toFixed(2)}` : 'Dados inválidos.');
+
+    // Slide 31 - Exercícios práticos
+    console.log('\n--- EXERCÍCIOS PRÁTICOS (SLIDE 31) ---');
+
+    // Exercício 1: Mostrar nome no console
+    function mostrarMeuNome() {
+        console.log('Exercício 1: Matheus Luiz Neves Johnsson');
+    }
+    mostrarMeuNome();
+
+    // Exercício 2: Saudação com nome
+    function receberNome(nome) {
+        console.log(`Exercício 2: Olá, ${nome}!`);
+    }
+    receberNome('Maria');
+
+    // Exercício 3: Área do retângulo
+    function calcularArea(base, altura) {
+        return base * altura;
+    }
+    console.log('Exercício 3: Área (5x4) =', calcularArea(5, 4));
+
+    // Exercício 4: Verificar aprovação
+    function verificarAprovacao(media) {
+        return media >= 7 ? 'Aprovado' : 'Reprovado';
+    }
+    console.log('Exercício 4: Média 7.5 =', verificarAprovacao(7.5));
+    console.log('Exercício 4: Média 5.0 =', verificarAprovacao(5.0));
+
+    // Exercício 5: Converter Fahrenheit para Celsius
+    function converterCelsius(fahrenheit) {
+        return ((fahrenheit - 32) * 5) / 9;
+    }
+    console.log('Exercício 5: 68°F em °C =', converterCelsius(68).toFixed(1));
+
+    // Slide 32 - Desafios de programação
+    console.log('\n--- DESAFIOS (SLIDE 32) ---');
+
+    // Desafio 1: Calcular IMC com classificação
+    function calcularIMC(peso, altura) {
+        if (peso <= 0 || altura <= 0 || isNaN(peso) || isNaN(altura)) {
+            return 'Dados inválidos.';
+        }
+        const imc = peso / (altura * altura);
+        let classificacao = '';
+        if (imc < 18.5) classificacao = 'Abaixo do peso';
+        else if (imc < 25) classificacao = 'Peso normal';
+        else if (imc < 30) classificacao = 'Sobrepeso';
+        else classificacao = 'Obesidade';
+        return `IMC: ${imc.toFixed(2)} (${classificacao})`;
+    }
+    console.log('Desafio 1: IMC (75kg, 1.78m) =', calcularIMC(75, 1.78));
+
+    // Desafio 2: Calcular conta de luz formatada
+    function calcularConta(consumo, tarifa) {
+        return `R$ ${(consumo * tarifa).toFixed(2).replace('.', ',')}`;
+    }
+    console.log('Desafio 2: Conta de luz =', calcularConta(180, 0.75));
+
+    // Desafio 3: Contar números pares
+    function contarPares(numeros) {
+        let pares = 0;
+        for (const n of numeros) {
+            if (n % 2 === 0) pares++;
+        }
+        return pares;
+    }
+    console.log('Desafio 3: Qtd de pares =', contarPares([1, 2, 4, 7, 8, 10]));
+
+    // Desafio 4: Cadastrar aluno com média
+    function cadastrarAluno(nome, curso, notas) {
+        const soma = notas.reduce((acc, nota) => acc + nota, 0);
+        const media = notas.length > 0 ? soma / notas.length : 0;
+        return { nome, curso, notas, media: Number(media.toFixed(1)) };
+    }
+    console.log('Desafio 4: Aluno cadastrado =', cadastrarAluno('Ana Silva', 'Engenharia', [8.0, 9.5, 7.5]));
+
+    // Desafio 5: Calculadora com operação por parâmetro
+    function calcularOperacao(n1, n2, operacao) {
+        switch (operacao) {
+            case '+': return n1 + n2;
+            case '-': return n1 - n2;
+            case '*': return n1 * n2;
+            case '/': return n2 !== 0 ? n1 / n2 : 'Divisão por zero não permitida';
+            default: return 'Operação inválida';
+        }
+    }
+    console.log('Desafio 5: Operação 10 / 2 =', calcularOperacao(10, 2, '/'));
+
+    function executarCalculoInterface() {
+        const n1 = Number(document.getElementById('calcNum1').value);
+        const n2 = Number(document.getElementById('calcNum2').value);
+        const op = document.getElementById('calcOperacao').value;
+        const res = calcularOperacao(n1, n2, op);
+        document.getElementById('calcResultado').textContent = `Resultado: ${n1} ${op} ${n2} = ${res}`;
+        console.log(`Desafio 5 (Interface): ${n1} ${op} ${n2} = ${res}`);
+    }
 </script>
 </body>
 </html>
