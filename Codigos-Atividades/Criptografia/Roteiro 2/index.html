@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>Laboratório SHA-256</title>
+</head>
+<body>
+  <main>
+    <h1>Laboratório de Hash SHA-256</h1>
+    <label for="entrada">Digite uma informação</label>
+    <input id="entrada" type="text">
+    <p id="contador">0 caracteres</p>
+
+    <button id="gerar" type="button">Gerar SHA-256</button>
+    <button id="limpar" type="button">Limpar</button>
+    <button id="copiar" type="button">Copiar hash</button>
+
+    <p>Original: <output id="original">—</output></p>
+    <p>Hash: <output id="hash">—</output></p>
+    <p id="status" aria-live="polite"></p>
+
+    <h2>Comparar dados</h2>
+    <label for="dado1">Dado 1</label>
+    <input id="dado1" type="text">
+    <label for="dado2">Dado 2</label>
+    <input id="dado2" type="text">
+    <button id="comparar" type="button">Comparar</button>
+    <output id="resultado-comparacao"></output>
+
+    <h2>Experimento</h2>
+    <table>
+      <thead><tr><th>Entrada</th><th>SHA-256</th></tr></thead>
+      <tbody><tr><td>Celso</td><td id="hash-celso"></td></tr></tbody>
+    </table>
+    <p>Aplicação demonstrativa: não use SHA-256 puro para senhas.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

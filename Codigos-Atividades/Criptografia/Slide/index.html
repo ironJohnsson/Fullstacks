@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório Criptográfico - Criptografia, Hash e Segurança</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Laboratório Criptográfico</h1>
+      <p class="subtitulo">Fundamentos, SHA-256, SHA-512, Efeito Avalanche, Integridade e HMAC</p>
+      <div class="nav-tabs" role="tablist">
+        <button class="tab-btn active" data-tab="modulo1">Módulo 1: SHA-256 & SHA-512</button>
+        <button class="tab-btn" data-tab="modulo2">Módulo 2: Efeito Avalanche</button>
+        <button class="tab-btn" data-tab="modulo3">Módulo 3: Verificador de Integridade</button>
+        <button class="tab-btn" data-tab="modulo4">Módulo 4: Hash Simples x HMAC</button>
+        <button class="tab-btn" data-tab="modulo5">Módulo 5: Desafio ITA (Serialização)</button>
+        <button class="tab-btn" data-tab="modulo6">Módulo 6: Análise de Casos (Slides 36 e 38)</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- MÓDULO 1: SHA-256 & SHA-512 (Prática 1 & Prática Guiada) -->
+    <section id="modulo1" class="tab-content active">
+      <div class="card">
+        <h2>Módulo 1 — Geração de Hash (SHA-256 e SHA-512)</h2>
+        <p class="descricao">Calcule resumos criptográficos usando a Web Crypto API nativa do navegador.</p>
+        
+        <label for="m1-entrada">Frase ou mensagem de entrada:</label>
+        <textarea id="m1-entrada" rows="3" placeholder="Digite uma frase ou mensagem... (Ex: Professor Celso)"></textarea>
+        
+        <div class="btn-group">
+          <button id="m1-btn-sha256" class="btn btn-primary" type="button">Gerar SHA-256</button>
+          <button id="m1-btn-sha512" class="btn btn-secondary" type="button">Gerar SHA-512</button>
+          <button id="m1-btn-limpar" class="btn btn-outline" type="button">Limpar</button>
+        </div>
+
+        <div class="resultados-grid">
+          <div class="resultado-card">
+            <h3>Detalhes da Entrada</h3>
+            <p><strong>Bytes UTF-8:</strong> <span id="m1-bytes">0 bytes</span></p>
+            <p><strong>Caracteres:</strong> <span id="m1-chars">0 caracteres</span></p>
+          </div>
+          <div class="resultado-card">
+            <h3>Detalhes do Resumo</h3>
+            <p><strong>Algoritmo:</strong> <span id="m1-algoritmo">—</span></p>
+            <p><strong>Tamanho em Bits:</strong> <span id="m1-bits">—</span></p>
+            <p><strong>Caracteres Hexadecimais:</strong> <span id="m1-hex-length">—</span></p>
+          </div>
+        </div>
+
+        <div class="hash-box">
+          <label>Saída Hexadecimal:</label>
+          <pre id="m1-hash">—</pre>
+          <button id="m1-btn-copiar" class="btn btn-copy" type="button">Copiar Hash</button>
+          <span id="m1-status" class="status-msg"></span>
+        </div>
+
+        <h3>Tabela de Experimentos Sugeridos (Slide 31)</h3>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Entrada de Teste</th>
+                <th>Ação Rápida</th>
+                <th>Bits</th>
+                <th>Hex Length</th>
+                <th>Hash Resultante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Professor Celso</code></td>
+                <td><button class="btn-small" onclick="testarEntradaM1('Professor Celso', 'SHA-256')">SHA-256</button> <button class="btn-small" onclick="testarEntradaM1('Professor Celso', 'SHA-512')">SHA-512</button></td>
+                <td id="t-bits-1">—</td>
+                <td id="t-len-1">—</td>
+                <td><code id="t-hash-1" class="hash-cell">—</code></td>
+              </tr>
+              <tr>
+                <td><code>professor Celso</code></td>
+                <td><button class="btn-small" onclick="testarEntradaM1('professor Celso', 'SHA-256')">SHA-256</button></td>
+                <td id="t-bits-2">—</td>
+                <td id="t-len-2">—</td>
+                <td><code id="t-hash-2" class="hash-cell">—</code></td>
+              </tr>
+              <tr>
+                <td><code>Professor Celso!</code></td>
+                <td><button class="btn-small" onclick="testarEntradaM1('Professor Celso!', 'SHA-256')">SHA-256</button></td>
+                <td id="t-bits-3">—</td>
+                <td id="t-len-3">—</td>
+                <td><code id="t-hash-3" class="hash-cell">—</code></td>
+              </tr>
+              <tr>
+                <td><code>(string vazia)</code></td>
+                <td><button class="btn-small" onclick="testarEntradaM1('', 'SHA-256')">SHA-256</button></td>
+                <td id="t-bits-4">—</td>
+                <td id="t-len-4">—</td>
+                <td><code id="t-hash-4" class="hash-cell">—</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 2: EFEITO AVALANCHE (Prática 2) -->
+    <section id="modulo2" class="tab-content">
+      <div class="card">
+        <h2>Módulo 2 — Investigando o Efeito Avalanche</h2>
+        <p class="descricao">Uma alteração de apenas um único caractere (ou bit) na entrada altera aproximadamente 50% de todos os bits do hash final.</p>
+
+        <div class="grid-2">
+          <div>
+            <label for="m2-entrada-a">Entrada A:</label>
+            <input id="m2-entrada-a" type="text" value="SEGURANCA2026">
+          </div>
+          <div>
+            <label for="m2-entrada-b">Entrada B:</label>
+            <input id="m2-entrada-b" type="text" value="SEGURANCA2027">
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button id="m2-btn-comparar" class="btn btn-primary" type="button">Calcular e Comparar Bits</button>
+          <button id="m2-btn-limpar" class="btn btn-outline" type="button">Limpar</button>
+        </div>
+
+        <div class="avalanche-stats">
+          <div class="stat-card">
+            <h4>Diferença em Bits</h4>
+            <div id="m2-bits-diff" class="stat-number">—</div>
+            <small>de 256 bits totais</small>
+          </div>
+          <div class="stat-card">
+            <h4>Porcentagem de Avalanche</h4>
+            <div id="m2-pct-diff" class="stat-number">—</div>
+            <small>Esperado: ~50%</small>
+          </div>
+          <div class="stat-card">
+            <h4>Diferença em Caracteres Hex</h4>
+            <div id="m2-chars-diff" class="stat-number">—</div>
+            <small>de 64 caracteres</small>
+          </div>
+        </div>
+
+        <div class="hashes-comparison">
+          <label>Hash SHA-256 (Entrada A):</label>
+          <pre id="m2-hash-a">—</pre>
+          <label>Hash SHA-256 (Entrada B):</label>
+          <pre id="m2-hash-b">—</pre>
+          <label>Visualização de Bits Diferentes (Vermelho = divergência):</label>
+          <div id="m2-visualizacao-bits" class="bits-container">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 3: VERIFICADOR DE INTEGRIDADE (Práticas 3 e 4) -->
+    <section id="modulo3" class="tab-content">
+      <div class="card">
+        <h2>Módulo 3 — Verificador de Integridade (Texto e Arquivo)</h2>
+        <p class="descricao">Verifique a integridade de dados e arquivos através do SHA-256.</p>
+
+        <h3>Parte A: Integridade entre dois textos (Prática 3)</h3>
+        <div class="grid-2">
+          <div>
+            <label for="m3-original">Conteúdo Original:</label>
+            <textarea id="m3-original" rows="3" placeholder="Digite o conteúdo original..."></textarea>
+            <small id="m3-bytes-original" class="byte-info">0 bytes</small>
+          </div>
+          <div>
+            <label for="m3-recebido">Conteúdo Recebido:</label>
+            <textarea id="m3-recebido" rows="3" placeholder="Digite o conteúdo recebido..."></textarea>
+            <small id="m3-bytes-recebido" class="byte-info">0 bytes</small>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button id="m3-btn-verificar" class="btn btn-primary" type="button">Verificar Integridade</button>
+        </div>
+
+        <div id="m3-resultado-badge" class="badge-status">—</div>
+
+        <hr style="margin: 24px 0; border: 0; border-top: 1px solid #e1e7ec;">
+
+        <h3>Parte B: Integridade de Arquivo no Navegador (Prática 4)</h3>
+        <p class="descricao">Selecione qualquer arquivo local para ler em bytes via <code>File.arrayBuffer()</code> e gerar o SHA-256 diretamente.</p>
+
+        <label for="m3-arquivo-input">Selecione um arquivo local:</label>
+        <input id="m3-arquivo-input" type="file">
+
+        <div id="m3-arquivo-info" class="card-info" style="display: none;">
+          <p><strong>Nome do Arquivo:</strong> <span id="m3-arq-nome">—</span></p>
+          <p><strong>Tamanho:</strong> <span id="m3-arq-tamanho">—</span> (<span id="m3-arq-bytes">—</span>)</p>
+          <label>SHA-256 do Arquivo:</label>
+          <pre id="m3-arq-hash">—</pre>
+          <button id="m3-btn-copiar-arq" class="btn btn-copy" type="button">Copiar Hash do Arquivo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 4: HASH SIMPLES X HMAC (Prática 6) -->
+    <section id="modulo4" class="tab-content">
+      <div class="card">
+        <h2>Módulo 4 — Hash Simples vs HMAC com Chave Secreta</h2>
+        <p class="descricao">Entenda por que o SHA-256 sozinho garante <em>apenas integridade</em>, mas o HMAC garante <em>integridade e autenticidade de origem</em>.</p>
+
+        <label for="m4-mensagem">Mensagem / Payload:</label>
+        <textarea id="m4-mensagem" rows="2">matricula=20261001&valor=1500.00&horario=11:30</textarea>
+
+        <label for="m4-chave">Chave Secreta Compartilhada (K):</label>
+        <input id="m4-chave" type="text" value="segredo-super-restrito-2026">
+
+        <div class="btn-group">
+          <button id="m4-btn-gerar" class="btn btn-primary" type="button">Calcular SHA-256 e HMAC-SHA256</button>
+          <button id="m4-btn-tamper" class="btn btn-danger" type="button">Simular Ataque: Adulterar Mensagem</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="resultado-card">
+            <h3>Hash Simples (SHA-256)</h3>
+            <small>Não usa chave secreta. Qualquer atacante pode modificar os dados e recalcular um hash válido!</small>
+            <pre id="m4-res-sha">—</pre>
+          </div>
+          <div class="resultado-card">
+            <h3>Tag Autenticada (HMAC-SHA256)</h3>
+            <small>Usa chave secreta compartilhada via Web Crypto API. O atacante não consegue falsificar sem a chave!</small>
+            <pre id="m4-res-hmac">—</pre>
+          </div>
+        </div>
+
+        <div id="m4-status-autenticidade" class="badge-status" style="margin-top: 16px;">—</div>
+      </div>
+    </section>
+
+    <!-- MÓDULO 5: DESAFIO ITA (Slide 39) -->
+    <section id="modulo5" class="tab-content">
+      <div class="card">
+        <h2>Módulo 5 — Desafio ITA: Representação Não Ambígua (Serialização Canônica)</h2>
+        <p class="descricao">Demonstração de como concatenações ingênuas geram colisões de serialização e como uma representação canônica resolve o problema.</p>
+
+        <div class="grid-2">
+          <div class="card-sub">
+            <h3>Registro A</h3>
+            <label>Campo 1:</label> <input id="m5-a1" type="text" value="12">
+            <label>Campo 2:</label> <input id="m5-a2" type="text" value="345">
+          </div>
+          <div class="card-sub">
+            <h3>Registro B</h3>
+            <label>Campo 1:</label> <input id="m5-b1" type="text" value="123">
+            <label>Campo 2:</label> <input id="m5-b2" type="text" value="45">
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button id="m5-btn-demonstrar" class="btn btn-primary" type="button">Comparar Serializações</button>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Método de Serialização</th>
+                <th>Entrada Registro A</th>
+                <th>Entrada Registro B</th>
+                <th>Hash Registro A</th>
+                <th>Hash Registro B</th>
+                <th>Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ingênua (Concatenação)</strong></td>
+                <td><code id="m5-in-a-naive">—</code></td>
+                <td><code id="m5-in-b-naive">—</code></td>
+                <td><code id="m5-hash-a-naive" class="hash-cell">—</code></td>
+                <td><code id="m5-hash-b-naive" class="hash-cell">—</code></td>
+                <td id="m5-res-naive"><span class="badge badge-danger">Falsa Colisão</span></td>
+              </tr>
+              <tr>
+                <td><strong>Canônica (JSON Estrito)</strong></td>
+                <td><code id="m5-in-a-json">—</code></td>
+                <td><code id="m5-in-b-json">—</code></td>
+                <td><code id="m5-hash-a-json" class="hash-cell">—</code></td>
+                <td><code id="m5-hash-b-json" class="hash-cell">—</code></td>
+                <td id="m5-res-json"><span class="badge badge-success">Distintos e Seguros</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  
+    <!-- MÓDULO 6: ANÁLISE DE SEGURANÇA E ARQUITETURA (Slides 36 e 38) -->
+    <section id="modulo6" class="tab-content">
+      <div class="card">
+        <h2>Módulo 6 — Análise de Falhas de Segurança e Decisão de Arquitetura</h2>
+        <p class="descricao">Respostas e análises aprofundadas dos exercícios conceituais dos Slides 36 e 38.</p>
+
+        <h3>1. Prática 5 — Erros Críticos de Segurança com Senhas (Slide 36)</h3>
+        <div class="resultado-card" style="margin-bottom: 16px;">
+          <p><strong>Código Problemático:</strong></p>
+          <pre>const senha = document.querySelector("#senha").value;
+const hash = await gerarHash(senha, "SHA-256");
+localStorage.setItem("senha", hash);
+console.log("Senha protegida com criptografia SHA-256");</pre>
+          
+          <h4 style="margin-top: 10px; color: var(--perigo);">Falhas Identificadas:</h4>
+          <ul style="padding-left: 20px; font-size: 0.9rem; line-height: 1.6; margin-top: 6px;">
+            <li><strong>Conceitual:</strong> SHA-256 é função hash (resumo unidirecional), NÃO é criptografia reversível.</li>
+            <li><strong>Vulnerabilidade de Rainbow Tables:</strong> SHA-256 sem <em>salt</em> permite que invasores comparem senhas comuns pré-computadas instantaneamente.</li>
+            <li><strong>Velocidade Inadequada:</strong> O SHA-256 foi otimizado para velocidade em hardware; placas de vídeo (GPUs) modernas conseguem testar dezenas de bilhões de combinações por segundo.</li>
+            <li><strong>Armazenamento Inseguro:</strong> <code>localStorage</code> é vulnerável a extração via ataques de XSS (Cross-Site Scripting).</li>
+          </ul>
+
+          <h4 style="margin-top: 12px; color: var(--sucesso);">Arquitetura Recomendada:</h4>
+          <p style="font-size: 0.9rem;">Processamento seguro no servidor com algoritmos resistentes a força bruta e com salt automático: <strong>Argon2id</strong>, <strong>bcrypt</strong> ou <strong>PBKDF2</strong>.</p>
+        </div>
+
+        <h3>2. Exercício — Decisão de Arquitetura Universitária (Slide 38)</h3>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Equipe</th>
+                <th>Solução Proposta</th>
+                <th>Integridade</th>
+                <th>Autenticidade</th>
+                <th>Não-Repúdio</th>
+                <th>Veredito</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Equipe A</strong></td>
+                <td>SHA-256(documento)</td>
+                <td>✓ Sim</td>
+                <td>✗ Não</td>
+                <td>✗ Não</td>
+                <td><span class="badge badge-danger">Insuficiente</span></td>
+              </tr>
+              <tr>
+                <td><strong>Equipe B</strong></td>
+                <td>HMAC-SHA-256 com chave K</td>
+                <td>✓ Sim</td>
+                <td>✓ Sim (Restrita)</td>
+                <td>✗ Não (K compartilhada)</td>
+                <td><span class="badge badge-danger">Inadequada para Alunos</span></td>
+              </tr>
+              <tr>
+                <td><strong>Equipe C</strong></td>
+                <td>Assinatura Digital (Chave Pública/Privada)</td>
+                <td>✓ Sim</td>
+                <td>✓ Sim (Plena)</td>
+                <td>✓ Sim (Total)</td>
+                <td><span class="badge badge-success">Recomendada (Vencedora)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="resultado-card" style="margin-top: 16px;">
+          <h4>Justificativa Técnica da Escolha da Equipe C:</h4>
+          <p style="font-size: 0.88rem; line-height: 1.6;">
+            Apenas a <strong>Assinatura Digital</strong> impede que a própria universidade forje ou altere o trabalho do aluno (garantindo <strong>Não-Repúdio</strong>), ao mesmo tempo em que permite que terceiros (como comissões avaliadoras, órgãos reguladores ou o MEC) verifiquem a autenticidade usando a chave pública do aluno, sem jamais exigir a divulgação de chaves privadas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Engenharia da Computação • Criptografia e Integridade de Dados • Professor Celso Barreto</p>
+      <p><small>Web Crypto API nativa sem bibliotecas externas • Padrão NIST FIPS 180-4</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
