@@ -75,6 +75,7 @@ body {
 .nav-links {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 8px;
 }
@@ -108,6 +109,62 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
+
+/* =========================
+   BOTÃO DE IDIOMA (PT / EN)
+========================= */
+
+.navbar-topo-mobile {
+    display: none;
+}
+
+.btn-idioma {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    user-select: none;
+}
+
+.btn-idioma:hover {
+    background: rgba(139, 92, 246, 0.3);
+    border-color: #a78bfa;
+    box-shadow: 0 0 14px rgba(139, 92, 246, 0.45);
+    transform: translateY(-1px);
+}
+
+.btn-idioma:active {
+    transform: translateY(0);
+}
+
+.btn-idioma .idioma-globo {
+    font-size: 14px;
+}
+
+.btn-idioma .idioma-sigla {
+    color: #9494a8;
+    transition: all 0.2s ease;
+}
+
+.btn-idioma .idioma-sigla.ativo {
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(167, 139, 250, 0.8);
+}
+
+.btn-idioma .idioma-barra {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 11px;
+}
+
 
 /* =========================
    HERO / INÍCIO
@@ -203,6 +260,17 @@ body {
     white-space: nowrap;
     animation: marquee 22s linear infinite;
 }
+
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.marquee-sep {
+    opacity: 0.6;
+}
+
 
 @keyframes marquee {
     from { transform: translateX(0); }
@@ -766,12 +834,23 @@ footer p {
     }
 
     .navbar {
-        padding: 10px;
+        padding: 10px 14px;
+    }
+
+    .navbar-topo-mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn-idioma-desktop {
+        display: none;
     }
 
     .menu-toggle {
         display: block;
-        margin: 0 auto;
+        margin: 0;
     }
 
     .nav-links {

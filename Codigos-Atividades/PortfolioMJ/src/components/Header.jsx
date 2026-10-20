@@ -1,17 +1,13 @@
 import { useState } from "react";
 
-const itensNavegacao = [
-  { id: "inicio", label: "Início" },
-  { id: "sobre", label: "Sobre" },
-  { id: "projetos", label: "Projetos" },
-  { id: "habilidades", label: "Habilidades" },
-  { id: "experiencia", label: "Experiência" },
-  { id: "certificacoes", label: "Certificações" },
-  { id: "hobbies", label: "Hobbies" },
-  { id: "contato", label: "Contato" }
-];
-
-function Header({ secaoAtiva, onNavigate }) {
+function Header({
+  secaoAtiva,
+  onNavigate,
+  itensNavegacao,
+  idioma,
+  onToggleIdioma,
+  btnIdiomaTitle
+}) {
   const [menuAberto, setMenuAberto] = useState(false);
 
   const navegar = (id) => {
@@ -21,13 +17,27 @@ function Header({ secaoAtiva, onNavigate }) {
 
   return (
     <nav className="navbar">
-      <button
-        className="menu-toggle"
-        onClick={() => setMenuAberto(!menuAberto)}
-        aria-label="Alternar Menu"
-      >
-        {menuAberto ? "✕" : "☰"}
-      </button>
+      <div className="navbar-topo-mobile">
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuAberto(!menuAberto)}
+          aria-label={menuAberto ? "Fechar Menu" : "Abrir Menu"}
+        >
+          {menuAberto ? "✕" : "☰"}
+        </button>
+
+        <button
+          type="button"
+          className="btn-idioma btn-idioma-mobile"
+          onClick={onToggleIdioma}
+          title={btnIdiomaTitle}
+          aria-label={btnIdiomaTitle}
+        >
+          <span className={`idioma-sigla ${idioma === "pt" ? "ativo" : ""}`}>PT</span>
+          <span className="idioma-barra">|</span>
+          <span className={`idioma-sigla ${idioma === "en" ? "ativo" : ""}`}>EN</span>
+        </button>
+      </div>
 
       <div className={`nav-links ${menuAberto ? "aberto" : ""}`}>
         {itensNavegacao.map((item) => (
@@ -43,6 +53,18 @@ function Header({ secaoAtiva, onNavigate }) {
             {item.label}
           </a>
         ))}
+
+        <button
+          type="button"
+          className="btn-idioma btn-idioma-desktop"
+          onClick={onToggleIdioma}
+          title={btnIdiomaTitle}
+          aria-label={btnIdiomaTitle}
+        >
+          <span className={`idioma-sigla ${idioma === "pt" ? "ativo" : ""}`}>PT</span>
+          <span className="idioma-barra">|</span>
+          <span className={`idioma-sigla ${idioma === "en" ? "ativo" : ""}`}>EN</span>
+        </button>
       </div>
     </nav>
   );

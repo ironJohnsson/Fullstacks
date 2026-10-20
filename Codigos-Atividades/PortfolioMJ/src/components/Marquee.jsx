@@ -1,18 +1,16 @@
-function Marquee() {
+function Marquee({ itens }) {
+  // Duplica os itens para criar o loop contínuo e suave no carrossel
+  const listaExibicao = itens && itens.length > 0 ? [...itens, ...itens] : [];
+
   return (
     <div className="marquee-container">
       <div className="marquee">
-        <span> Bem-vindo ao meu portfólio!</span>
-        <span>•</span>
-        <span>Programação</span>
-        <span>•</span>
-        <span>Computação Quântica</span>
-        <span>•</span>
-        <span>Realidade Virtual (VR)</span>
-        <span>•</span>
-        <span>Impressão 3D</span>
-        <span>•</span>
-        <span>Unreal Engine 5</span>
+        {listaExibicao.map((item, index) => (
+          <span key={index} className="marquee-item">
+            <span>{item}</span>
+            <span className="marquee-sep">•</span>
+          </span>
+        ))}
       </div>
     </div>
   );

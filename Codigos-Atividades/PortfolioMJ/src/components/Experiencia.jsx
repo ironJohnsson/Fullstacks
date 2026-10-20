@@ -1,10 +1,10 @@
-function Experiencia({ experiencias }) {
+function Experiencia({ dados }) {
   return (
     <section id="experiencia">
-      <h2>Experiência</h2>
+      <h2>{dados.titulo}</h2>
 
       <div className="timeline">
-        {experiencias.map((experiencia, index) => (
+        {dados.lista.map((experiencia, index) => (
           <div className="experiencia-card" key={index}>
             <div className="exp-header">
               <h3>{experiencia.empresa}</h3>

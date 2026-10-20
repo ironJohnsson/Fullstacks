@@ -1,16 +1,19 @@
-function Habilidades({ buscaHabilidade, setBuscaHabilidade, habilidadesFiltradas }) {
+function Habilidades({ dados, buscaHabilidade, setBuscaHabilidade, habilidadesFiltradas }) {
   return (
     <section id="habilidades">
-      <h2>Habilidades</h2>
+      <h2>{dados.titulo}</h2>
 
       <div className="busca-wrapper busca-habilidade">
         <input
           type="text"
-          placeholder=" Filtrar habilidades..."
+          placeholder={dados.placeholderBusca}
           value={buscaHabilidade}
           onChange={(e) => setBuscaHabilidade(e.target.value)}
           className="input-busca"
         />
+        {buscaHabilidade && (
+          <button className="btn-limpar" onClick={() => setBuscaHabilidade("")}>✕</button>
+        )}
       </div>
 
       <ul className="lista-habilidades">

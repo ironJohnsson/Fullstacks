@@ -1,9 +1,9 @@
-function Contato() {
+function Contato({ dados }) {
   return (
     <section id="contato">
-      <h2>Contato</h2>
+      <h2>{dados.titulo}</h2>
 
-      <p>Sinta-se à vontade para se conectar comigo:</p>
+      <p>{dados.subtitulo}</p>
 
       <div className="redes-sociais">
         <a

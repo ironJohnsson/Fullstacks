@@ -1,5 +1,5 @@
 function Projetos({
-  categorias,
+  dados,
   categoriaFiltro,
   setCategoriaFiltro,
   buscaProjeto,
@@ -10,17 +10,17 @@ function Projetos({
 }) {
   return (
     <section id="projetos">
-      <h2>Meus Projetos</h2>
+      <h2>{dados.titulo}</h2>
 
       <div className="projetos-controles">
         <div className="filtros-categoria">
-          {categorias.map((cat) => (
+          {dados.categorias.map((cat) => (
             <button
-              key={cat}
-              className={`btn-filtro ${categoriaFiltro === cat ? "ativo" : ""}`}
-              onClick={() => setCategoriaFiltro(cat)}
+              key={cat.id}
+              className={`btn-filtro ${categoriaFiltro === cat.id ? "ativo" : ""}`}
+              onClick={() => setCategoriaFiltro(cat.id)}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -28,7 +28,7 @@ function Projetos({
         <div className="busca-wrapper">
           <input
             type="text"
-            placeholder=" Buscar projetos ou tecnologias..."
+            placeholder={dados.placeholderBusca}
             value={buscaProjeto}
             onChange={(e) => setBuscaProjeto(e.target.value)}
             className="input-busca"
@@ -69,13 +69,13 @@ function Projetos({
                   className="btn-ver-mais"
                   onClick={() => toggleExpandirProjeto(isExpandido ? null : projeto.id)}
                 >
-                  {isExpandido ? "Recolher Detalhes ▲" : "Ver Detalhes ▼"}
+                  {isExpandido ? dados.recolher : dados.verMais}
                 </button>
 
                 {isExpandido && (
                   <div className="projeto-detalhes-box">
                     <div className="detalhes-header">
-                      <h4>Detalhes do Projeto</h4>
+                      <h4>{dados.detalhesTitulo}</h4>
                     </div>
                     <p className="detalhes-texto">{projeto.detalhes}</p>
                   </div>
@@ -85,7 +85,7 @@ function Projetos({
           })
         ) : (
           <p className="sem-resultados">
-            Nenhum projeto encontrado para a busca "{buscaProjeto}".
+            {dados.semResultados(buscaProjeto)}
           </p>
         )}
       </div>

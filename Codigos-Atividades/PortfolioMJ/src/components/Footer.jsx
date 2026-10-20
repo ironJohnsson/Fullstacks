@@ -1,7 +1,7 @@
-function Footer() {
+function Footer({ dados }) {
   return (
     <footer>
-      <p>&copy; 2026 Matheus Luiz Neves Johnsson. Todos os direitos reservados.</p>
+      <p>{dados.direitos}</p>
     </footer>
   );
 }
