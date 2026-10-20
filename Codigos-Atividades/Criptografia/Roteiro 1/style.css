@@ -1,0 +1,6 @@
+body { font-family: sans-serif; max-width: 760px; margin: auto; padding: 24px; }
+input { width: 100%; padding: 10px; box-sizing: border-box; }
+button { margin: 10px 6px 10px 0; padding: 10px 14px; }
+pre { overflow-wrap: anywhere; background: #edf3f8; padding: 12px; }
+.erro { color: #a11d32; }
+.sucesso { color: #176e3a; }

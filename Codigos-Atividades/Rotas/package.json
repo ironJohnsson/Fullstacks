@@ -1,0 +1,27 @@
+{
+  "name": "rotas-api",
+  "version": "1.0.0",
+  "description": "Aula de Desenvolvimento Back-End - Servidores e Rotas com Node.js e Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "tarefas": "node server-tarefas.js",
+    "nativo": "node server-nativo.js",
+    "testar": "node testar-rotas.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "api",
+    "rotas"
+  ],
+  "author": "Professor Celso Barreto",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
