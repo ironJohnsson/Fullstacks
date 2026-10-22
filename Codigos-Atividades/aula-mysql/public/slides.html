@@ -93,7 +93,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px 40px;
+      padding: 30px 40px;
     }
 
     .slide {
@@ -119,7 +119,7 @@
     }
 
     .slide-tag {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -128,7 +128,7 @@
     }
 
     h1 {
-      font-size: 3.2rem;
+      font-size: 3.4rem;
       font-weight: 800;
       line-height: 1.15;
       margin-bottom: 20px;
@@ -138,14 +138,14 @@
     }
 
     h2 {
-      font-size: 2.3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 18px;
       color: #ffffff;
     }
 
     p.subtitle {
-      font-size: 1.25rem;
+      font-size: 1.28rem;
       color: var(--text-muted);
       line-height: 1.6;
       margin-bottom: 30px;
@@ -161,7 +161,7 @@
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 24px;
       margin-top: 20px;
     }
 
@@ -169,7 +169,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 24px;
+      padding: 28px;
       backdrop-filter: blur(16px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       transition: transform 0.2s, border-color 0.2s;
@@ -181,39 +181,39 @@
     }
 
     .card h3 {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: #fff;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
     .card p, .card li {
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
-    ul {
+    ul, ol {
       list-style-position: inside;
       margin-left: 4px;
     }
 
     li {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     pre {
       background: #05070d;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
+      border-radius: 14px;
+      padding: 20px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       color: #e2e8f0;
       overflow-x: auto;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     code {
@@ -222,20 +222,6 @@
       background: rgba(56, 189, 248, 0.1);
       padding: 2px 6px;
       border-radius: 6px;
-    }
-
-    .notes-box {
-      margin-top: 20px;
-      background: rgba(52, 211, 153, 0.08);
-      border-left: 4px solid var(--success);
-      border-radius: 0 12px 12px 0;
-      padding: 14px 18px;
-      font-size: 0.92rem;
-      color: #cbd5e1;
-    }
-
-    .notes-box strong {
-      color: var(--success);
     }
 
     footer {
@@ -275,7 +261,7 @@
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 8px;
       font-family: inherit;
       font-size: 0.9rem;
@@ -300,7 +286,7 @@
     }
 
     .key-hint {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
     }
   </style>
@@ -333,12 +319,8 @@
         </div>
         <div class="card">
           <h3>🎨 Frontend</h3>
-          <p>Single Page Application em TypeScript puro sem dependências pesadas.</p>
+          <p>Single Page Application em TypeScript puro sem dependências externas.</p>
         </div>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1 min):</strong> Apresente-se, mencione que o projeto aborda a construção de um CRUD completo de alunos com separação de responsabilidades e foco em segurança.
       </div>
     </div>
 
@@ -354,21 +336,17 @@
           <ul>
             <li>Não tem contato direto com o banco de dados.</li>
             <li>Envia e consome exclusivamente JSON via <code>Fetch API</code>.</li>
-            <li>Renderiza estados de loading, sucesso e erro em tempo real.</li>
+            <li>Renderiza estados de cadastro, busca e exclusão em tempo real.</li>
           </ul>
         </div>
         <div class="card">
           <h3>🛡️ Backend & Conexão</h3>
           <ul>
             <li>Servidor Express valida cada requisição antes de tocar no banco.</li>
-            <li>Pool gerenciado pelo <code>mysql2/promise</code> na porta <code>3306</code>.</li>
+            <li>Pool de conexões gerenciado pelo <code>mysql2/promise</code> na porta <code>3306</code>.</li>
             <li>Credenciais protegidas por variáveis de ambiente (<code>.env</code>).</li>
           </ul>
         </div>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1 min):</strong> Destaque o isolamento do banco. O browser nunca executa query direta; todo fluxo passa pelo backend que audita e valida os dados.
       </div>
     </div>
 
@@ -390,19 +368,15 @@ CREATE TABLE IF NOT EXISTS alunos (
   UNIQUE KEY uq_alunos_email (email)
 );</code></pre>
 
-      <div class="grid-2" style="margin-top: 14px;">
-        <div class="card" style="padding: 16px;">
+      <div class="grid-2" style="margin-top: 20px;">
+        <div class="card" style="padding: 20px;">
           <h3>✨ Suporte UTF-8 (utf8mb4)</h3>
-          <p>Permite acentuação da língua portuguesa e caracteres internacionais.</p>
+          <p>Permite acentuação correta da língua portuguesa e caracteres internacionais.</p>
         </div>
-        <div class="card" style="padding: 16px;">
-          <h3>🔒 Chave Única (UQ)</h3>
+        <div class="card" style="padding: 20px;">
+          <h3>🔒 Chave Única (UNIQUE)</h3>
           <p>O MySQL rejeita automaticamente cadastros duplicados com o mesmo e-mail.</p>
         </div>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1 min):</strong> Explique as escolhas do DDL: o campo id unsigned auto-incremental e a regra de negócio do e-mail único delegada ao motor de integridade do MySQL.
       </div>
     </div>
 
@@ -429,13 +403,9 @@ CREATE TABLE IF NOT EXISTS alunos (
           <ul>
             <li><strong>Reaproveitamento:</strong> Conexões permanecem vivas na fila.</li>
             <li><strong>Concorrência:</strong> Múltiplas requisições atendidas sem sobrecarregar o MySQL.</li>
-            <li><strong>Health Check:</strong> Teste <code>SELECT 1</code> durante o boot do servidor.</li>
+            <li><strong>Health Check:</strong> Teste com <code>SELECT 1</code> durante o boot do servidor.</li>
           </ul>
         </div>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1.5 min):</strong> Explique por que abrir e fechar conexões a cada requisição é uma má prática e como o Connection Pool resolve esse gargalo.
       </div>
     </div>
 
@@ -451,23 +421,19 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
   [novo.nome, novo.email, novo.curso]
 );</code></pre>
 
-      <div class="grid-3" style="margin-top: 14px;">
+      <div class="grid-3" style="margin-top: 20px;">
         <div class="card">
           <h3>🛡️ Parâmetros (?)</h3>
           <p>O driver trata qualquer caractere suspeito como dado puro, nunca como código SQL.</p>
         </div>
         <div class="card">
           <h3>⚠️ Tratamento 409</h3>
-          <p>Captura o código <code>ER_DUP_ENTRY</code> e responde com aviso amigável de e-mail duplicado.</p>
+          <p>Captura o código <code>ER_DUP_ENTRY</code> e responde com aviso de e-mail duplicado.</p>
         </div>
         <div class="card">
           <h3>🛑 Validação Prévia</h3>
           <p>Verificação estrita de e-mail regex e comprimento máximo de texto antes da query.</p>
         </div>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1.5 min):</strong> Ressalte que o sistema nunca usa concatenação de strings. Explique o fluxo de erro quando o banco retorna e-mail duplicado e como o backend traduz para HTTP 409.
       </div>
     </div>
 
@@ -491,10 +457,6 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
           <p>Confirmação de segurança e deleção com atualização imediata da listagem.</p>
         </div>
       </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1 min):</strong> Comente que o TypeScript no frontend garante que o modelo de Aluno na tela seja estritamente igual ao modelo aceito pela API.
-      </div>
     </div>
 
     <!-- Slide 7 -->
@@ -503,18 +465,14 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
       <h2>Demonstração Prática (Live Demo)</h2>
       <p class="subtitle">Apresentando o sistema em funcionamento real.</p>
 
-      <div class="card">
-        <h3>📋 Roteiro de Teste ao Vivo:</h3>
-        <ol style="margin-left: 20px; line-height: 2;">
+      <div class="card" style="padding: 32px;">
+        <h3 style="margin-bottom: 20px;">📋 Roteiro de Teste ao Vivo:</h3>
+        <ol style="margin-left: 24px; line-height: 2.2; font-size: 1.1rem; color: var(--text);">
           <li>Cadastrar um aluno com nome, e-mail e curso válidos.</li>
-          <li>Tentar cadastrar novamente o mesmo e-mail (mostrar alerta de duplicidade).</li>
+          <li>Tentar cadastrar novamente o mesmo e-mail (validação de unicidade e aviso amigável).</li>
           <li>Testar o campo de busca digitando parte do nome do aluno.</li>
-          <li>Excluir o aluno cadastrado e verificar a tabela sendo atualizada.</li>
+          <li>Excluir o aluno cadastrado e verificar a tabela sendo atualizada em tempo real.</li>
         </ol>
-      </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1.5 min):</strong> Alterne para a aba da aplicação em <code>http://localhost:3000</code> e realize os 4 passos com calma enquanto narra cada ação.
       </div>
     </div>
 
@@ -529,7 +487,7 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
           <h3>🧠 Conhecimentos Adquiridos</h3>
           <ul>
             <li>Compreensão profunda do ciclo de vida HTTP request-response.</li>
-            <li>Gerenciamento de conexões assíncronas com banco de dados.</li>
+            <li>Gerenciamento de conexões assíncronas com banco de dados relacional.</li>
             <li>Automação de processos com scripts no <code>package.json</code>.</li>
           </ul>
         </div>
@@ -542,10 +500,6 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
           </ul>
         </div>
       </div>
-
-      <div class="notes-box">
-        <strong>🎙️ Dica de fala (1 min):</strong> Sintetize como a atividade ajudou a entender o desenvolvimento fullstack real além da teoria.
-      </div>
     </div>
 
     <!-- Slide 9 -->
@@ -554,13 +508,9 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
       <h1>Obrigado!</h1>
       <p class="subtitle">Perguntas, dúvidas e considerações finais.</p>
 
-      <div class="card" style="text-align: center; padding: 40px;">
-        <h3 style="justify-content: center; font-size: 1.5rem; margin-bottom: 15px;">Sistema de Cadastro de Alunos</h3>
-        <p style="font-size: 1.1rem; color: var(--accent);">Node.js | TypeScript | Express | MySQL</p>
-      </div>
-
-      <div class="notes-box" style="margin-top: 30px;">
-        <strong>🎙️ Dica de fala (30 seg):</strong> Agradeça a todos pela atenção e coloque-se à disposição para perguntas do professor ou colegas.
+      <div class="card" style="text-align: center; padding: 48px;">
+        <h3 style="justify-content: center; font-size: 1.6rem; margin-bottom: 16px;">Sistema de Cadastro de Alunos</h3>
+        <p style="font-size: 1.2rem; color: var(--accent);">Node.js | TypeScript | Express | MySQL</p>
       </div>
     </div>
   </main>
@@ -622,4 +572,3 @@ const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
   </script>
 </body>
 </html>
-
