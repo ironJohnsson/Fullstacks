@@ -6,6 +6,7 @@
     "build:backend": "tsc -p tsconfig.json",
     "build:frontend": "tsc -p tsconfig.frontend.json",
     "build": "npm run build:backend && npm run build:frontend",
+    "prestart": "node scripts/ensure-db.js",
     "start": "node dist/server.js",
     "dev": "npm run build && npm start"
   },
@@ -20,4 +21,3 @@
     "typescript": "^5.7.3"
   }
 }
-

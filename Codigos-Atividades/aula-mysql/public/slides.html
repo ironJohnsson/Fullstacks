@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apresentação: Sistema de Gestão de Alunos com MySQL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --success: #34d399;
+      --border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Ambient background lighting */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 20%;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 40px;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .slide-tag {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #ffffff;
+    }
+
+    p.subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p, .card li {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style-position: inside;
+      margin-left: 4px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    pre {
+      background: #05070d;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .notes-box {
+      margin-top: 20px;
+      background: rgba(52, 211, 153, 0.08);
+      border-left: 4px solid var(--success);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      font-size: 0.92rem;
+      color: #cbd5e1;
+    }
+
+    .notes-box strong {
+      color: var(--success);
+    }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 16px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      max-width: 400px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 24px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+    }
+
+    .btn-accent:hover {
+      background: #7dd3fc;
+    }
+
+    .key-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">
+      <span class="badge-dot"></span>
+      <span>Atividade Prática: aula-mysql</span>
+    </div>
+    <div class="meta" id="slideTimer">Tempo sugerido: ~10 minutos</div>
+  </header>
+
+  <main>
+    <!-- Slide 1 -->
+    <div class="slide active" data-time="1 min">
+      <div class="slide-tag">01 / Introdução</div>
+      <h1>Aplicação Fullstack com TypeScript & MySQL</h1>
+      <p class="subtitle">Integração de interface web responsiva com backend Node.js e banco relacional persistente.</p>
+      
+      <div class="grid-3">
+        <div class="card">
+          <h3>⚡ Backend</h3>
+          <p>Node.js, Express e TypeScript com rotas REST e validação de schema.</p>
+        </div>
+        <div class="card">
+          <h3>🗄️ Banco de Dados</h3>
+          <p>MySQL 8 com pool de conexões assíncronas e modelagem normalizada.</p>
+        </div>
+        <div class="card">
+          <h3>🎨 Frontend</h3>
+          <p>Single Page Application em TypeScript puro sem dependências pesadas.</p>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1 min):</strong> Apresente-se, mencione que o projeto aborda a construção de um CRUD completo de alunos com separação de responsabilidades e foco em segurança.
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" data-time="1 min">
+      <div class="slide-tag">02 / Arquitetura</div>
+      <h2>Arquitetura em 3 Camadas</h2>
+      <p class="subtitle">Comunicação desacoplada e isolamento seguro de recursos.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🌐 Frontend (Navegador)</h3>
+          <ul>
+            <li>Não tem contato direto com o banco de dados.</li>
+            <li>Envia e consome exclusivamente JSON via <code>Fetch API</code>.</li>
+            <li>Renderiza estados de loading, sucesso e erro em tempo real.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🛡️ Backend & Conexão</h3>
+          <ul>
+            <li>Servidor Express valida cada requisição antes de tocar no banco.</li>
+            <li>Pool gerenciado pelo <code>mysql2/promise</code> na porta <code>3306</code>.</li>
+            <li>Credenciais protegidas por variáveis de ambiente (<code>.env</code>).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1 min):</strong> Destaque o isolamento do banco. O browser nunca executa query direta; todo fluxo passa pelo backend que audita e valida os dados.
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" data-time="1 min">
+      <div class="slide-tag">03 / Modelagem de Dados</div>
+      <h2>Estrutura do Banco no MySQL</h2>
+      <p class="subtitle">Definição DDL otimizada com integridade e padronização.</p>
+
+      <pre><code>CREATE DATABASE IF NOT EXISTS aula_mysql
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS alunos (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(120) NOT NULL,
+  email VARCHAR(160) NOT NULL,
+  curso VARCHAR(120) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_alunos_email (email)
+);</code></pre>
+
+      <div class="grid-2" style="margin-top: 14px;">
+        <div class="card" style="padding: 16px;">
+          <h3>✨ Suporte UTF-8 (utf8mb4)</h3>
+          <p>Permite acentuação da língua portuguesa e caracteres internacionais.</p>
+        </div>
+        <div class="card" style="padding: 16px;">
+          <h3>🔒 Chave Única (UQ)</h3>
+          <p>O MySQL rejeita automaticamente cadastros duplicados com o mesmo e-mail.</p>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1 min):</strong> Explique as escolhas do DDL: o campo id unsigned auto-incremental e a regra de negócio do e-mail único delegada ao motor de integridade do MySQL.
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide" data-time="1.5 min">
+      <div class="slide-tag">04 / Backend & Pool</div>
+      <h2>Gerenciamento Eficiente com Connection Pool</h2>
+      <p class="subtitle">Escalabilidade e desempenho evitando custos de handshake TCP repetidos.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>⚙️ Configuração do Pool</h3>
+          <pre><code>export const pool = createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  connectionLimit: 10,
+  waitForConnections: true
+});</code></pre>
+        </div>
+        <div class="card">
+          <h3>🚀 Vantagens Práticas</h3>
+          <ul>
+            <li><strong>Reaproveitamento:</strong> Conexões permanecem vivas na fila.</li>
+            <li><strong>Concorrência:</strong> Múltiplas requisições atendidas sem sobrecarregar o MySQL.</li>
+            <li><strong>Health Check:</strong> Teste <code>SELECT 1</code> durante o boot do servidor.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1.5 min):</strong> Explique por que abrir e fechar conexões a cada requisição é uma má prática e como o Connection Pool resolve esse gargalo.
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide" data-time="1.5 min">
+      <div class="slide-tag">05 / Segurança</div>
+      <h2>Segurança & Prevenção de SQL Injection</h2>
+      <p class="subtitle">Blindagem de queries com Prepared Statements e tratamento de exceções.</p>
+
+      <pre><code>// ✅ Preparação segura contra injeção SQL
+const [resultado] = await pool.execute&lt;ResultSetHeader&gt;(
+  'INSERT INTO alunos (nome, email, curso) VALUES (?, ?, ?)',
+  [novo.nome, novo.email, novo.curso]
+);</code></pre>
+
+      <div class="grid-3" style="margin-top: 14px;">
+        <div class="card">
+          <h3>🛡️ Parâmetros (?)</h3>
+          <p>O driver trata qualquer caractere suspeito como dado puro, nunca como código SQL.</p>
+        </div>
+        <div class="card">
+          <h3>⚠️ Tratamento 409</h3>
+          <p>Captura o código <code>ER_DUP_ENTRY</code> e responde com aviso amigável de e-mail duplicado.</p>
+        </div>
+        <div class="card">
+          <h3>🛑 Validação Prévia</h3>
+          <p>Verificação estrita de e-mail regex e comprimento máximo de texto antes da query.</p>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1.5 min):</strong> Ressalte que o sistema nunca usa concatenação de strings. Explique o fluxo de erro quando o banco retorna e-mail duplicado e como o backend traduz para HTTP 409.
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide" data-time="1 min">
+      <div class="slide-tag">06 / Frontend</div>
+      <h2>Interface do Usuário com TypeScript</h2>
+      <p class="subtitle">Interatividade dinâmica sem frameworks pesados.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>📝 Cadastro Instantâneo</h3>
+          <p>Submissão assíncrona com feedback imediato e limpeza do formulário.</p>
+        </div>
+        <div class="card">
+          <h3>🔍 Filtro por Nome</h3>
+          <p>Busca dinâmica enviando parâmetros via query string (<code>/api/alunos?nome=...</code>).</p>
+        </div>
+        <div class="card">
+          <h3>🗑️ Exclusão Segura</h3>
+          <p>Confirmação de segurança e deleção com atualização imediata da listagem.</p>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1 min):</strong> Comente que o TypeScript no frontend garante que o modelo de Aluno na tela seja estritamente igual ao modelo aceito pela API.
+      </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide" data-time="1.5 min">
+      <div class="slide-tag">07 / Demonstração</div>
+      <h2>Demonstração Prática (Live Demo)</h2>
+      <p class="subtitle">Apresentando o sistema em funcionamento real.</p>
+
+      <div class="card">
+        <h3>📋 Roteiro de Teste ao Vivo:</h3>
+        <ol style="margin-left: 20px; line-height: 2;">
+          <li>Cadastrar um aluno com nome, e-mail e curso válidos.</li>
+          <li>Tentar cadastrar novamente o mesmo e-mail (mostrar alerta de duplicidade).</li>
+          <li>Testar o campo de busca digitando parte do nome do aluno.</li>
+          <li>Excluir o aluno cadastrado e verificar a tabela sendo atualizada.</li>
+        </ol>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1.5 min):</strong> Alterne para a aba da aplicação em <code>http://localhost:3000</code> e realize os 4 passos com calma enquanto narra cada ação.
+      </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide" data-time="1 min">
+      <div class="slide-tag">08 / Aprendizados</div>
+      <h2>Aprendizados & Melhores Práticas</h2>
+      <p class="subtitle">Principais conceitos consolidados durante o desenvolvimento.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🧠 Conhecimentos Adquiridos</h3>
+          <ul>
+            <li>Compreensão profunda do ciclo de vida HTTP request-response.</li>
+            <li>Gerenciamento de conexões assíncronas com banco de dados.</li>
+            <li>Automação de processos com scripts no <code>package.json</code>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🚀 Próximas Evoluções Possíveis</h3>
+          <ul>
+            <li>Adição de paginação de resultados no backend.</li>
+            <li>Autenticação de usuários com tokens JWT.</li>
+            <li>Edição e atualização inline de cadastros existentes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <strong>🎙️ Dica de fala (1 min):</strong> Sintetize como a atividade ajudou a entender o desenvolvimento fullstack real além da teoria.
+      </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide" data-time="30 seg">
+      <div class="slide-tag">09 / Conclusão</div>
+      <h1>Obrigado!</h1>
+      <p class="subtitle">Perguntas, dúvidas e considerações finais.</p>
+
+      <div class="card" style="text-align: center; padding: 40px;">
+        <h3 style="justify-content: center; font-size: 1.5rem; margin-bottom: 15px;">Sistema de Cadastro de Alunos</h3>
+        <p style="font-size: 1.1rem; color: var(--accent);">Node.js | TypeScript | Express | MySQL</p>
+      </div>
+
+      <div class="notes-box" style="margin-top: 30px;">
+        <strong>🎙️ Dica de fala (30 seg):</strong> Agradeça a todos pela atenção e coloque-se à disposição para perguntas do professor ou colegas.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="key-hint">Dica: use as teclas <strong>←</strong> e <strong>→</strong> (ou Espaço) do teclado para navegar. Tecla <strong>F</strong> para tela cheia.</div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="controls">
+      <button id="prevBtn">← Anterior</button>
+      <span id="slideCounter" style="display: flex; align-items: center; font-size: 0.9rem; font-weight: 700; color: var(--accent); padding: 0 8px;">1 / 9</span>
+      <button id="nextBtn" class="btn-accent">Próximo →</button>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    const slideCounter = document.getElementById('slideCounter');
+    const slideTimer = document.getElementById('slideTimer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentSlide = 0;
+
+    function updateSlide(index) {
+      if (index < 0 || index >= slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      const progress = ((currentSlide + 1) / slides.length) * 100;
+      progressBar.style.width = progress + '%';
+      slideCounter.innerText = `${currentSlide + 1} / ${slides.length}`;
+      slideTimer.innerText = `Tempo sugerido: ${slides[currentSlide].dataset.time || '~1 min'}`;
+
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.innerText = currentSlide === slides.length - 1 ? 'Concluir' : 'Próximo →';
+    }
+
+    prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        updateSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        updateSlide(currentSlide - 1);
+      } else if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    });
+
+    updateSlide(0);
+  </script>
+</body>
+</html>
+
