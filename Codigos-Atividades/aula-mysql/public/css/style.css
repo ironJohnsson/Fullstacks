@@ -1,0 +1,217 @@
+/* Cores compartilhadas e base legível da interface. */
+:root {
+  --verde: #153b31;
+  --fundo: #f2f4ed;
+  --borda: #cbd8cb;
+  --erro: #a32727;
+  --sucesso: #17623b;
+  --aviso: #805417;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #183329;
+  background: var(--fundo);
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.largura {
+  width: min(100% - 32px, 1050px);
+  margin-inline: auto;
+}
+
+.topo {
+  background: var(--verde);
+  color: white;
+  padding: 35px 0;
+}
+
+.topo h1 {
+  margin: 5px 0;
+  font-size: clamp(28px, 5vw, 42px);
+}
+
+.topo p {
+  margin-bottom: 0;
+}
+
+.marca {
+  color: #dcf1a5;
+  font-weight: bold;
+}
+
+/* Cards e formulários em grid que se ajustam à largura disponível. */
+main {
+  padding-block: 25px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 25px #173d2410;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.busca {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.busca > div {
+  flex: 1 1 260px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #8b9e90;
+  border-radius: 8px;
+  padding: 11px;
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: var(--verde);
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #27644f;
+}
+
+button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+button.secundario {
+  background: #e3ebe0;
+  color: var(--verde);
+}
+
+button.secundario:hover {
+  background: #cfdfc9;
+}
+
+button.perigo {
+  background: #a32727;
+}
+
+button.perigo:hover {
+  background: #841f1f;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #d08b2f;
+  outline-offset: 3px;
+}
+
+/* A tabela rola horizontalmente sem comprimir as colunas. */
+.tabela-rolagem {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: left;
+  font-weight: bold;
+  padding: 12px 0;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--borda);
+}
+
+th {
+  background: #eaf0e7;
+}
+
+.mensagem {
+  min-height: 1.5em;
+  margin: 15px 0;
+}
+
+.mensagem.sucesso {
+  color: var(--sucesso);
+}
+
+.mensagem.erro {
+  color: var(--erro);
+}
+
+.mensagem.aviso {
+  color: var(--aviso);
+}
+
+.confirmacao {
+  margin-top: 17px;
+  padding: 16px;
+  border: 2px solid var(--aviso);
+  border-radius: 10px;
+  background: #fff5df;
+}
+
+.confirmacao[hidden] {
+  display: none;
+}
+
+.confirmacao button {
+  margin: 0 8px 6px 0;
+}
+
+footer {
+  color: #53665c;
+  padding-bottom: 25px;
+}
+
+/* Em telas estreitas, os campos ficam empilhados. */
+@media (max-width: 700px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    padding: 17px;
+  }
+}
+
