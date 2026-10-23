@@ -440,7 +440,7 @@
     .progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #38bdf8, #818cf8, #a855f7);
-      width: 6.25%;
+      width: 6.66%;
       transition: width 0.3s ease;
     }
 
@@ -1138,63 +1138,9 @@ const dados = (await resposta.json()) as RespostaApi;</code></pre>
       </div>
     </div>
 
-    <!-- SLIDE 14: ROTEIRO DE DEMONSTRAÇÃO PRÁTICA -->
-    <div class="slide" data-title="14. Roteiro de Demonstração ao Vivo">
-      <div class="slide-tag">14 / Validação Prática</div>
-      <h2>Roteiro de Demonstração ao Vivo (Live Demo)</h2>
-      <p class="subtitle">Casos de teste práticos e cenários de validação preparados para a banca avaliadora.</p>
-
-      <div class="card" style="padding: 24px;">
-        <div class="table-container" style="margin-top: 0;">
-          <table class="slide-table">
-            <thead>
-              <tr>
-                <th>Etapa</th>
-                <th>Ação Executada</th>
-                <th>Dados de Teste</th>
-                <th>Comportamento Esperado no Sistema</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>1. Cadastro Válido (CREATE)</strong></td>
-                <td>Preencher formulário e clicar em <em>Cadastrar</em></td>
-                <td><code>Nome: Carlos Silva</code><br><code>E-mail: carlos@senai.br</code><br><code>Curso: Eng. Computação</code></td>
-                <td>Status <span class="status-badge status-201">201 Created</span> retornado. Formulário é limpo e Carlos aparece no topo da tabela com ID auto-incrementado.</td>
-              </tr>
-              <tr>
-                <td><strong>2. Teste de Unicidade (CONFLICT)</strong></td>
-                <td>Tentar cadastrar novamente o mesmo e-mail</td>
-                <td><code>E-mail: carlos@senai.br</code></td>
-                <td>MySQL rejeita com <code>ER_DUP_ENTRY</code>. API devolve <span class="status-badge status-409">409 Conflict</span> e tela exibe <em>"Este e-mail já está cadastrado."</em></td>
-              </tr>
-              <tr>
-                <td><strong>3. Busca Dinâmica (READ)</strong></td>
-                <td>Digitar termo no campo <em>Buscar por nome</em></td>
-                <td><code>Busca: Carlos</code></td>
-                <td>Dispara <code>GET /api/alunos?nome=Carlos</code>. Tabela filtra instantaneamente apenas os registros compatíveis usando cláusula <code>LIKE ?</code>.</td>
-              </tr>
-              <tr>
-                <td><strong>4. Prova Anti-Injection</strong></td>
-                <td>Tentar payload de injeção SQL no nome</td>
-                <td><code>Nome: ' OR '1'='1</code></td>
-                <td>O sistema cadastra com sucesso a string literal exata, comprovando que o interpretador SQL tratou a entrada como texto puro e inofensivo.</td>
-              </tr>
-              <tr>
-                <td><strong>5. Exclusão Segura (DELETE)</strong></td>
-                <td>Clicar em <em>Excluir</em> na linha do aluno</td>
-                <td>ID do aluno criado</td>
-                <td>Painel de confirmação in-page é exibido. Ao confirmar, envia <code>DELETE /api/alunos/:id</code> (<span class="status-badge status-200">200 OK</span>) e remove a linha da tabela.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 15: APRENDIZADOS, BOAS PRÁTICAS & PRÓXIMOS PASSOS -->
-    <div class="slide" data-title="15. Aprendizados & Boas Práticas">
-      <div class="slide-tag">15 / Síntese & Futuro</div>
+    <!-- SLIDE 14: APRENDIZADOS, BOAS PRÁTICAS & PRÓXIMOS PASSOS -->
+    <div class="slide" data-title="14. Aprendizados & Boas Práticas">
+      <div class="slide-tag">14 / Síntese & Futuro</div>
       <h2>Aprendizados Consolidados & Evoluções Futuras</h2>
       <p class="subtitle">Conhecimentos de engenharia de software fixados e melhorias planejadas para ambiente de produção.</p>
 
@@ -1221,9 +1167,9 @@ const dados = (await resposta.json()) as RespostaApi;</code></pre>
       </div>
     </div>
 
-    <!-- SLIDE 16: CONCLUSÃO & PERGUNTAS -->
-    <div class="slide" data-title="16. Conclusão & Encerramento">
-      <div class="slide-tag">16 / Encerramento</div>
+    <!-- SLIDE 15: CONCLUSÃO & PERGUNTAS -->
+    <div class="slide" data-title="15. Conclusão & Encerramento">
+      <div class="slide-tag">15 / Encerramento</div>
       <h1>Obrigado!</h1>
       <p class="subtitle">Perguntas, dúvidas técnicas e considerações da banca avaliadora.</p>
 
@@ -1256,7 +1202,7 @@ const dados = (await resposta.json()) as RespostaApi;</code></pre>
     </div>
     <div class="controls">
       <button id="prevBtn" title="Slide anterior">&larr; Anterior</button>
-      <span id="slideCounter" style="display: flex; align-items: center; font-size: 0.9rem; font-weight: 700; color: var(--accent); padding: 0 8px;">1 / 16</span>
+      <span id="slideCounter" style="display: flex; align-items: center; font-size: 0.9rem; font-weight: 700; color: var(--accent); padding: 0 8px;">1 / 15</span>
       <button id="nextBtn" class="btn-accent" title="Próximo slide">Próximo &rarr;</button>
     </div>
   </footer>
