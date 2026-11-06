@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "cliente": "Mariana Silva",
+    "itens": [
+      {
+        "produtoId": 1,
+        "nome": "Teclado Mecânico RGB",
+        "precoUnitario": 250,
+        "quantidade": 2,
+        "subtotal": 500
+      }
+    ],
+    "valorTotal": 500,
+    "dataCriacao": "2026-11-06T14:55:27.648Z"
+  },
+  {
+    "id": 2,
+    "cliente": "Lucas Andrade",
+    "itens": [
+      {
+        "produtoId": 1,
+        "nome": "Teclado Mecânico RGB",
+        "precoUnitario": 250,
+        "quantidade": 2,
+        "subtotal": 500
+      },
+      {
+        "produtoId": 2,
+        "nome": "Mouse Gamer Pro",
+        "precoUnitario": 180,
+        "quantidade": 1,
+        "subtotal": 180
+      }
+    ],
+    "valorTotal": 680,
+    "dataCriacao": "2026-11-06T14:55:32.400Z"
+  },
+  {
+    "id": 3,
+    "cliente": "Lucas Andrade",
+    "itens": [
+      {
+        "produtoId": 1,
+        "nome": "Teclado Mecânico RGB",
+        "precoUnitario": 250,
+        "quantidade": 2,
+        "subtotal": 500
+      },
+      {
+        "produtoId": 2,
+        "nome": "Mouse Gamer Pro",
+        "precoUnitario": 180,
+        "quantidade": 1,
+        "subtotal": 180
+      }
+    ],
+    "valorTotal": 680,
+    "dataCriacao": "2026-11-06T14:56:46.741Z"
+  }
+]
