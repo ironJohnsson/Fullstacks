@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoramento Meteorológico · Dados do Tempo em Tempo Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Topbar / Status dos Microsserviços -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-icon">🌤️</span>
+        <div class="brand-text">
+          <span class="eyebrow">DADOS DO TEMPO · EM TEMPO REAL</span>
+          <h1 class="page-title">Monitoramento Meteorológico</h1>
+        </div>
+      </div>
+      <div class="services-status" id="servicesStatus">
+        <span class="status-dot"></span>
+        <span class="status-label">Microsserviços: Verificando...</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <p class="intro">
+      Descubra as condições atuais e acompanhe a previsão dos próximos cinco dias para cidades do mundo todo.
+    </p>
+
+    <!-- NAVEGAÇÃO POR ABAS -->
+    <nav class="nav-tabs" aria-label="Navegação do Painel">
+      <button class="tab-btn active" data-tab="tab-clima">🌤️ Consulta & Previsão</button>
+      <button class="tab-btn" data-tab="tab-comparar">⚖️ Compare duas cidades</button>
+      <button class="tab-btn" data-tab="tab-checklist">📋 Checklist (20/20)</button>
+      <button class="tab-btn" data-tab="tab-arquitetura">🏛️ Arquitetura & Endpoints</button>
+      <button class="tab-btn" data-tab="tab-questoes">💡 Questões para Discussão</button>
+      <button class="tab-btn" data-tab="tab-testes">🧪 Testes Obrigatórios</button>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- ABA 1: CONSULTA METEOROLÓGICA & PREVISÃO   -->
+    <!-- ========================================== -->
+    <section id="tab-clima" class="tab-content active">
+
+      <!-- Painel de Busca -->
+      <div class="panel search-panel">
+        <div class="search-header">
+          <label for="cityInput" class="city-label">Qual cidade você quer consultar?</label>
+          <div class="search-actions">
+            <button id="refreshBtn" class="btn btn-secondary" title="Recarregar dados da cidade atual">
+              ↻ Atualizar dados
+            </button>
+          </div>
+        </div>
+
+        <form id="searchForm" class="search-form">
+          <div class="input-group">
+            <span class="input-icon">🔍</span>
+            <input
+              type="text"
+              id="cityInput"
+              class="city-input"
+              placeholder="Digite o nome de uma cidade"
+              autocomplete="off"
+              required
+            >
+            <button type="submit" id="searchBtn" class="btn btn-primary">
+              Consultar
+            </button>
+          </div>
+        </form>
+
+        <p class="search-hint">
+          Experimente <strong>Salvador</strong>, <strong>Recife</strong>, <strong>Curitiba</strong> ou uma cidade de outro país como <strong>Paris</strong> ou <strong>Tóquio</strong>.
+        </p>
+
+        <!-- Sugestões Rápidas -->
+        <div class="quick-pills">
+          <span class="pills-label">Sugestões rápidas:</span>
+          <button type="button" class="pill-btn" data-city="Salvador">Salvador (BA)</button>
+          <button type="button" class="pill-btn" data-city="Recife">Recife (PE)</button>
+          <button type="button" class="pill-btn" data-city="São Paulo">São Paulo (SP)</button>
+          <button type="button" class="pill-btn" data-city="Curitiba">Curitiba (PR)</button>
+          <button type="button" class="pill-btn" data-city="Paris">Paris (França)</button>
+          <button type="button" class="pill-btn" data-city="Tokyo">Tóquio (Japão)</button>
+          <button type="button" class="pill-btn pill-homonima" data-city="Valença">Valença (Homônimas)</button>
+        </div>
+
+        <!-- Alerta / Mensagem de Erro ou Loading -->
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
+
+        <!-- Seletor de Cidades Homônimas -->
+        <div id="homonimasPanel" class="homonimas-box" style="display: none;">
+          <div class="homonimas-header">
+            <span class="homonimas-title">⚠️ Escolha a localidade correta</span>
+            <span class="homonimas-desc">O Geocoding encontrou múltiplas cidades homônimas com esse nome:</span>
+          </div>
+          <div id="homonimasList" class="homonimas-grid"></div>
+        </div>
+      </div>
+
+      <!-- Histórico de Consultas Recentes -->
+      <div class="panel history-panel" id="historyPanel">
+        <div class="panel-header">
+          <h3 class="panel-title">Consultas recentes</h3>
+          <span class="panel-subtitle">As últimas cinco cidades desta sessão.</span>
+        </div>
+        <div id="historyList" class="history-chips">
+          <span class="history-empty">Nenhuma consulta realizada nesta sessão.</span>
+        </div>
+      </div>
+
+      <!-- Conteúdo Meteorológico (Condições Atuais + Previsão + Gráfico) -->
+      <div id="weatherResults" class="weather-results" style="display: none;">
+
+        <!-- Card de Condições Atuais -->
+        <div class="panel current-panel">
+          <div class="current-header">
+            <div>
+              <span class="current-kicker">CONDIÇÕES ATUAIS</span>
+              <h2 id="currentCityName" class="current-city">Salvador</h2>
+              <p id="currentLocationMeta" class="current-meta">Bahia, Brasil · Lat: -12.97°, Lon: -38.49°</p>
+              <p id="currentObservationTime" class="observation-time">Observação: --:--</p>
+            </div>
+            <div class="current-badge-wrapper">
+              <span id="currentWeatherIcon" class="big-weather-icon">☀️</span>
+              <span id="currentWeatherDesc" class="weather-badge">Ensolarado</span>
+            </div>
+          </div>
+
+          <div class="current-grid">
+            <div class="metric-card main-temp">
+              <span class="metric-label">Temperatura</span>
+              <div class="temp-display">
+                <span id="currentTemp" class="temp-val">--</span>
+                <span class="temp-unit">°C</span>
+              </div>
+              <span class="metric-sub">Sensação de <strong id="currentApparentTemp">--°C</strong></span>
+            </div>
+
+            <div class="metric-card">
+              <span class="metric-label">Vento</span>
+              <div class="metric-value" id="currentWind">-- km/h</div>
+              <div class="wind-direction-box">
+                <span class="compass-arrow" id="compassArrow">➔</span>
+                <span id="currentWindDirection">--</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <span class="metric-label">Índice Ultravioleta (UV)</span>
+              <div class="metric-value" id="currentUV">--</div>
+              <span class="uv-badge" id="currentUVBadge">--</span>
+            </div>
+
+            <div class="metric-card">
+              <span class="metric-label">Umidade & Chuva</span>
+              <div class="metric-value" id="currentHumidity">--%</div>
+              <span class="metric-sub">Precipitação: <strong id="currentPrecipitation">0.0 mm</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Previsão dos Próximos 5 Dias -->
+        <div class="panel forecast-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Próximos 5 dias</h3>
+            <span class="panel-subtitle">Acompanhe as máximas, mínimas e condições para o período.</span>
+          </div>
+          <div id="forecastGrid" class="forecast-grid"></div>
+        </div>
+
+        <!-- Gráfico de Temperaturas por Dia -->
+        <div class="panel chart-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Temperaturas por dia</h3>
+            <span class="panel-subtitle">Variação das temperaturas máximas e mínimas ao longo dos dias.</span>
+          </div>
+          <div class="chart-wrapper">
+            <svg id="temperatureChart" class="temperature-chart" viewBox="0 0 760 260" preserveAspectRatio="none">
+              <!-- Renderizado via JS -->
+            </svg>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-dot max-dot"></span> Temperatura Máxima (°C)</span>
+              <span class="legend-item"><span class="legend-dot min-dot"></span> Temperatura Mínima (°C)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABA 2: COMPARAR DUAS CIDADES               -->
+    <!-- ========================================== -->
+    <section id="tab-comparar" class="tab-content">
+      <div class="panel compare-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Compare duas cidades</h2>
+          <p class="panel-subtitle">Consulte cidades acima e escolha duas para comparar as mínimas e máximas.</p>
+        </div>
+
+        <form id="compareForm" class="compare-form">
+          <div class="compare-inputs-grid">
+            <div class="compare-input-box">
+              <label for="compareCity1" class="compare-label">Primeira cidade</label>
+              <input type="text" id="compareCity1" class="city-input" placeholder="Ex: Salvador" value="Salvador" required>
+            </div>
+            <div class="compare-vs">VS</div>
+            <div class="compare-input-box">
+              <label for="compareCity2" class="compare-label">Segunda cidade</label>
+              <input type="text" id="compareCity2" class="city-input" placeholder="Ex: Curitiba" value="Curitiba" required>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 16px;">
+            <button type="submit" id="btnRunCompare" class="btn btn-primary">
+              Comparar Previsões
+            </button>
+          </div>
+        </form>
+
+        <div id="compareStatus" class="status-message" style="display: none; margin-top: 16px;"></div>
+
+        <div id="compareResults" class="compare-results" style="display: none; margin-top: 24px;">
+          <!-- Card de Veredito / Análise -->
+          <div class="compare-verdict-card" id="compareVerdict">
+            <!-- Renderizado via JS -->
+          </div>
+
+          <!-- Comparação Lado a Lado -->
+          <div class="compare-grid-sides">
+            <div class="compare-side-card" id="sideCity1"></div>
+            <div class="compare-side-card" id="sideCity2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABA 3: CHECKLIST DE DESENVOLVIMENTO (20/20)-->
+    <!-- ========================================== -->
+    <section id="tab-checklist" class="tab-content">
+      <div class="panel checklist-panel">
+        <div class="panel-header-split">
+          <div>
+            <h2 class="panel-title">Checklist de desenvolvimento</h2>
+            <p class="panel-subtitle">Marque as etapas à medida que forem concluídas.</p>
+          </div>
+          <div class="checklist-score">
+            <span id="checklistCounter" class="score-badge">20 / 20</span>
+            <button id="btnCheckAll" class="btn btn-small">Marcar Todas</button>
+            <button id="btnResetChecklist" class="btn btn-small btn-secondary">Limpar</button>
+          </div>
+        </div>
+
+        <div class="checklist-progress-bar">
+          <div id="checklistProgressBar" class="checklist-progress-fill" style="width: 100%;"></div>
+        </div>
+
+        <div class="checklist-grid" id="checklistContainer">
+          <!-- Os 20 itens renderizados dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABA 4: ARQUITETURA DA SOLUÇÃO & ENDPOINTS  -->
+    <!-- ========================================== -->
+    <section id="tab-arquitetura" class="tab-content">
+      <div class="panel architecture-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Arquitetura da solução</h2>
+          <p class="panel-subtitle">Fluxo conceitual para uma implementação com Node.js, Express e microsserviços.</p>
+        </div>
+
+        <!-- Diagrama Visual -->
+        <div class="arch-diagram">
+          <div class="arch-node client-node">
+            <span class="node-tag">FRONTEND</span>
+            <h4>Navegador (SPA)</h4>
+            <p>HTML5, CSS3, JS Reativo<br>Consome apenas o Gateway</p>
+          </div>
+          <div class="arch-arrow">➔</div>
+          <div class="arch-node gateway-node">
+            <span class="node-tag">PORTA 5000</span>
+            <h4>API Gateway</h4>
+            <p>Roteamento centralizado, orquestração e timeout de 7s</p>
+          </div>
+          <div class="arch-arrow">➔</div>
+          <div class="arch-services-col">
+            <div class="arch-node service-node">
+              <span class="node-tag">PORTA 5001</span>
+              <h4>Microsserviço de Cidades</h4>
+              <p>Geocodificação, detecção de homônimas e coordenadas</p>
+            </div>
+            <div class="arch-node service-node">
+              <span class="node-tag">PORTA 5002</span>
+              <h4>Microsserviço de Meteorologia</h4>
+              <p>Condições atuais, sensação, UV, vento e previsão de 5 dias</p>
+            </div>
+          </div>
+          <div class="arch-arrow">➔</div>
+          <div class="arch-node external-node">
+            <span class="node-tag">EXTERNO</span>
+            <h4>APIs Open-Meteo</h4>
+            <p>Geocoding API & Forecast API<br>Dados globais em tempo real</p>
+          </div>
+        </div>
+
+        <h3 class="section-title" style="margin-top: 32px;">Tabela Oficial de Endpoints REST</h3>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Serviço</th>
+                <th>Porta</th>
+                <th>Método</th>
+                <th>Endpoint</th>
+                <th>Finalidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge-service gateway">Gateway</span></td>
+                <td><code>5000</code></td>
+                <td><code>GET</code></td>
+                <td><code>/api/status</code></td>
+                <td>Healthcheck unificado de todos os microsserviços</td>
+              </tr>
+              <tr>
+                <td><span class="badge-service gateway">Gateway</span></td>
+                <td><code>5000</code></td>
+                <td><code>GET</code></td>
+                <td><code>/api/clima?cidade=Salvador</code></td>
+                <td>Endpoint orquestrado integrado (Cidades + Clima + 5 dias)</td>
+              </tr>
+              <tr>
+                <td><span class="badge-service gateway">Gateway</span></td>
+                <td><code>5000</code></td>
+                <td><code>GET</code></td>
+                <td><code>/api/comparar?cidade1=...&cidade2=...</code></td>
+                <td>Compara previsão de duas cidades simultaneamente</td>
+              </tr>
+              <tr>
+                <td><span class="badge-service cidades">Cidades</span></td>
+                <td><code>5001</code></td>
+                <td><code>GET</code></td>
+                <td><code>/cidades?nome=...</code></td>
+                <td>Busca localidades, estados, países e homônimas</td>
+              </tr>
+              <tr>
+                <td><span class="badge-service clima">Clima</span></td>
+                <td><code>5002</code></td>
+                <td><code>GET</code></td>
+                <td><code>/meteorologia?lat=...&lon=...</code></td>
+                <td>Métricas atuais, códigos WMO, UV e previsão diária</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABA 5: QUESTÕES PARA DISCUSSÃO EM SALA    -->
+    <!-- ========================================== -->
+    <section id="tab-questoes" class="tab-content">
+      <div class="panel discussion-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Questões para discussão em sala</h2>
+          <p class="panel-subtitle">Gabarito comentado com aprofundamento técnico em arquitetura e APIs.</p>
+        </div>
+
+        <div class="qa-accordion">
+          <details class="qa-item" open>
+            <summary class="qa-question">
+              <span class="qa-number">1</span>
+              <span>Qual é a diferença entre consumir uma API diretamente no frontend e consumi-la por meio de um backend?</span>
+            </summary>
+            <div class="qa-answer">
+              <p><strong>No Frontend (Cliente):</strong> O navegador realiza a requisição direta. Isso expõe chaves secretas de autenticação (API Keys) nas ferramentas de inspeção (DevTools), sofre com restrições rígidas de CORS (Cross-Origin Resource Sharing) e sobrecarrega a rede do cliente caso seja necessário realizar múltiplos cruzamentos de dados.</p>
+              <p><strong>Por meio de um Backend (API Gateway / Microsserviços):</strong> As credenciais ficam seguras no servidor (arquivo <code>.env</code>), o backend atua como intermediário seguro, orquestra múltiplas APIs em paralelo sem expor detalhes internos, aplica cache para reduzir custos e requisições externas, e pode sanitizar ou enriquecer os dados antes de entregar ao usuário.</p>
+            </div>
+          </details>
+
+          <details class="qa-item" open>
+            <summary class="qa-question">
+              <span class="qa-number">2</span>
+              <span>Por que as consultas meteorológicas utilizam latitude e longitude em vez de apenas o nome da cidade?</span>
+            </summary>
+            <div class="qa-answer">
+              <p><strong>Precisão Geográfica & Cidades Homônimas:</strong> Existem centenas de cidades com o mesmo nome ao redor do mundo (por exemplo, <em>Valença</em> existe na Bahia, no Rio de Janeiro e na Espanha; <em>Santa Maria</em> existe no RS, no DF e em diversos países). Modelos meteorológicos numéricos trabalham com grades espaciais de coordenadas cartográficas (latitude e longitude) para calcular variáveis físicas exatas (altitude, relevo, pressão atmosférica).</p>
+              <p>Por isso, o padrão de mercado adota duas etapas: um serviço de <strong>Geocodificação</strong> converte o nome em coordenadas inequívocas, e a <strong>API Meteorológica</strong> utiliza essas coordenadas para consultar o modelo climático.</p>
+            </div>
+          </details>
+
+          <details class="qa-item" open>
+            <summary class="qa-question">
+              <span class="qa-number">3</span>
+              <span>Qual é a diferença entre dados meteorológicos atuais e uma previsão?</span>
+            </summary>
+            <div class="qa-answer">
+              <p><strong>Dados Atuais (Nowcasting):</strong> Representam medições registradas em tempo real ou no horário mais recente por estações meteorológicas, radares, balões e satélites (ex: temperatura de 29°C às 15h, vento de 21 km/h registrado agora).</p>
+              <p><strong>Previsão (Forecast):</strong> Trata-se de uma simulação computacional baseada em modelos físico-matemáticos (como GFS, ECMWF e ICON). Eles resolvem equações da termodinâmica e mecânica dos fluidos para projetar probabilidades futuras (temperaturas máximas, mínimas e chance de precipitação dos próximos 5 a 14 dias), possuindo margem de incerteza que aumenta com o horizonte temporal.</p>
+            </div>
+          </details>
+
+          <details class="qa-item" open>
+            <summary class="qa-question">
+              <span class="qa-number">4</span>
+              <span>O que deve acontecer quando a Open-Meteo deixa de responder ou excede o tempo limite?</span>
+            </summary>
+            <div class="qa-answer">
+              <p><strong>Tratamento Defensivo e Resiliência:</strong></p>
+              <ul>
+                <li>O backend deve implementar um <strong>Timeout estrito</strong> (no projeto utilizamos <code>AbortSignal.timeout(6000)</code> para cancelar a conexão após 6 segundos e evitar que threads fiquem bloqueadas).</li>
+                <li>Retornar códigos de status HTTP adequados: <strong>504 Gateway Timeout</strong> caso a API externa não responda a tempo, ou <strong>502 Bad Gateway</strong> caso ela retorne erro.</li>
+                <li>O frontend nunca deve travar em tela branca: deve apresentar uma mensagem amigável ao usuário informando a indisponibilidade momentânea e oferecendo botão para tentar novamente.</li>
+                <li>Em ambientes de missão crítica, utiliza-se cache em memória (Redis) com os últimos dados válidos (estratégia <em>stale-while-revalidate</em>) ou fallback para outra API meteorológica de contingência.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="qa-item" open>
+            <summary class="qa-question">
+              <span class="qa-number">5</span>
+              <span>Quais são as vantagens de separar os serviços de localização e meteorologia?</span>
+            </summary>
+            <div class="qa-answer">
+              <p><strong>Princípio da Responsabilidade Única (SRP) & Arquitetura de Microsserviços:</strong></p>
+              <ul>
+                <li><strong>Escalabilidade Independente:</strong> O serviço de localização (cidades) recebe menos requisições e seus dados mudam raramente (pode ter cache longo de semanas). O serviço meteorológico muda a cada minuto e exige maior processamento e atualização frequente.</li>
+                <li><strong>Substituibilidade de Provedores:</strong> Se amanhã o serviço de Geocoding for migrado para a API do Google Maps ou IBGE, o serviço de meteorologia continua intacto sem nenhuma alteração.</li>
+                <li><strong>Resiliência e Tolerância a Falhas:</strong> Uma lentidão na busca textual de cidades não derruba as consultas meteorológicas de clientes que já possuem as coordenadas salvas em cache.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABA 6: TESTES OBRIGATÓRIOS                 -->
+    <!-- ========================================== -->
+    <section id="tab-testes" class="tab-content">
+      <div class="panel tests-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Testes obrigatórios</h2>
+          <p class="panel-subtitle">Resultados HTTP esperados para a arquitetura proposta. Execute os testes com 1 clique diretamente na API.</p>
+        </div>
+
+        <div class="tests-buttons-grid">
+          <button class="test-btn" data-test="salvador">
+            <span class="test-badge badge-get">GET</span>
+            <strong>1. Consultar Salvador</strong>
+            <span class="test-expected">Esperado: 200 OK + Dados de Salvador</span>
+          </button>
+
+          <button class="test-btn" data-test="tres-brasileiras">
+            <span class="test-badge badge-get">GET</span>
+            <strong>2. Três Cidades Brasileiras</strong>
+            <span class="test-expected">Recife, São Paulo e Curitiba</span>
+          </button>
+
+          <button class="test-btn" data-test="internacional">
+            <span class="test-badge badge-get">GET</span>
+            <strong>3. Cidade Fora do Brasil</strong>
+            <span class="test-expected">Paris / Tóquio (País internacional)</span>
+          </button>
+
+          <button class="test-btn" data-test="homonimas">
+            <span class="test-badge badge-get">GET</span>
+            <strong>4. Cidades Homônimas</strong>
+            <span class="test-expected">Valença (BA, RJ e Espanha)</span>
+          </button>
+
+          <button class="test-btn" data-test="inexistente">
+            <span class="test-badge badge-err">404</span>
+            <strong>5. Cidade Inexistente</strong>
+            <span class="test-expected">"Xzkqp999" (Tratamento 404)</span>
+          </button>
+
+          <button class="test-btn" data-test="vazio">
+            <span class="test-badge badge-err">400</span>
+            <strong>6. Campo Vazio / Inválido</strong>
+            <span class="test-expected">Sem parâmetros (Tratamento 400)</span>
+          </button>
+
+          <button class="test-btn" data-test="comparacao">
+            <span class="test-badge badge-get">GET</span>
+            <strong>7. Comparar Salvador vs Curitiba</strong>
+            <span class="test-expected">Endpoint /api/comparar (200 OK)</span>
+          </button>
+        </div>
+
+        <div id="testConsoleBox" class="test-console-box" style="display: none; margin-top: 24px;">
+          <div class="console-header">
+            <span id="testConsoleTitle">Executando teste...</span>
+            <button id="btnClearTestConsole" class="btn-clear-console">Limpar</button>
+          </div>
+          <pre id="testConsoleOutput" class="console-output"></pre>
+        </div>
+      </div>
+
+      <!-- Banner de Entrega Final -->
+      <div class="panel delivery-panel" style="margin-top: 24px;">
+        <h3 class="delivery-title">Entrega final</h3>
+        <p class="delivery-text">
+          Apresente o repositório, a aplicação funcionando, capturas de tela, a documentação dos endpoints e uma demonstração dos cenários de teste. Para executar <code>/api/clima?cidade=...</code> como endpoint real, implemente e hospede separadamente o gateway e os microsserviços Express descritos acima.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Desenvolvimento Fullstack · SENAI CIMATEC · Monitoramento Meteorológico com Node.js e Microsserviços</p>
+      <p class="footer-sub">Consome Open-Meteo Geocoding API e Open-Meteo Weather Forecast API sem chaves pagas.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

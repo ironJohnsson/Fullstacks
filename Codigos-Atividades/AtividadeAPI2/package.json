@@ -1,0 +1,29 @@
+{
+  "name": "monitoramento-meteorologico-api2",
+  "version": "1.0.0",
+  "description": "Sistema de Monitoramento Meteorológico em Tempo Real com Microsserviços e API Gateway consumindo Open-Meteo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "gateway": "node gateway/server.js",
+    "cidades": "node servico-cidades/server.js",
+    "clima": "node servico-clima/server.js",
+    "testar": "node testar-tudo.js"
+  },
+  "keywords": [
+    "open-meteo",
+    "microservices",
+    "express",
+    "gateway",
+    "weather",
+    "fullstack"
+  ],
+  "author": "Turma SENAI / Fullstack",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
