@@ -1,0 +1,29 @@
+{
+  "name": "pokedex-explorer-api3",
+  "version": "1.0.0",
+  "description": "Pokédex Explorer Web App - Laboratório de APIs e Arquitetura de Microsserviços com PokéAPI v2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "gateway": "node gateway/server.js",
+    "catalogo": "node servico-catalogo/server.js",
+    "detalhes": "node servico-detalhes/server.js",
+    "testar": "node testar-tudo.js"
+  },
+  "keywords": [
+    "pokeapi",
+    "pokedex",
+    "microservices",
+    "express",
+    "api-gateway",
+    "fullstack"
+  ],
+  "author": "Turma SENAI / Fullstack",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
